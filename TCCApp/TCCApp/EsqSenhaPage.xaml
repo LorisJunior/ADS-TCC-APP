@@ -2,9 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.EsqSenhaPage">
-    
+
     <StackLayout VerticalOptions="Center"
-                 HorizontalOptions="Center">
-        <Label Text="EsqSenhaPage"/>
+                 Margin="30">
+        <Entry Placeholder="Email"
+               Keyboard="Email"/>
+
+        <Button Text="Enviar"
+                Margin="0, 60, 0, 0"
+                TextColor="White"
+                BackgroundColor="DodgerBlue"/>
+        
     </StackLayout>
 </ContentPage>
