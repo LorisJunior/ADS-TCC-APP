@@ -2,13 +2,34 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.CadastroPage">
-    
-    
-    
-    
-    
-    <StackLayout VerticalOptions="Center"
-                 HorizontalOptions="Center">
-        <Label Text="CadastroPage"/>
+
+
+
+
+
+    <StackLayout VerticalOptions="CenterAndExpand"
+                 Margin="30">
+        
+        <Entry Placeholder="Email"/>
+
+        <Entry Placeholder="Senha"/>
+        
+        <Entry Placeholder="Confirmar senha"/>
+
+        <Button Text="Criar nova conta"
+                Margin="0, 60, 0, 0"
+                TextColor="White"
+                BackgroundColor="DodgerBlue"/>
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+            
+            <Label Text="Já tem uma conta?"
+                   VerticalOptions="Center"/>
+            
+            <Button Text="Entrar"
+                    BackgroundColor="Transparent"
+                    Scale="0.75"/>
+            
+        </StackLayout>
     </StackLayout>
 </ContentPage>
