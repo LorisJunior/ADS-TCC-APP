@@ -11,7 +11,8 @@
         <Button Text="Enviar"
                 Margin="0, 60, 0, 0"
                 TextColor="White"
-                BackgroundColor="DodgerBlue"/>
+                BackgroundColor="DodgerBlue"
+                Clicked="OnEnviarEmail"/>
         
     </StackLayout>
 </ContentPage>

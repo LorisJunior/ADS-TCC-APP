@@ -17,5 +17,12 @@ namespace TCCApp
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
         }
+
+        public async void OnEnviarEmail(object sender, EventArgs e)
+        {
+            await DisplayAlert("Recuperar Senha", "Email enviado com sucesso!", "Ok");
+
+            await Navigation.PopAsync();
+        }
     }
 }

@@ -28,7 +28,8 @@
             
             <Button Text="Entrar"
                     BackgroundColor="Transparent"
-                    Scale="0.75"/>
+                    Scale="0.75"
+                    Clicked="OnEntrarConta"/>
             
         </StackLayout>
     </StackLayout>

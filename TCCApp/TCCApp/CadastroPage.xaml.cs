@@ -17,5 +17,10 @@ namespace TCCApp
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
         }
+
+        public async void OnEntrarConta(object sender, EventArgs e)
+        { 
+            await Navigation.PopAsync();
+        }
     }
 }
