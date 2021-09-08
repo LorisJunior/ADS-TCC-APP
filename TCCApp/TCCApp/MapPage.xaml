@@ -9,5 +9,5 @@
               HorizontalOptions="FillAndExpand"
               VerticalOptions="FillAndExpand"
               IsShowingUser="True"
-              MapType="Hybrid"/>
+              MapType="Street"/>
 </ContentPage>
