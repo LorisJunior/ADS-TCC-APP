@@ -8,6 +8,5 @@
     <maps:Map x:Name="myMap"
               HorizontalOptions="FillAndExpand"
               VerticalOptions="FillAndExpand"
-              IsShowingUser="True"
-              MapType="Hybrid"/>
+              IsShowingUser="True"/>
 </ContentPage>
