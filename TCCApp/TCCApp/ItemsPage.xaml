@@ -68,19 +68,19 @@
             Text="Itens" 
             FontAttributes="Bold" 
             FontSize="30" 
-            AbsoluteLayout.LayoutBounds="42, 20, 68, 42"/>
+            AbsoluteLayout.LayoutBounds="42, 15, 68, 42"/>
 
         <Label 
             Text="Aqui você pode adicionar os itens que deseja comprar em grupo."
             FontAttributes="none" 
             FontSize="16" 
-            AbsoluteLayout.LayoutBounds="42, 60, 258, 42"/>
+            AbsoluteLayout.LayoutBounds="42, 55, 258, 42"/>
 
         <CollectionView 
             ItemsSource="{Binding Items}" 
             ItemTemplate="{StaticResource ItemTemplate}" 
             ItemsLayout="VerticalGrid, 2" 
-            AbsoluteLayout.LayoutBounds="0, 115, 411, 455"
+            AbsoluteLayout.LayoutBounds="0, 105, 411, 423"
             SelectionMode="Multiple" 
             ItemSizingStrategy="MeasureFirstItem" >
 
@@ -89,12 +89,12 @@
         <Button 
             Text="Adicionar" 
             BackgroundColor="#ECEE72" 
-            AbsoluteLayout.LayoutBounds="39, 585, 255, 60"
+            AbsoluteLayout.LayoutBounds="39, 535, 255, 60"
             CornerRadius="15"/>
 
         <ImageButton 
             Source="delete.png" 
-            AbsoluteLayout.LayoutBounds="308, 585, 60, 60" 
+            AbsoluteLayout.LayoutBounds="308, 535, 60, 60" 
             CornerRadius="15" 
             Padding="10"
             BackgroundColor="#F2A6A6"/>
