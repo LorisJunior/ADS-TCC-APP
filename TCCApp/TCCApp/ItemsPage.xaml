@@ -2,56 +2,102 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.ItemsPage"
-             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:local="clr-namespace:TCCApp.Model">
 
 
+    <ContentPage.BindingContext>
+        <local:ItemData/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="ItemTemplate" >
+
+                <FlexLayout>
+
+                    <pancake:PancakeView WidthRequest="140" HeightRequest="180" CornerRadius="20" Margin="30">
+
+                        <pancake:PancakeView.Shadow>
+                            <pancake:DropShadow Color="LightGray" BlurRadius="8"/>
+                        </pancake:PancakeView.Shadow>
+
+                        <AbsoluteLayout 
+                            BackgroundColor="Yellow" 
+                            VerticalOptions="Center" 
+                            HorizontalOptions="Center">
+
+                            <BoxView 
+                                Color="{Binding Cor}" 
+                                WidthRequest="140" 
+                                HeightRequest="180"/>
+
+                            <Image 
+                                Source="delete.png" 
+                                AbsoluteLayout.LayoutBounds="0.5, 0.5, 100, 100"
+                                AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                        </AbsoluteLayout>
+
+                    </pancake:PancakeView>
+
+                </FlexLayout>
+            </DataTemplate>
+
+            <Style TargetType="FlexLayout">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                        Value="LightSkyBlue" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
 
     <AbsoluteLayout BackgroundColor="#FFF9EE">
 
-        <Label Text="Itens" FontAttributes="Bold" FontSize="30" AbsoluteLayout.LayoutBounds="42, 40, 68, 42"/>
-        <Label FontAttributes="none" FontSize="16" AbsoluteLayout.LayoutBounds="42, 80, 258, 42"
-               Text="Aqui você pode adicionar os itens que deseja comprar em grupo."/>
+        <Label 
+            Text="Itens" 
+            FontAttributes="Bold" 
+            FontSize="30" 
+            AbsoluteLayout.LayoutBounds="42, 20, 68, 42"/>
 
-        <ScrollView AbsoluteLayout.LayoutBounds="0, 150, 411, 347">
-            <FlexLayout x:Name="flex" Direction="row" WidthRequest="411"
-                        HorizontalOptions="Center" Wrap="Wrap">
+        <Label 
+            Text="Aqui você pode adicionar os itens que deseja comprar em grupo."
+            FontAttributes="none" 
+            FontSize="16" 
+            AbsoluteLayout.LayoutBounds="42, 60, 258, 42"/>
 
-                <pancake:PancakeView WidthRequest="140" HeightRequest="155" CornerRadius="15" Margin="30">
+        <CollectionView 
+            ItemsSource="{Binding Items}" 
+            ItemTemplate="{StaticResource ItemTemplate}" 
+            ItemsLayout="VerticalGrid, 2" 
+            AbsoluteLayout.LayoutBounds="0, 115, 411, 455"
+            SelectionMode="Multiple" 
+            ItemSizingStrategy="MeasureFirstItem" >
 
-                    <pancake:PancakeView.Shadow>
-                        <pancake:DropShadow Color="LightGray" BlurRadius="8"/>
-                    </pancake:PancakeView.Shadow>
-                    <BoxView Color="#BDF5F5"/>
-                    
-                </pancake:PancakeView>
+        </CollectionView>
 
-                <pancake:PancakeView WidthRequest="140" HeightRequest="155" CornerRadius="15" Margin="30">
+        <Button 
+            Text="Adicionar" 
+            BackgroundColor="#ECEE72" 
+            AbsoluteLayout.LayoutBounds="39, 585, 255, 60"
+            CornerRadius="15"/>
 
-                    <pancake:PancakeView.Shadow>
-                        <pancake:DropShadow Color="LightGray" BlurRadius="8"/>
-                    </pancake:PancakeView.Shadow>
-
-                    <BoxView Color="#F5BDEF"/>
-                </pancake:PancakeView>
-
-                <pancake:PancakeView  WidthRequest="140" HeightRequest="155" CornerRadius="15" Margin="30">
-
-                    <pancake:PancakeView.Shadow>
-                        <pancake:DropShadow Color="LightGray" BlurRadius="8"/>
-                    </pancake:PancakeView.Shadow>
-
-                    <BoxView Color="#EDF5BD"/>
-                </pancake:PancakeView>
-
-            </FlexLayout>
-        </ScrollView>
-
-        <Button Text="Adicionar" BackgroundColor="#ECEE72" AbsoluteLayout.LayoutBounds="39, 520, 255, 60"
-                 CornerRadius="15"/>
-
-        <ImageButton Source="delete.png" AbsoluteLayout.LayoutBounds="308, 520, 60, 60" CornerRadius="15" Padding="10"
-                     BackgroundColor="#F2A6A6"/>
+        <ImageButton 
+            Source="delete.png" 
+            AbsoluteLayout.LayoutBounds="308, 585, 60, 60" 
+            CornerRadius="15" 
+            Padding="10"
+            BackgroundColor="#F2A6A6"/>
 
     </AbsoluteLayout>
 </ContentPage>
