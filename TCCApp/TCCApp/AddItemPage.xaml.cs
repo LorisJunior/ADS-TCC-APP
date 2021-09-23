@@ -10,17 +10,12 @@ using Xamarin.Forms.Xaml;
 namespace TCCApp
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ItemsPage : ContentPage
+    public partial class AddItemPage : ContentPage
     {
-        public ItemsPage()
+        public AddItemPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-        }
-
-        private async void Adicionar_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AddItemPage());
         }
     }
 }

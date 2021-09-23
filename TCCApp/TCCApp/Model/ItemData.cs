@@ -18,7 +18,7 @@ namespace TCCApp.Model
             {
                 Nome = "Camisa",
                 Cor = "#BDF5F5",
-                ImageUrl = "",
+                ImageUrl = "delete.png",
                 Descricao = ""
             });
 
@@ -26,7 +26,7 @@ namespace TCCApp.Model
             {
                 Nome = "Shots",
                 Cor = "#F5BDEF",
-                ImageUrl = "",
+                ImageUrl = "chat.png",
                 Descricao = ""
             });
 
@@ -34,29 +34,7 @@ namespace TCCApp.Model
             {
                 Nome = "Garrafa",
                 Cor = "#EDF5BD",
-                ImageUrl = "",
-                Descricao = ""
-            });
-            Items.Add(new Item
-            {
-                Nome = "Garrafa",
-                Cor = "#BDF5D3",
-                ImageUrl = "",
-                Descricao = ""
-            });
-            Items.Add(new Item
-            {
-                Nome = "Shots",
-                Cor = "#F5BDEF",
-                ImageUrl = "",
-                Descricao = ""
-            });
-
-            Items.Add(new Item
-            {
-                Nome = "Garrafa",
-                Cor = "#EDF5BD",
-                ImageUrl = "",
+                ImageUrl = "edit.png",
                 Descricao = ""
             });
         }

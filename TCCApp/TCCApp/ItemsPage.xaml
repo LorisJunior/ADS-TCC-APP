@@ -33,7 +33,7 @@
                                 HeightRequest="180"/>
 
                             <Image 
-                                Source="delete.png" 
+                                Source="{Binding ImageUrl}" 
                                 AbsoluteLayout.LayoutBounds="0.5, 0.5, 100, 100"
                                 AbsoluteLayout.LayoutFlags="PositionProportional"/>
                         </AbsoluteLayout>
@@ -80,21 +80,24 @@
             ItemsSource="{Binding Items}" 
             ItemTemplate="{StaticResource ItemTemplate}" 
             ItemsLayout="VerticalGrid, 2" 
-            AbsoluteLayout.LayoutBounds="0, 105, 411, 423"
-            SelectionMode="Multiple" 
-            ItemSizingStrategy="MeasureFirstItem" >
+            AbsoluteLayout.LayoutBounds="0, 95, 411, 440"
+            SelectionMode="Single" 
+            ItemSizingStrategy="MeasureFirstItem"
+            Margin="10">
 
         </CollectionView>
 
         <Button 
+            x:Name="Adicionar"
             Text="Adicionar" 
             BackgroundColor="#ECEE72" 
-            AbsoluteLayout.LayoutBounds="39, 535, 255, 60"
-            CornerRadius="15"/>
+            AbsoluteLayout.LayoutBounds="39, 533, 255, 60"
+            CornerRadius="15"
+            Clicked="Adicionar_Clicked"/>
 
         <ImageButton 
             Source="delete.png" 
-            AbsoluteLayout.LayoutBounds="308, 535, 60, 60" 
+            AbsoluteLayout.LayoutBounds="308, 533, 60, 60" 
             CornerRadius="15" 
             Padding="10"
             BackgroundColor="#F2A6A6"/>
