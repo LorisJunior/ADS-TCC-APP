@@ -23,7 +23,6 @@
                         </pancake:PancakeView.Shadow>
 
                         <AbsoluteLayout 
-                            BackgroundColor="Yellow" 
                             VerticalOptions="Center" 
                             HorizontalOptions="Center">
 
@@ -91,16 +90,16 @@
             x:Name="Adicionar"
             Text="Adicionar" 
             BackgroundColor="#ECEE72" 
-            AbsoluteLayout.LayoutBounds="39, 533, 255, 60"
+            AbsoluteLayout.LayoutBounds="78, 533, 255, 60"
             CornerRadius="15"
             Clicked="Adicionar_Clicked"/>
 
-        <ImageButton 
+        <!--ImageButton 
             Source="delete.png" 
             AbsoluteLayout.LayoutBounds="308, 533, 60, 60" 
             CornerRadius="15" 
             Padding="10"
-            BackgroundColor="#F2A6A6"/>
+            BackgroundColor="#F2A6A6"/-->
 
     </AbsoluteLayout>
 </ContentPage>
