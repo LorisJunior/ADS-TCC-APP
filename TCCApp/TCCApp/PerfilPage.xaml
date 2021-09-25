@@ -6,75 +6,93 @@
 
 
     <ScrollView HeightRequest="850">
-        <AbsoluteLayout BackgroundColor="#FFF9EE" HeightRequest="850">
+        
+        <AbsoluteLayout BackgroundColor="#FFF8EA" HeightRequest="850">
 
-            <Frame AbsoluteLayout.LayoutBounds="0, 0, 411, 292" Padding="0">
-                <Image Source="profile.png" 
-                   Aspect="AspectFill"/>
+            <Frame AbsoluteLayout.LayoutBounds="0, 0, 411, 250" Padding="0" BackgroundColor="Yellow">
+                <Image Source="profile.png" Aspect="AspectFill"/>
             </Frame>
 
-            <ImageButton Source="settings.png" 
-                     AbsoluteLayout.LayoutBounds="350, 10, 50, 50" 
-                     BackgroundColor="Transparent"/>
+            <ImageButton 
+                Source="settings.png" 
+                AbsoluteLayout.LayoutBounds="350, 10, 50, 50" 
+                BackgroundColor="Transparent"/>
 
-            <Label Text="fulanodetal@email.com" 
-               FontAttributes="Bold" 
-               AbsoluteLayout.LayoutBounds="120,190, 214, 21" 
-               TextColor="White" 
-               FontSize="18"/>
+            <Label 
+                Text="fulanodetal@email.com" 
+                FontAttributes="Bold" 
+                AbsoluteLayout.LayoutBounds="120,190, 214, 21" 
+                TextColor="White" 
+                FontSize="18"/>
 
-            <pancake:PancakeView AbsoluteLayout.LayoutBounds="13.5, 220, 386, 172">
+            <pancake:PancakeView AbsoluteLayout.LayoutBounds="13.5, 190, 386, 172" CornerRadius="20">
 
                 <pancake:PancakeView.Shadow>
-                    <pancake:DropShadow Color="#000000" BlurRadius="10"/>
+                    <pancake:DropShadow BlurRadius="8"/>
                 </pancake:PancakeView.Shadow>
 
-                <Frame CornerRadius="20" VerticalOptions="Fill" Padding="25">
+                <StackLayout 
+                    Padding="25"
+                    BackgroundColor="White">
 
-                    <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        
+                        <Label 
+                            Text="Sobre" 
+                            FontAttributes="Bold" 
+                            FontSize="16" 
+                            VerticalOptions="Center"/>
 
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="Sobre" 
-                               FontAttributes="Bold" 
-                               FontSize="16" 
-                               VerticalOptions="Center"/>
-
-                            <ImageButton Source="edit.png" 
-                                     HorizontalOptions="End" 
-                                     WidthRequest="30" 
-                                     BackgroundColor="Transparent" 
-                                     Margin="250, 0, 0, 0"/>
-
-                        </StackLayout>
-
-                        <Label Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                               Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-                               FontSize="16"
-                               Margin="0, 15, 0, 0"/>
+                        <ImageButton 
+                            Source="edit.png" 
+                            HorizontalOptions="End" 
+                            WidthRequest="30" 
+                            BackgroundColor="Transparent" 
+                            Margin="250, 0, 0, 0"/>
 
                     </StackLayout>
-                </Frame>
+
+                    <Label 
+                        Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+                        FontSize="16"
+                        Margin="0, 15, 0, 0"/>
+
+                </StackLayout>
+                
             </pancake:PancakeView>
 
-            <pancake:PancakeView AbsoluteLayout.LayoutBounds="13.5, 446, 386, 370">
+            <pancake:PancakeView AbsoluteLayout.LayoutBounds="13.5, 385, 386, 370" CornerRadius="20">
+                
                 <pancake:PancakeView.Shadow>
-                    <pancake:DropShadow Color="#000000" BlurRadius="10" />
+                    <pancake:DropShadow BlurRadius="8" />
                 </pancake:PancakeView.Shadow>
 
-                <Frame CornerRadius="20" VerticalOptions="Fill" Padding="25">
-                    <StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="Notificações" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" HorizontalOptions="Start"/>
-                            <ImageButton Source="delete.png" 
-                                     BackgroundColor="Transparent"
-                                     WidthRequest="30"
-                                     Margin="200,0,0,0"/>
+                <StackLayout BackgroundColor="White" Padding="25">
+                    
+                    <StackLayout Orientation="Horizontal">
+                        
+                        <Label 
+                            Text="Notificações" 
+                            FontAttributes="Bold" 
+                            FontSize="16" 
+                            VerticalOptions="Center" 
+                            HorizontalOptions="Start"/>
+                        
+                        <ImageButton 
+                            Source="delete.png" 
+                            BackgroundColor="Transparent"
+                            WidthRequest="30"
+                            Margin="200,0,0,0"/>
 
-                        </StackLayout>
                     </StackLayout>
-                </Frame>
+                    
+                </StackLayout>
+                
             </pancake:PancakeView>
+            
         </AbsoluteLayout>
+        
     </ScrollView>
    
 </ContentPage>

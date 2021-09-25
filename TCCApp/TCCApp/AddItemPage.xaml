@@ -4,15 +4,15 @@
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="TCCApp.AddItemPage">
 
-    <AbsoluteLayout BackgroundColor="#FFF9EE">
+    <AbsoluteLayout BackgroundColor="#FFF8EA">
 
-        <Label Text="x3" FontSize="60" AbsoluteLayout.LayoutBounds="167, 77, 118, 70"/>
-        <StackLayout AbsoluteLayout.LayoutBounds="32, 361, 347, 300">
+        <Label Text="x3" FontSize="60" AbsoluteLayout.LayoutBounds="167, 20, 118, 70"/>
+        <StackLayout AbsoluteLayout.LayoutBounds="32, 310, 347, 350">
             <pancake:PancakeView 
                 WidthRequest="347" 
                 HeightRequest="370" 
                 CornerRadius="25, 25, 0, 0" 
-                BackgroundColor="#FEF2DC">
+                BackgroundColor="#FFEFD2">
 
                 <StackLayout VerticalOptions="Fill" Margin="20">
                     <Entry Placeholder="Nome" VerticalOptions="CenterAndExpand"/>
@@ -24,35 +24,24 @@
             </pancake:PancakeView>
         </StackLayout>
 
-        <StackLayout AbsoluteLayout.LayoutBounds="112, 172, 190, 234">
-            <pancake:PancakeView WidthRequest="190" HeightRequest="234" CornerRadius="20">
+        <pancake:PancakeView AbsoluteLayout.LayoutBounds="120, 120, 180, 235" CornerRadius="20">
 
-                <pancake:PancakeView.Shadow>
-                    <pancake:DropShadow Color="LightGray" BlurRadius="8"/>
-                </pancake:PancakeView.Shadow>
+            <pancake:PancakeView.Shadow>
+                <pancake:DropShadow BlurRadius="8"/>
+            </pancake:PancakeView.Shadow>
 
-                <AbsoluteLayout 
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center">
+            <AbsoluteLayout BackgroundColor="White">
 
-                    <BoxView 
-                        Color="White" 
-                        WidthRequest="190" 
-                        HeightRequest="234"/>
+                <BoxView 
+                    AbsoluteLayout.LayoutBounds="0, 1, 180, 100"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    BackgroundColor="#BDF5F5"/>
 
-                    <BoxView AbsoluteLayout.LayoutBounds="0, 140, 190, 95"
-                        Color="#BDF5F5" 
-                        WidthRequest="190" 
-                        HeightRequest="90"/>
+            </AbsoluteLayout>
 
-                    <Image 
-                        Source="{Binding ImageUrl}" 
-                        AbsoluteLayout.LayoutBounds="0.5, 0.5, 100, 100"
-                        AbsoluteLayout.LayoutFlags="PositionProportional"/>
-                </AbsoluteLayout>
+            
 
-            </pancake:PancakeView>
-        </StackLayout>
+        </pancake:PancakeView>
 
         
         

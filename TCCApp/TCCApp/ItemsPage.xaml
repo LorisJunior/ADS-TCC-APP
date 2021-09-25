@@ -61,7 +61,7 @@
     </ContentPage.Resources>
 
 
-    <AbsoluteLayout BackgroundColor="#FFF9EE">
+    <AbsoluteLayout BackgroundColor="#FFF8EA">
 
         <Label 
             Text="Itens" 
