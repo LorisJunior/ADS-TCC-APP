@@ -37,9 +37,7 @@
                     <pancake:DropShadow BlurRadius="8"/>
                 </pancake:PancakeView.Shadow>
 
-                <StackLayout 
-                    Padding="25"
-                    BackgroundColor="White">
+                <StackLayout Padding="25" BackgroundColor="White">
 
                     <StackLayout Orientation="Horizontal">
                         
@@ -51,7 +49,6 @@
 
                         <ImageButton 
                             Source="edit.png" 
-                            HorizontalOptions="End" 
                             WidthRequest="30" 
                             BackgroundColor="Transparent" 
                             Margin="250, 0, 0, 0"/>

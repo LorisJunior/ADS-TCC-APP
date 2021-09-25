@@ -86,13 +86,18 @@
 
         </CollectionView>
 
-        <Button 
+        <pancake:PancakeView AbsoluteLayout.LayoutBounds="78, 533, 255, 60"  CornerRadius="10">
+
+            <pancake:PancakeView.Shadow>
+                <pancake:DropShadow BlurRadius="1" />
+            </pancake:PancakeView.Shadow>
+            <Button 
             x:Name="Adicionar"
             Text="Adicionar" 
+            TextColor="#827C93"
             BackgroundColor="#ECEE72" 
-            AbsoluteLayout.LayoutBounds="78, 533, 255, 60"
-            CornerRadius="15"
             Clicked="Adicionar_Clicked"/>
+        </pancake:PancakeView>
 
         <!--ImageButton 
             Source="delete.png" 

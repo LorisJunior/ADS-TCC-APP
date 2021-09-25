@@ -6,8 +6,8 @@
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              android:TabbedPage.ToolbarPlacement="Bottom"
              BarBackgroundColor="White"
-             android:TabbedPage.BarItemColor="Black"
-             android:TabbedPage.BarSelectedItemColor="DodgerBlue">
+             android:TabbedPage.BarItemColor="#827C93"
+             android:TabbedPage.BarSelectedItemColor="Black">
 
     <local:PerfilPage Title="Perfil" IconImageSource="person.png"/>
     <local:ItemsPage Title="Items" IconImageSource="list.png"/>

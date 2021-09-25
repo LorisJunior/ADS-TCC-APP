@@ -1,18 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TCCApp.EsqSenhaPage">
+             x:Class="TCCApp.EsqSenhaPage"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
 
-    <StackLayout VerticalOptions="Center"
-                 Margin="30">
-        <Entry Placeholder="Email"
-               Keyboard="Email"/>
+    <StackLayout BackgroundColor="#FFF8EA">
 
-        <Button Text="Enviar"
-                Margin="0, 60, 0, 0"
-                TextColor="White"
-                BackgroundColor="DodgerBlue"
-                Clicked="OnEnviarEmail"/>
+        <Frame BackgroundColor="#ECEE72">
+            
+            <Label 
+                Text="Recuperar Senha"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                FontSize="Title" 
+                TextColor="#827C93"/>
+            
+        </Frame>
         
+        <StackLayout VerticalOptions="CenterAndExpand" Margin="30">
+
+            <Entry 
+                Placeholder="Email"
+                Keyboard="Email" />
+
+            <pancake:PancakeView CornerRadius="5" Margin="0, 30, 0, 0">
+                
+                <pancake:PancakeView.Shadow>
+                    <pancake:DropShadow BlurRadius="2"/>
+                </pancake:PancakeView.Shadow>
+
+                <Button
+                    Text="Enviar"
+                    TextColor="#827C93"
+                    BackgroundColor="#ECEE72"
+                    CornerRadius="5"
+                    Clicked="OnEnviarEmail"/>
+                
+            </pancake:PancakeView>
+
+        </StackLayout>
     </StackLayout>
+    
 </ContentPage>
