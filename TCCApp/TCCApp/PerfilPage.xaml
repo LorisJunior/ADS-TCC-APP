@@ -9,14 +9,20 @@
         
         <AbsoluteLayout BackgroundColor="#FFF8EA" HeightRequest="850">
 
-            <Frame AbsoluteLayout.LayoutBounds="0, 0, 411, 250" Padding="0" BackgroundColor="Yellow">
-                <Image Source="profile.png" Aspect="AspectFill"/>
+            <Frame AbsoluteLayout.LayoutBounds="0, 0, 411, 250" Padding="0">
+                <Image x:Name="image" Source="upload.png" Aspect="AspectFill"/>
             </Frame>
 
             <ImageButton 
                 Source="settings.png" 
                 AbsoluteLayout.LayoutBounds="350, 10, 50, 50" 
                 BackgroundColor="Transparent"/>
+
+            <ImageButton 
+                Source="add.png" 
+                AbsoluteLayout.LayoutBounds="300, 10, 50, 50" 
+                BackgroundColor="Transparent"
+                Clicked="ImageButton_Clicked"/>
 
             <Label 
                 Text="fulanodetal@email.com" 
