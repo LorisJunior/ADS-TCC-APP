@@ -1,4 +1,5 @@
 ﻿using System;
+using TCCApp.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +16,7 @@ namespace TCCApp
 
         protected override void OnStart()
         {
+            DependencyService.Get<ISetStatusBarColor>().SetStatusBarColor(Color.White, false);
         }
 
         protected override void OnSleep()
