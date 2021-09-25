@@ -12,11 +12,14 @@ namespace TCCApp
             InitializeComponent();
 
             MainPage = new NavigationPage(new MainPage());
+
+            var statusBarColor = DependencyService.Get<ISetStatusBarColor>();
+
+            statusBarColor.SetStatusBarColor(Color.White, false);
         }
 
         protected override void OnStart()
         {
-            DependencyService.Get<ISetStatusBarColor>().SetStatusBarColor(Color.White, false);
         }
 
         protected override void OnSleep()
