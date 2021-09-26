@@ -14,35 +14,66 @@
         <ResourceDictionary>
             <DataTemplate x:Key="ItemTemplate" >
 
-                <FlexLayout>
+                <Grid Padding="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="180"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                    <pancake:PancakeView WidthRequest="140" HeightRequest="180" CornerRadius="20" Margin="30">
+                    <pancake:PancakeView CornerRadius="20" Grid.Row="1" Grid.Column="1">
 
                         <pancake:PancakeView.Shadow>
                             <pancake:DropShadow Color="LightGray" BlurRadius="8"/>
                         </pancake:PancakeView.Shadow>
 
-                        <AbsoluteLayout 
-                            VerticalOptions="Center" 
-                            HorizontalOptions="Center">
+                        <AbsoluteLayout BackgroundColor="{Binding Cor}">
 
-                            <BoxView 
-                                Color="{Binding Cor}" 
-                                WidthRequest="140" 
-                                HeightRequest="180"/>
+                            <Frame
+                                AbsoluteLayout.LayoutBounds="0,0,150,108"
+                                BackgroundColor="Transparent"
+                                Padding="10">
 
-                            <Image 
-                                Source="{Binding ImageUrl}" 
-                                AbsoluteLayout.LayoutBounds="0.5, 0.5, 100, 100"
-                                AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                                <Image 
+                                Source="{Binding ImageUrl}"/>
+                            </Frame>
+
+                            <StackLayout
+                                AbsoluteLayout.LayoutBounds="0, 105, 150, 78"
+                                Padding="5">       
+                                <Grid VerticalOptions="Fill" HorizontalOptions="Fill">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="22"/>
+                                        <RowDefinition Height="22"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.RowSpan="1" Grid.Column="1"
+                                        Text="Shorts" 
+                                        FontSize="20"/>         
+                                    <Label Grid.Row="1" Grid.Column="1" HorizontalOptions="End"
+                                         Text="x3" 
+                                         FontSize="20"/>
+                                </Grid >
+                                
+                            </StackLayout>
+                            
                         </AbsoluteLayout>
 
                     </pancake:PancakeView>
 
-                </FlexLayout>
+                </Grid>
             </DataTemplate>
 
-            <Style TargetType="FlexLayout">
+            <Style TargetType="Grid">
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">

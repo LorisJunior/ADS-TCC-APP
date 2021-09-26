@@ -22,7 +22,7 @@ namespace TCCApp.Model
                 Descricao = ""
             });
 
-            Items.Add(new Item
+           Items.Add(new Item
             {
                 Nome = "Shots",
                 Cor = "#F5BDEF",
