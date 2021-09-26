@@ -118,12 +118,38 @@
             </pancake:PancakeView.Shadow>
 
             <AbsoluteLayout BackgroundColor="{Binding HslColor, Source={StaticResource itemColorHelper}}">
+                
                 <Frame AbsoluteLayout.LayoutBounds="0, 0,180, 125"
                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                       BackgroundColor="White"
+                       BackgroundColor="Transparent"
                        Padding="0">
-                    <Image Source="shorts.png" Aspect="AspectFit"  Margin="15"/>
+                    
+                    <Image 
+                        x:Name="itemImage" 
+                        Source="shorts.png" 
+                        Aspect="AspectFit"  
+                        Margin="15"/>
+                    
                 </Frame>
+
+                <!--Botão AddPhoto-->
+                
+                <pancake:PancakeView 
+                    
+                    AbsoluteLayout.LayoutBounds="105,5,70,70"
+                    CornerRadius="0,15,15,0" BackgroundColor="Red">
+                    <pancake:PancakeView.Shadow>
+                        <pancake:DropShadow BlurRadius="3"/>
+                    </pancake:PancakeView.Shadow>
+                    
+                    <ImageButton 
+                        
+                        Padding="15"
+                        Source="plus.png"
+                        BackgroundColor="#ECEE72"
+                        Clicked="ImageButton_Clicked"/>
+                </pancake:PancakeView>
+                
 
                 <StackLayout
                     AbsoluteLayout.LayoutBounds="0, 120, 180, 115"
@@ -153,12 +179,14 @@
         <!--Icones-->
 
         <CollectionView 
+            x:Name="icones"
             ItemsSource="{Binding Icones}"
             ItemTemplate="{StaticResource IconTemplate}"
             ItemsLayout="HorizontalList"
             Margin="10"
             AbsoluteLayout.LayoutBounds="16, 310,380,80"
-            SelectionMode="Single">
+            SelectionMode="Single"
+            SelectionChanged="CollectionView_SelectionChanged">
 
         </CollectionView>
         
