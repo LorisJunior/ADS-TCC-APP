@@ -67,7 +67,7 @@ namespace TCCApp.ViewModel
                     if (Usuario.Email == user.Email && Usuario.Senha == user.Senha)
                     {
                         //Abre a tela de HistoryPage após o sucesso do Login    
-                        await App.Current.MainPage.Navigation.PushAsync(new PerfilPage());
+                        await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
                     }
                     else
                         await App.Current.MainPage.DisplayAlert("Falha no login", "O email ou a senha estão incorretos", "OK");

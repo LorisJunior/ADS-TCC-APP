@@ -14,7 +14,4 @@
     <local:MapPage Title="Mapa" IconImageSource="map.png"/>
     <local:ChatPage Title="Chat" IconImageSource="chat.png"/>
 
-
-
-
 </TabbedPage>
