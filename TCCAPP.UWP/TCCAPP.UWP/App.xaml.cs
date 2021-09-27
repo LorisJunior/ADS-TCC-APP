@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using TCCApp.Helpers;
-using TCCApp.Serviços;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,15 +6,11 @@ namespace TCCApp
 {
     public partial class App : Application
     {
-        public App(IOAuth2Service oAuth2Service)
+        public App()
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage(oAuth2Service));
-
-            var statusBarColor = DependencyService.Get<ISetStatusBarColor>();
-
-            statusBarColor.SetStatusBarColor(Color.White, false);
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

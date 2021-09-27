@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TCCApp.ViewModel;
+using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace TCCApp
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CadastroPage : ContentPage
+    public partial class EsqSenhaPage : ContentPage
     {
-        CadastroViewModel cadastroViewModel;
-        public CadastroPage()
+        public EsqSenhaPage()
         {
-            cadastroViewModel = new CadastroViewModel(this);
             InitializeComponent();
-            BindingContext = cadastroViewModel;
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        public async void OnEntrarConta(object sender, EventArgs e)
+        public async void OnEnviarEmail(object sender, EventArgs e)
         {
+            await DisplayAlert("Recuperar Senha", "Email enviado com sucesso!", "Ok");
+
             await Navigation.PopAsync();
         }
     }
