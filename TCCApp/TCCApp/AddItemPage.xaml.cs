@@ -65,7 +65,7 @@ namespace TCCApp
             Item item = new Item
             {
                 Nome = nome.Text,
-                Quantidade = quantidade.Text,
+                Quantidade = quantidade.Value,
                 Descricao = descricao.Text,
                 Cor = produtoCor.BackgroundColor,
                 ImageUrl = itemImage.Source

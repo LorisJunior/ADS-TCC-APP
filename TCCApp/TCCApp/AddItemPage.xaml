@@ -70,11 +70,12 @@
                 Grid.Row="0"
                 Placeholder="Nome do produto" 
                 VerticalOptions="CenterAndExpand"/>
-            <Entry 
-                x:Name="quantidade"
-                Grid.Row="1"
-                Placeholder="Quantidade" 
-                VerticalOptions="CenterAndExpand"/>
+            <Stepper 
+                x:Name="quantidade" 
+                Grid.Row="1" 
+                Minimum="1" 
+                Value="1"/>
+            
             <Entry 
                 x:Name="descricao"
                 Grid.Row="2"
@@ -180,7 +181,7 @@
                         <Label 
                             BindingContext="{x:Reference quantidade}"
                             Grid.Row="1" Grid.Column="1" HorizontalOptions="End"
-                            Text="{Binding Text, StringFormat='x{0}'}" 
+                            Text="{Binding Value, StringFormat='x{0}'}" 
                             FontSize="25"/>
                     </Grid >
                 </StackLayout>

@@ -19313,28 +19313,31 @@ namespace TCCApp.Droid
 			public const int person = 2131165357;
 			
 			// aapt resource value: 0x7F0700AE
-			public const int preference_list_divider_material = 2131165358;
+			public const int plus = 2131165358;
 			
 			// aapt resource value: 0x7F0700AF
-			public const int profile = 2131165359;
+			public const int preference_list_divider_material = 2131165359;
 			
 			// aapt resource value: 0x7F0700B0
-			public const int settings = 2131165360;
+			public const int profile = 2131165360;
 			
 			// aapt resource value: 0x7F0700B1
-			public const int shorts = 2131165361;
+			public const int settings = 2131165361;
 			
 			// aapt resource value: 0x7F0700B2
-			public const int test_custom_background = 2131165362;
+			public const int shorts = 2131165362;
 			
 			// aapt resource value: 0x7F0700B3
-			public const int tooltip_frame_dark = 2131165363;
+			public const int test_custom_background = 2131165363;
 			
 			// aapt resource value: 0x7F0700B4
-			public const int tooltip_frame_light = 2131165364;
+			public const int tooltip_frame_dark = 2131165364;
 			
 			// aapt resource value: 0x7F0700B5
-			public const int upload = 2131165365;
+			public const int tooltip_frame_light = 2131165365;
+			
+			// aapt resource value: 0x7F0700B6
+			public const int upload = 2131165366;
 			
 			static Drawable()
 			{

@@ -25,7 +25,7 @@ namespace TCCApp.Model
                 Cor = Color.FromHex("#BDF5F5") ,
                 ImageUrl = "delete.png",
                 Descricao = "test",
-                Quantidade = "5"
+                Quantidade = 5
             });
 
            Items.Add(new Item
@@ -34,7 +34,7 @@ namespace TCCApp.Model
                 Cor = Color.FromHex("#F5BDEF"),
                 ImageUrl = "chat.png",
                 Descricao = "",
-                Quantidade = "6"
+                Quantidade = 6
            });
 
             Items.Add(new Item
@@ -43,7 +43,7 @@ namespace TCCApp.Model
                 Cor = Color.FromHex("#EDF5BD"),
                 ImageUrl = "edit.png",
                 Descricao = "",
-                Quantidade = "2"
+                Quantidade = 2
             });
         }
 
