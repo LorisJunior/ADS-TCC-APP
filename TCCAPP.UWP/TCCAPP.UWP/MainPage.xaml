@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TCCApp.MainPage">
+
+    <StackLayout VerticalOptions="CenterAndExpand"
+        Margin="30">
+        <Entry Placeholder="Email"
+               Keyboard="Email"/>
+        
+        <Entry Placeholder="Senha"
+               IsPassword="True"/>
+        
+        <Button x:Name="EsqSenhaButton"
+                Text="Esqueceu a senha?"
+                TextColor="Gray"
+                BackgroundColor="Transparent"
+                HorizontalOptions="End"
+                Scale="0.85"
+                Clicked="EsqSenhaButton_Clicked"/>
+        
+        <Button x:Name="EntrarButton"
+                Text="Entrar"
+                TextColor="White"
+                BackgroundColor="DodgerBlue"
+                Clicked="EntrarButton_Clicked"/>
+        
+        <StackLayout Orientation="Horizontal" 
+                     HorizontalOptions="EndAndExpand">
+            
+            <Label Text="Ainda não tem uma conta?"
+                   VerticalOptions="Center"/>
+            
+            <Button x:Name="CadastroButton"
+                    Text="Cadastra-se"
+                    Scale="0.75"
+                    BackgroundColor="Transparent"
+                    Clicked="CadastroButton_Clicked"/>
+            
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal" 
+                     HorizontalOptions="CenterAndExpand"
+                     Margin="0, 30, 0, 0">
+            
+            <Button Text="G"
+                    TextColor="White"
+                    BackgroundColor="Red"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    CornerRadius="30"
+                    HorizontalOptions="Center"
+                    Margin="0,0,20,0"/>
+            
+            <Button Text="F"
+                    TextColor="White"
+                    BackgroundColor="DodgerBlue"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    CornerRadius="30"
+                    HorizontalOptions="Center"/>
+            
+        </StackLayout>
+        
+    </StackLayout>
+    
+
+</ContentPage>

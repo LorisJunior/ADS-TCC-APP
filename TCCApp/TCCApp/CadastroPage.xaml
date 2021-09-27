@@ -16,17 +16,28 @@
         
         <StackLayout VerticalOptions="CenterAndExpand" Margin="30">
 
-            <Entry Placeholder="Email"/>
+            <Entry Placeholder="Email"
+            Text="{Binding Usuario.Email}"
+            Keyboard="Email"/>
+            <Label x:Name="Usuario_EmailError" 
+                IsVisible="False" TextColor="Red" />
 
-            <Entry Placeholder="Senha"/>
+            <Entry Placeholder="Senha"
+            Text="{Binding Usuario.Senha}"
+            IsPassword="True"/>
+            <Label x:Name="Usuario_SenhaError" 
+                IsVisible="False" TextColor="Red" />
 
-            <Entry Placeholder="Confirmar senha"/>
+            <Entry Placeholder="Confirmar senha"
+            Text="{Binding ConfirmarSenha}"
+            IsPassword="True"/>
 
             <Button 
                 Text="Criar nova conta"
                 Margin="0, 60, 0, 0"
                 TextColor="#827C93"
-                BackgroundColor="#ECEE72"/>
+                BackgroundColor="#ECEE72"
+                Command="{Binding CadastrarCommand}"/>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
 

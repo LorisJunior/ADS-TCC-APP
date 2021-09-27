@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TCCApp.HistoryPage"
+             xmlns:local="clr-namespace:TCCApp"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             android:TabbedPage.ToolbarPlacement="Bottom"
+             BarBackgroundColor="White"
+             android:TabbedPage.BarItemColor="Black"
+             android:TabbedPage.BarSelectedItemColor="DodgerBlue">
+
+    <local:PerfilPage Title="Perfil" IconImageSource="person.png"/>
+    <local:ItemsPage Title="Items" IconImageSource="list.png"/>
+    <local:MapPage Title="Mapa" IconImageSource="map.png"/>
+    <local:ChatPage Title="Chat" IconImageSource="chat.png"/>
+
+
+
+
+</TabbedPage>

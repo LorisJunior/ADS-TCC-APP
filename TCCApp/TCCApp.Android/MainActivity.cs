@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -8,6 +7,8 @@ using TCCApp.Helpers;
 using System.Drawing;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Plugin.GoogleClient;
+using TCCApp.Droid.Serviços;
 
 [assembly: Dependency(typeof(TCCApp.Droid.SetStatusBar))]
 namespace TCCApp.Droid
@@ -18,16 +19,22 @@ namespace TCCApp.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            GoogleClientManager.Initialize(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             Xamarin.FormsMaps.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            LoadApplication(new App(new OAuth2Service()));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        protected override void OnActivityResult(int requestCode, Result resultCode, Android.Content.Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            GoogleClientManager.OnAuthCompleted(requestCode, resultCode, data);
         }
     }
 

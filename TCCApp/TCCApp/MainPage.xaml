@@ -8,12 +8,18 @@
         
         <StackLayout VerticalOptions="CenterAndExpand" Margin="30">
 
-                <Entry Placeholder="Email"
-               Keyboard="Email" />
+            <Entry Placeholder="Email"
+                Text="{Binding Usuario.Email}"
+                Keyboard="Email" />
+            <Label x:Name="Usuario_EmailError" 
+                IsVisible="False" TextColor="Red" />
 
-                <Entry Placeholder="Senha"
-               IsPassword="True"/>
-                
+            <Entry Placeholder="Senha"
+                Text="{Binding Usuario.Senha}"
+                IsPassword="True"/>
+            <Label x:Name="Usuario_SenhaError" 
+                IsVisible="False" TextColor="Red" />
+
             <Button x:Name="EsqSenhaButton"
                 Text="Esqueceu a senha?"
                 TextColor="Gray"
@@ -31,8 +37,8 @@
                 Text="Entrar"
                 TextColor="#827C93"
                 BackgroundColor="#ECEE72"
-                Clicked="EntrarButton_Clicked"
-                CornerRadius="5"/>
+                CornerRadius="5"
+                Command="{Binding LoginCommand}"/>
             </pancake:PancakeView>
             
 
@@ -50,27 +56,24 @@
 
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal" 
-                     HorizontalOptions="CenterAndExpand"
-                     Margin="0, 30, 0, 0">
-
-                <Button Text="G"
-                    TextColor="White"
-                    BackgroundColor="Red"
-                    WidthRequest="60"
-                    HeightRequest="60"
-                    CornerRadius="30"
-                    HorizontalOptions="Center"
-                    Margin="0,0,20,0"/>
-
-                <Button Text="F"
-                    TextColor="White"
-                    BackgroundColor="DodgerBlue"
-                    WidthRequest="60"
-                    HeightRequest="60"
-                    CornerRadius="30"
-                    HorizontalOptions="Center"/>
-
+            <StackLayout Padding="20"
+                         VerticalOptions="CenterAndExpand" 
+                         x:Name="mainLayout"
+                         BindableLayout.ItemsSource="{Binding AuthenticationNetworks}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Button Text="{Binding Name, StringFormat='Login with {0}'}"
+                            ImageSource="{Binding Icon}"
+                            Command="{Binding Path=BindingContext.OnLoginCommand, Source={x:Reference mainLayout}}"
+                            CommandParameter="{Binding .}"     
+                            HeightRequest="45"
+                            TextColor="{Binding Foreground}"
+                            BackgroundColor="{Binding Background}"
+                            WidthRequest="280"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="FillAndExpand"/>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
             </StackLayout>
 
         </StackLayout>
