@@ -51,7 +51,7 @@
             WidthRequest="347" 
             HeightRequest="370" 
             CornerRadius="25, 25, 0, 0" 
-            BackgroundColor="LightCoral">
+            BackgroundColor="#F9FBA1">
         </pancake:PancakeView>
 
         <Grid AbsoluteLayout.LayoutBounds="0, 390, 411, 220" Margin="15">
