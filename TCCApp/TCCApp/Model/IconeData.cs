@@ -11,13 +11,60 @@ namespace TCCApp.Model
         {
             Icones = new List<Icone>();
 
-            for (int i = 0; i < 10; i++)
+            Icones.Add(new Icone
             {
-                Icones.Add(new Icone
-                {
-                    IconImage = "shorts.png"
-                });
-            }
+                IconImage = "shorts.png"
+            });
+
+            Icones.Add(new Icone
+            {
+                IconImage = "clothesIcon.png"
+            });
+
+            Icones.Add(new Icone
+            {
+                IconImage = "JeansIcon.png"
+            });
+
+            Icones.Add(new Icone
+            {
+                IconImage = "camisaIcon.png"
+            });
+
+            Icones.Add(new Icone
+            {
+                IconImage = "sneakersIcon.png"
+            });
+
+            Icones.Add(new Icone
+            {
+                IconImage = "garrafaIcon.png"
+            });
+
+            Icones.Add(new Icone
+            {
+                IconImage = "beerIcon.png"
+            });
+
+            Icones.Add(new Icone
+            {
+                IconImage = "meatIcon.png"
+            });
+
+            Icones.Add(new Icone
+            {
+                IconImage = "trumpetIcon.png"
+            });
+
+            Icones.Add(new Icone
+            {
+                IconImage = "violinIcon.png"
+            });
+
+            Icones.Add(new Icone
+            {
+                IconImage = "phoneIcon.png"
+            });
 
         }
     }

@@ -23,7 +23,7 @@ namespace TCCApp.Model
             {
                 Nome = "Camisa",
                 Cor = Color.FromHex("#BDF5F5") ,
-                ImageUrl = "delete.png",
+                ImageUrl = "camisaIcon.png",
                 Descricao = "test",
                 Quantidade = 5
             });
@@ -32,7 +32,7 @@ namespace TCCApp.Model
             {
                 Nome = "Shorts",
                 Cor = Color.FromHex("#F5BDEF"),
-                ImageUrl = "chat.png",
+                ImageUrl = "shorts.png",
                 Descricao = "",
                 Quantidade = 6
            });
@@ -41,7 +41,7 @@ namespace TCCApp.Model
             {
                 Nome = "Garrafa",
                 Cor = Color.FromHex("#EDF5BD"),
-                ImageUrl = "edit.png",
+                ImageUrl = "garrafaIcon.png",
                 Descricao = "",
                 Quantidade = 2
             });
