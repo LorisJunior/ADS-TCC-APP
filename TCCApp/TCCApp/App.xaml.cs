@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using TCCApp.Helpers;
+using TCCApp.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -7,6 +9,7 @@ namespace TCCApp
 {
     public partial class App : Application
     {
+        public IList<Item> Items { get; set; }
         public App()
         {
             InitializeComponent();

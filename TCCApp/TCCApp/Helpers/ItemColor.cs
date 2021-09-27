@@ -14,8 +14,8 @@ namespace TCCApp.Helpers
         public event PropertyChangedEventHandler PropertyChanged;
         public ItemColor()
         {
-            Luminosity = 0.75;
-            Saturation = 0.5;
+            Luminosity = 0.85;
+            Saturation = 0.73;
         }
 
         public Color HslColor

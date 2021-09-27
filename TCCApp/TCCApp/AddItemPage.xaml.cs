@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TCCApp.Model;
+using TCCApp.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,10 +14,15 @@ namespace TCCApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddItemPage : ContentPage
     {
+        IItemService itemDataReference;
+
         public AddItemPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+
+            itemDataReference = DependencyService.Get<IItemService>();
+
         }
 
         private async void ImageButton_Clicked(object sender, EventArgs e)
@@ -52,6 +58,25 @@ namespace TCCApp
             catch (Exception)
             {
             }
+        }
+
+        private async void criarItem_Clicked(object sender, EventArgs e)
+        {
+            Item item = new Item
+            {
+                Nome = nome.Text,
+                Quantidade = quantidade.Text,
+                Descricao = descricao.Text,
+                Cor = produtoCor.BackgroundColor,
+                ImageUrl = itemImage.Source
+            };
+
+            itemDataReference.AddItem(item);
+
+            await DisplayAlert("Sucesso!", "O item foi criado com sucesso", "ok");
+
+            await Navigation.PopAsync();
+
         }
     }
 }

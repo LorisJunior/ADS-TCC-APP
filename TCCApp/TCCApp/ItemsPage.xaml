@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:TCCApp.Model">
 
 
-    <ContentPage.BindingContext>
+    <!--ContentPage.BindingContext>
         <local:ItemData/>
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext-->
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -57,10 +57,10 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.RowSpan="1" Grid.Column="1"
-                                        Text="Shorts" 
+                                        Text="{Binding Nome}" 
                                         FontSize="20"/>         
                                     <Label Grid.Row="1" Grid.Column="1" HorizontalOptions="End"
-                                         Text="x3" 
+                                         Text="{Binding Quantidade, StringFormat='x{0}'}" 
                                          FontSize="20"/>
                                 </Grid >
                                 
@@ -107,7 +107,7 @@
             AbsoluteLayout.LayoutBounds="42, 55, 258, 42"/>
 
         <CollectionView 
-            ItemsSource="{Binding Items}" 
+            x:Name="itensCollection"
             ItemTemplate="{StaticResource ItemTemplate}" 
             ItemsLayout="VerticalGrid, 2" 
             AbsoluteLayout.LayoutBounds="0, 95, 411, 440"
@@ -123,11 +123,11 @@
                 <pancake:DropShadow BlurRadius="1" />
             </pancake:PancakeView.Shadow>
             <Button 
-            x:Name="Adicionar"
-            Text="Adicionar" 
-            TextColor="#827C93"
-            BackgroundColor="#ECEE72" 
-            Clicked="Adicionar_Clicked"/>
+                x:Name="Adicionar"
+                Text="Adicionar" 
+                TextColor="#827C93"
+                BackgroundColor="#ECEE72" 
+                Clicked="Adicionar_Clicked"/>
         </pancake:PancakeView>
 
         <!--ImageButton 

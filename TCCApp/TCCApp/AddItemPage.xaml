@@ -66,16 +66,19 @@
             </Grid.ColumnDefinitions>
             
             <Entry 
+                x:Name="nome"
                 Grid.Row="0"
                 Placeholder="Nome do produto" 
                 VerticalOptions="CenterAndExpand"/>
             <Entry 
+                x:Name="quantidade"
                 Grid.Row="1"
                 Placeholder="Quantidade" 
                 VerticalOptions="CenterAndExpand"/>
             <Entry 
+                x:Name="descricao"
                 Grid.Row="2"
-                Placeholder="Sobre" 
+                Placeholder="Descrição" 
                 VerticalOptions="CenterAndExpand"/>
             <Label 
                 Grid.Row="3"
@@ -83,6 +86,7 @@
                 TextColor="#636363"
                 FontSize="18"/>
             <Slider 
+                x:Name="cor"
                 Value="{Binding Hue, Source={StaticResource itemColorHelper}}"
                 Grid.Row="3"
                 VerticalOptions="CenterAndExpand" 
@@ -98,9 +102,11 @@
                 <pancake:DropShadow BlurRadius="2"/>
             </pancake:PancakeView.Shadow>
             <Button 
+                x:Name="criarItem"
                 Text="Criar"
                 BackgroundColor="#ECEE72"
-                TextColor="#827C93"/>
+                TextColor="#827C93"
+                Clicked="criarItem_Clicked"/>
         </pancake:PancakeView>
 
         <BoxView 
@@ -117,7 +123,9 @@
                 <pancake:DropShadow BlurRadius="8"/>
             </pancake:PancakeView.Shadow>
 
-            <AbsoluteLayout BackgroundColor="{Binding HslColor, Source={StaticResource itemColorHelper}}">
+            <AbsoluteLayout 
+                x:Name="produtoCor" 
+                BackgroundColor="{Binding HslColor, Source={StaticResource itemColorHelper}}">
                 
                 <Frame AbsoluteLayout.LayoutBounds="0, 0,180, 125"
                        AbsoluteLayout.LayoutFlags="PositionProportional"
@@ -164,11 +172,15 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.RowSpan="1" Grid.Column="1"
-                            Text="Shorts" 
+                        <Label 
+                            BindingContext="{x:Reference nome}"
+                            Grid.RowSpan="1" Grid.Column="1"
+                            Text="{Binding Text}" 
                             FontSize="25"/>
-                        <Label Grid.Row="1" Grid.Column="1" HorizontalOptions="End"
-                            Text="x3" 
+                        <Label 
+                            BindingContext="{x:Reference quantidade}"
+                            Grid.Row="1" Grid.Column="1" HorizontalOptions="End"
+                            Text="{Binding Text, StringFormat='x{0}'}" 
                             FontSize="25"/>
                     </Grid >
                 </StackLayout>
