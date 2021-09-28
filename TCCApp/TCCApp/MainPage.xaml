@@ -49,7 +49,7 @@
                    VerticalOptions="Center"/>
 
                 <Button x:Name="CadastroButton"
-                    Text="Cadastra-se"
+                    Text="Cadastre-se"
                     Scale="0.75"
                     BackgroundColor="Transparent"
                     Clicked="CadastroButton_Clicked"/>
