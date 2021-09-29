@@ -26,7 +26,7 @@ namespace TCCApp
                 {
                     Title = "Pega uma foto"
                 });
-                var stream = await media.OpenReadAsync();
+                System.IO.Stream stream = await media.OpenReadAsync();
                 image.Source = ImageSource.FromStream(() => stream);
             }
             catch (NullReferenceException)

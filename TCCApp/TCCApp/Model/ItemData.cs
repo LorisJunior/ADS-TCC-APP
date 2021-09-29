@@ -49,7 +49,13 @@ namespace TCCApp.Model
 
         public void AddItem(Item item)
         {
-            Items.Add(item);
+            try
+            {
+                Items.Add(item);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,12 +30,20 @@ namespace TCCApp
         {
             try
             {
-                var media = await MediaPicker.PickPhotoAsync(new MediaPickerOptions
-                {
-                    Title = "Pega uma foto"
-                });
+                //SOLUÇÃO DO BUG QUE IMPOSSIBILITAVA ESCOLHER A MESMA IMAGEM DA GALERIA DUAS VEZES
+
+                //Guardo a imagem em media
+                var media = await MediaPicker.PickPhotoAsync();
+                //Transformo em uma stream
                 var stream = await media.OpenReadAsync();
-                itemImage.Source = ImageSource.FromStream(() => stream);
+                //Crio um conteiner na memória e copio os dados para um array
+                var imageStream = new MemoryStream();
+                stream.CopyTo(imageStream);
+                imageStream.Position = 0;
+                var byteArray = imageStream.ToArray();
+
+                //passo um novo conteiner para source
+                itemImage.Source = ImageSource.FromStream(() => new MemoryStream(byteArray));
                 itemImage.Margin = 0;
             }
             catch (NullReferenceException)
@@ -62,6 +71,7 @@ namespace TCCApp
 
         private async void criarItem_Clicked(object sender, EventArgs e)
         {
+
             Item item = new Item
             {
                 Nome = nome.Text,
