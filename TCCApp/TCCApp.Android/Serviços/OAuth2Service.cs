@@ -1,7 +1,7 @@
 ﻿using System;
 using Plugin.CurrentActivity;
 using Xamarin.Auth;
-using TCCApp.Serviços;
+using TCCApp.Services;
 
 namespace TCCApp.Droid.Serviços
 {

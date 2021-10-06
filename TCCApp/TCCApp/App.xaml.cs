@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using TCCApp.Helpers;
-using TCCApp.Serviços;
+using TCCApp.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

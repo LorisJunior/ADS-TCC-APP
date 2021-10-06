@@ -17,34 +17,35 @@ namespace TCCApp.Model
 
         public ItemData()
         {
-            Items = new List<Item>();
-
-            Items.Add(new Item
+            Items = new List<Item>
             {
-                Nome = "Camisa",
-                Cor = Color.FromHex("#BDF5F5") ,
-                ImageUrl = "camisaIcon.png",
-                Descricao = "test",
-                Quantidade = 5
-            });
+                new Item
+                {
+                    Nome = "Camisa",
+                    Cor = Color.FromHex("#BDF5F5"),
+                    ImageUrl = "camisaIcon.png",
+                    Descricao = "test",
+                    Quantidade = 5
+                },
 
-           Items.Add(new Item
-            {
-                Nome = "Shorts",
-                Cor = Color.FromHex("#F5BDEF"),
-                ImageUrl = "shorts.png",
-                Descricao = "",
-                Quantidade = 6
-           });
+                new Item
+                {
+                    Nome = "Shorts",
+                    Cor = Color.FromHex("#F5BDEF"),
+                    ImageUrl = "shorts.png",
+                    Descricao = "",
+                    Quantidade = 6
+                },
 
-            Items.Add(new Item
-            {
-                Nome = "Garrafa",
-                Cor = Color.FromHex("#EDF5BD"),
-                ImageUrl = "garrafaIcon.png",
-                Descricao = "",
-                Quantidade = 2
-            });
+                new Item
+                {
+                    Nome = "Garrafa",
+                    Cor = Color.FromHex("#EDF5BD"),
+                    ImageUrl = "garrafaIcon.png",
+                    Descricao = "",
+                    Quantidade = 2
+                }
+            };
         }
 
         public void AddItem(Item item)

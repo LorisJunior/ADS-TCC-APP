@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TCCApp.Helpers;
 using TCCApp.Model;
-using TCCApp.Serviços;
+using TCCApp.Services;
 using TCCApp.View;
 using Xamarin.Forms;
 

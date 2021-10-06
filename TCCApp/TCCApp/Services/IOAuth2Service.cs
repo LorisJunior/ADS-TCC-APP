@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TCCApp.Serviços
+namespace TCCApp.Services
 {
     public interface IOAuth2Service
     {

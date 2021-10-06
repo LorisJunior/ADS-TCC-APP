@@ -9,62 +9,63 @@ namespace TCCApp.Model
         public IList<Icone> Icones { get; set; }
         public IconeData()
         {
-            Icones = new List<Icone>();
-
-            Icones.Add(new Icone
+            Icones = new List<Icone>
             {
-                IconImage = "shorts.png"
-            });
+                new Icone
+                {
+                    IconImage = "shorts.png"
+                },
 
-            Icones.Add(new Icone
-            {
-                IconImage = "clothesIcon.png"
-            });
+                new Icone
+                {
+                    IconImage = "clothesIcon.png"
+                },
 
-            Icones.Add(new Icone
-            {
-                IconImage = "JeansIcon.png"
-            });
+                new Icone
+                {
+                    IconImage = "JeansIcon.png"
+                },
 
-            Icones.Add(new Icone
-            {
-                IconImage = "camisaIcon.png"
-            });
+                new Icone
+                {
+                    IconImage = "camisaIcon.png"
+                },
 
-            Icones.Add(new Icone
-            {
-                IconImage = "sneakersIcon.png"
-            });
+                new Icone
+                {
+                    IconImage = "sneakersIcon.png"
+                },
 
-            Icones.Add(new Icone
-            {
-                IconImage = "garrafaIcon.png"
-            });
+                new Icone
+                {
+                    IconImage = "garrafaIcon.png"
+                },
 
-            Icones.Add(new Icone
-            {
-                IconImage = "beerIcon.png"
-            });
+                new Icone
+                {
+                    IconImage = "beerIcon.png"
+                },
 
-            Icones.Add(new Icone
-            {
-                IconImage = "meatIcon.png"
-            });
+                new Icone
+                {
+                    IconImage = "meatIcon.png"
+                },
 
-            Icones.Add(new Icone
-            {
-                IconImage = "trumpetIcon.png"
-            });
+                new Icone
+                {
+                    IconImage = "trumpetIcon.png"
+                },
 
-            Icones.Add(new Icone
-            {
-                IconImage = "violinIcon.png"
-            });
+                new Icone
+                {
+                    IconImage = "violinIcon.png"
+                },
 
-            Icones.Add(new Icone
-            {
-                IconImage = "phoneIcon.png"
-            });
+                new Icone
+                {
+                    IconImage = "phoneIcon.png"
+                }
+            };
 
         }
     }

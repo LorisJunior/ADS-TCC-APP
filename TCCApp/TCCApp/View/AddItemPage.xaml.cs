@@ -36,14 +36,8 @@ namespace TCCApp.View
                 var media = await MediaPicker.PickPhotoAsync();
                 //Transformo em uma stream
                 var stream = await media.OpenReadAsync();
-                //Crio um conteiner na memória e copio os dados para um array
-                var imageStream = new MemoryStream();
-                stream.CopyTo(imageStream);
-                imageStream.Position = 0;
-                var byteArray = imageStream.ToArray();
-
                 //passo um novo conteiner para source
-                itemImage.Source = ImageSource.FromStream(() => new MemoryStream(byteArray));
+                itemImage.Source = ImageSource.FromStream(() => new MemoryStream(ImageService.ConvertToByte(stream)));
                 itemImage.Margin = 0;
             }
             catch (NullReferenceException)
