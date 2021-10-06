@@ -10,7 +10,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TCCApp
+namespace TCCApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddItemPage : ContentPage
@@ -69,7 +69,7 @@ namespace TCCApp
             }
         }
 
-        private async void criarItem_Clicked(object sender, EventArgs e)
+        private async void CriarItem_Clicked(object sender, EventArgs e)
         {
 
             Item item = new Item

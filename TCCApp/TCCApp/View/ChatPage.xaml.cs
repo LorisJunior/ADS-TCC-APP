@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TCCApp
+namespace TCCApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MapPage : ContentPage
+    public partial class ChatPage : ContentPage
     {
-        public MapPage()
+        public ChatPage()
         {
             InitializeComponent();
-            //NavigationPage.SetHasNavigationBar(this, false);
+            NavigationPage.SetHasNavigationBar(this, false);
         }
     }
 }

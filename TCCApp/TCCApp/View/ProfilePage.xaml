@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TCCApp.PerfilPage"
+             x:Class="TCCApp.View.ProfilePage"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
 
-
     <ScrollView HeightRequest="850">
-        
+
         <AbsoluteLayout BackgroundColor="#FFF8EA" HeightRequest="850">
 
             <Frame AbsoluteLayout.LayoutBounds="0, 0, 411, 250" Padding="0">
@@ -32,7 +31,7 @@
                 Clicked="ImageButton_Clicked"/>
             </Frame>
 
-            
+
 
             <Label 
                 Text="fulanodetal@email.com" 
@@ -50,7 +49,7 @@
                 <StackLayout Padding="25" BackgroundColor="White">
 
                     <StackLayout Orientation="Horizontal">
-                        
+
                         <Label 
                             Text="Sobre" 
                             FontAttributes="Bold" 
@@ -72,26 +71,26 @@
                         Margin="0, 15, 0, 0"/>
 
                 </StackLayout>
-                
+
             </pancake:PancakeView>
 
             <pancake:PancakeView AbsoluteLayout.LayoutBounds="13.5, 385, 386, 370" CornerRadius="20">
-                
+
                 <pancake:PancakeView.Shadow>
                     <pancake:DropShadow BlurRadius="2" />
                 </pancake:PancakeView.Shadow>
 
                 <StackLayout BackgroundColor="White" Padding="25">
-                    
+
                     <StackLayout Orientation="Horizontal">
-                        
+
                         <Label 
                             Text="Notificações" 
                             FontAttributes="Bold" 
                             FontSize="16" 
                             VerticalOptions="Center" 
                             HorizontalOptions="Start"/>
-                        
+
                         <ImageButton 
                             Source="delete.png" 
                             BackgroundColor="Transparent"
@@ -99,13 +98,12 @@
                             Margin="200,0,0,0"/>
 
                     </StackLayout>
-                    
+
                 </StackLayout>
-                
+
             </pancake:PancakeView>
-            
+
         </AbsoluteLayout>
-        
+
     </ScrollView>
-   
 </ContentPage>

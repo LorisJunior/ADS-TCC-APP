@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Text;
 using TCCApp.Helpers;
 using TCCApp.Model;
+using TCCApp.View;
 using Xamarin.Forms;
 
 namespace TCCApp.ViewModel

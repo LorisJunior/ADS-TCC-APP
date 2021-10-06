@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using TCCApp.Helpers;
 using TCCApp.Serviços;
 using Xamarin.Forms;
@@ -9,8 +10,11 @@ namespace TCCApp
 {
     public partial class App : Application
     {
+        public static Assembly assembly = null;
         public App(IOAuth2Service oAuth2Service)
         {
+            assembly = GetType().GetTypeInfo().Assembly;
+
             InitializeComponent();
 
             MainPage = new NavigationPage(new MainPage(oAuth2Service));

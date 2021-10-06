@@ -6,7 +6,7 @@ using TCCApp.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TCCApp
+namespace TCCApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CadastroPage : ContentPage

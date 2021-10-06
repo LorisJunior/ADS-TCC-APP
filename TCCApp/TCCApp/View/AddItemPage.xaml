@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             x:Class="TCCApp.AddItemPage"
+             x:Class="TCCApp.View.AddItemPage"
              xmlns:local="clr-namespace:TCCApp.Model"
              xmlns:colorHelper="clr-namespace:TCCApp.Helpers">
 
@@ -107,7 +107,7 @@
                 Text="Criar"
                 BackgroundColor="#ECEE72"
                 TextColor="#827C93"
-                Clicked="criarItem_Clicked"/>
+                Clicked="CriarItem_Clicked"/>
         </pancake:PancakeView>
 
         <BoxView 

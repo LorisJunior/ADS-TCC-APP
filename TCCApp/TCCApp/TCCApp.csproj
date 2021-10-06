@@ -14,39 +14,42 @@
     <PackageReference Include="FirebaseDatabase.net" Version="4.0.6" />
     <PackageReference Include="Plugin.GoogleClient" Version="2.1.12" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="Xamarin.Forms.GoogleMaps.v2" Version="3.4.5" />
     <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="AddItemPage.xaml">
+    <EmbeddedResource Update="View\AddItemPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="CadastroPage.xaml">
+    <EmbeddedResource Update="View\CadastroPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="ChatPage.xaml">
+    <EmbeddedResource Update="View\ChatPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="EsqSenhaPage.xaml">
+    <EmbeddedResource Update="View\EsqSenhaPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="HistoryPage.xaml">
+    <EmbeddedResource Update="View\HistoryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="ItemsPage.xaml">
+    <EmbeddedResource Update="View\ItemsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="MapPage.xaml">
+    <EmbeddedResource Update="View\MapPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="PerfilPage.xaml">
+    <EmbeddedResource Update="View\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Images\" />
     <Folder Include="ViewModel\Commands\" />
   </ItemGroup>
 </Project>

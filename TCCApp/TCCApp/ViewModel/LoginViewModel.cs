@@ -10,6 +10,7 @@ using System.Windows.Input;
 using TCCApp.Helpers;
 using TCCApp.Model;
 using TCCApp.Serviços;
+using TCCApp.View;
 using Xamarin.Forms;
 
 namespace TCCApp.ViewModel
