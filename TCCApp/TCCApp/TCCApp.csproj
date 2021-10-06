@@ -11,6 +11,38 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\beerIcon.png" />
+    <None Remove="Images\camisaIcon.png" />
+    <None Remove="Images\clothesIcon.png" />
+    <None Remove="Images\garrafaIcon.png" />
+    <None Remove="Images\hamburgerIcon.png" />
+    <None Remove="Images\imageIcon.png" />
+    <None Remove="Images\jeansIcon.png" />
+    <None Remove="Images\meatIcon.png" />
+    <None Remove="Images\phoneIcon.png" />
+    <None Remove="Images\shorts.png" />
+    <None Remove="Images\sneakersIcon.png" />
+    <None Remove="Images\trumpetIcon.png" />
+    <None Remove="Images\violinIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\beerIcon.png" />
+    <EmbeddedResource Include="Images\camisaIcon.png" />
+    <EmbeddedResource Include="Images\clothesIcon.png" />
+    <EmbeddedResource Include="Images\garrafaIcon.png" />
+    <EmbeddedResource Include="Images\hamburgerIcon.png" />
+    <EmbeddedResource Include="Images\imageIcon.png" />
+    <EmbeddedResource Include="Images\jeansIcon.png" />
+    <EmbeddedResource Include="Images\meatIcon.png" />
+    <EmbeddedResource Include="Images\phoneIcon.png" />
+    <EmbeddedResource Include="Images\shorts.png" />
+    <EmbeddedResource Include="Images\sneakersIcon.png" />
+    <EmbeddedResource Include="Images\trumpetIcon.png" />
+    <EmbeddedResource Include="Images\violinIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FirebaseDatabase.net" Version="4.0.6" />
     <PackageReference Include="Plugin.GoogleClient" Version="2.1.12" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
@@ -50,7 +82,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
     <Folder Include="ViewModel\Commands\" />
   </ItemGroup>
 </Project>

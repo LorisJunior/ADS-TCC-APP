@@ -16,6 +16,14 @@ namespace TCCApp.View
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+
+            MessagingCenter.Subscribe<object, int>(this, "click", (arg, idx) =>
+            {
+                /*var chat = this.Children[idx] as ChatPage;
+                var localUser = arg as User;
+                chat.LocalUser = localUser;*/
+                CurrentPage = this.Children[idx];
+            });
         }
     }
 }

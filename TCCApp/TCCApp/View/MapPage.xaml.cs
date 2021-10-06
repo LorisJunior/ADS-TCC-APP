@@ -1,10 +1,11 @@
 ﻿using Plugin.Geolocator;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using TCCApp.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.Xaml;
@@ -40,20 +41,27 @@ namespace TCCApp.View
 
             map.MyLocationEnabled = true;
             map.UiSettings.MyLocationButtonEnabled = true;
+            map.PinClicked += Map_PinClicked;
             //NavigationPage.SetHasNavigationBar(this, false);
         }
+
+        
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
 
             locator = CrossGeolocator.Current;
-            locator.PositionChanged += Locator_PositionChanged;
             await locator.StartListeningAsync(new TimeSpan(0, 0, 0), 100);
             var position = await locator.GetPositionAsync();
             var center = new Position(position.Latitude, position.Longitude);
             CreateCircleShapeAt(center);
+
+            CreatePin(center);
+            locator.PositionChanged += Locator_PositionChanged;
+
             map.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(5000)), true);
+            //TODO
         }
 
         protected async override void OnDisappearing()
@@ -64,15 +72,42 @@ namespace TCCApp.View
             //Para de receber as posições
             await locator.StopListeningAsync();
         }
+        private void Map_PinClicked(object sender, PinClickedEventArgs e)
+        {
+            //TODO
+            Pin pin = e.Pin;
+            //int userId = (int)pin.Tag;
+            //var user = User.GetById(userId);
 
+            //Envio uma mensagem para a TabPage ir para a ChatPage
+            //MessagingCenter.Send<object, int>(user, "click", 2);
+            MessagingCenter.Send<object, int>(this, "click", 3);
+        }
         private void Locator_PositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs e)
         {
             var center = new Position(e.Position.Latitude, e.Position.Longitude);
-            //userPin.Position = center;
+            userPin.Position = center;
             CreateCircleShapeAt(center);
             map.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(5000)), true);
         }
-
+        public void CreatePin(Position position)
+        {
+            //TODO
+            userPin = new Pin()
+            {
+                Icon = BitmapDescriptorFactory.FromStream(new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.imageIcon.png", App.assembly))),
+                Type = PinType.Place,
+                Label = "Olá, vms comprar juntos!",
+                ZIndex = 5,
+                //Tag = user.Id
+            };
+            //if (user.Latitude != 0 || user.Longitude != 0)
+            //{
+                //userPin.Position = new Position(user.Latitude, user.Longitude);
+                userPin.Position = position;
+            //}
+            map.Pins.Add(userPin);
+        }
         public void CreateCircleShapeAt(Position position)
         {
             CleanMap(map.Circles);
