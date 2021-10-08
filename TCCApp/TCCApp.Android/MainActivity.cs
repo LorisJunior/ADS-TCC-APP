@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using Plugin.GoogleClient;
 using TCCApp.Droid.Serviços;
 using Android;
+using System.IO;
 
 [assembly: Dependency(typeof(TCCApp.Droid.SetStatusBar))]
 namespace TCCApp.Droid
@@ -31,7 +32,8 @@ namespace TCCApp.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
 
-            LoadApplication(new App(new OAuth2Service()));
+            var databasePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "MyData.db");
+            LoadApplication(new App(new OAuth2Service(), databasePath));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

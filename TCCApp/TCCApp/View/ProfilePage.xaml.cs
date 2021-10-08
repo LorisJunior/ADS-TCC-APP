@@ -18,6 +18,12 @@ namespace TCCApp.View
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
+            SetProfileImage();
+        }
+        public async void SetProfileImage()
+        {
+            App.user = await DatabaseService.GetUser(App.user.Id);
+            image.Source = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer));
         }
         private async void ImageButton_Clicked(object sender, EventArgs e)
         {
@@ -25,7 +31,12 @@ namespace TCCApp.View
             {
                 var media = await MediaPicker.PickPhotoAsync();
                 var stream = await media.OpenReadAsync();
-                image.Source = ImageSource.FromStream(() => new MemoryStream(ImageService.ConvertToByte(stream)));
+                var buffer = ImageService.ConvertToByte(stream);
+                image.Source = ImageSource.FromStream(() => new MemoryStream(buffer));
+
+                App.user.Buffer = buffer;
+                await DatabaseService.UpdateUser(App.user);
+
             }
             catch (NullReferenceException)
             {

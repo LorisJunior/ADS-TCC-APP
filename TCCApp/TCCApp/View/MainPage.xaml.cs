@@ -24,6 +24,8 @@ namespace TCCApp
             NavigationPage.SetHasNavigationBar(this, false);
         }
 
+        
+
         private async void EsqSenhaButton_Clicked(object sender, EventArgs e)
         {
 
