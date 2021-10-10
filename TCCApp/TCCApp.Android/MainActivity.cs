@@ -9,6 +9,8 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Plugin.GoogleClient;
 using TCCApp.Droid.Serviços;
+using Plugin.FacebookClient;
+using Xamarin.Facebook;
 using Android;
 using System.IO;
 
@@ -28,6 +30,8 @@ namespace TCCApp.Droid
         {
             base.OnCreate(savedInstanceState);
             GoogleClientManager.Initialize(this);
+            FacebookSdk.SdkInitialize(this);
+            FacebookClientManager.Initialize(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
@@ -56,6 +60,7 @@ namespace TCCApp.Droid
         {
             base.OnActivityResult(requestCode, resultCode, data);
             GoogleClientManager.OnAuthCompleted(requestCode, resultCode, data);
+            FacebookClientManager.OnActivityResult(requestCode, resultCode, data);
         }
         protected override void OnStart()
         {

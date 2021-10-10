@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TCCApp.Model
 {
-    class Usuario
+    public class Usuario
     {
         [Required, EmailAddress]
         public string Email { get; set; }

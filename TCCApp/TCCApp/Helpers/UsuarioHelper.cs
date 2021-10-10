@@ -13,7 +13,7 @@ using Xamarin.Forms;
 
 namespace TCCApp.Helpers
 {
-    class UsuarioHelper
+    public class UsuarioHelper
     {
         static FirebaseClient firebase = new FirebaseClient("https://xamarinfirebase-3c01a-default-rtdb.firebaseio.com/");
 

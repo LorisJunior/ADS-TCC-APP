@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Plugin.FacebookClient;
 using Plugin.GoogleClient;
 using Plugin.GoogleClient.Shared;
 using System;
@@ -22,6 +23,7 @@ namespace TCCApp.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         IGoogleClientManager _googleService = CrossGoogleClient.Current;
         IOAuth2Service _oAuth2Service;
+        IFacebookClient _facebookService = CrossFacebookClient.Current;
 
         public LoginViewModel(Page page, IOAuth2Service oAuth2Service)
         {
@@ -103,6 +105,9 @@ namespace TCCApp.ViewModel
         {
             switch (authNetwork.Name)
             {
+                case "Facebook":
+                    await LoginFacebookAsync(authNetwork);
+                    break;
                 case "Google":
                     await LoginGoogleAsync(authNetwork);
                     break;
@@ -159,6 +164,61 @@ namespace TCCApp.ViewModel
                 _googleService.OnLogin += userLoginDelegate;
 
                 await _googleService.LoginAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
+
+        async Task LoginFacebookAsync(AuthNetwork authNetwork)
+        {
+            try
+            {
+
+                if (_facebookService.IsLoggedIn)
+                {
+                    _facebookService.Logout();
+                }
+
+                EventHandler<FBEventArgs<string>> userDataDelegate = null;
+
+                userDataDelegate = async (object sender, FBEventArgs<string> e) =>
+                {
+                    switch (e.Status)
+                    {
+                        case FacebookActionStatus.Completed:
+                            var facebookProfile = await Task.Run(() => JsonConvert.DeserializeObject<FacebookProfile>(e.Data));
+                            var socialLoginData = new NetworkAuthData
+                            {
+                                Id = facebookProfile.Id,
+                                Logo = authNetwork.Icon,
+                                Foreground = authNetwork.Foreground,
+                                Background = authNetwork.Background,
+                                Picture = facebookProfile.Picture.Data.Url,
+                                Name = $"{facebookProfile.FirstName} {facebookProfile.LastName}",
+                            };
+                            await App.Current.MainPage.Navigation.PushModalAsync(new HistoryPage());
+                            break;
+                        case FacebookActionStatus.Canceled:
+                            await App.Current.MainPage.DisplayAlert("Facebook Auth", "Canceled", "Ok");
+                            break;
+                        case FacebookActionStatus.Error:
+                            await App.Current.MainPage.DisplayAlert("Facebook Auth", "Error", "Ok");
+                            break;
+                        case FacebookActionStatus.Unauthorized:
+                            await App.Current.MainPage.DisplayAlert("Facebook Auth", "Unauthorized", "Ok");
+                            break;
+                    }
+
+                    _facebookService.OnUserData -= userDataDelegate;
+                };
+
+                _facebookService.OnUserData += userDataDelegate;
+
+                string[] fbRequestFields = { "email", "first_name", "picture", "gender", "last_name" };
+                string[] fbPermisions = { "email" };
+                await _facebookService.RequestUserDataAsync(fbRequestFields, fbPermisions);
             }
             catch (Exception ex)
             {

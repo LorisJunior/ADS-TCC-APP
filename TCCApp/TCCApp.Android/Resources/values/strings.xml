@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="facebook_app_name">TCCApp</string>
+  <string name="facebook_app_id">4354693264614401</string>
+  <string name="fb_login_protocol_scheme">fb4354693264614401</string>
+</resources>
