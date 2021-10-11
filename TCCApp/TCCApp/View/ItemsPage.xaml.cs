@@ -48,6 +48,5 @@ namespace TCCApp.View
             MyItems = new ObservableCollection<Item>(itemsList.Items);
             itensCollection.ItemsSource = MyItems;
         }
-
     }
 }

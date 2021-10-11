@@ -42,24 +42,22 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <AbsoluteLayout BackgroundColor="#FFF8EA">
+    <AbsoluteLayout BackgroundColor="#FFF9EE">
 
         <!--Background Baixo-->
-        
-        <pancake:PancakeView
-            AbsoluteLayout.LayoutBounds="0, 220, 411, 440"
+        <BoxView
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 0.3"
+            AbsoluteLayout.LayoutFlags="All"
             WidthRequest="347" 
             HeightRequest="370" 
-            CornerRadius="25, 25, 0, 0" 
-            BackgroundColor="#F9FBA1">
-        </pancake:PancakeView>
+            BackgroundColor="#F9FBA1"/>
 
-        <Grid AbsoluteLayout.LayoutBounds="0, 390, 411, 220" Margin="15">
+        <Grid AbsoluteLayout.LayoutBounds="0, 385, 411, 220" Margin="15">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -82,9 +80,10 @@
                 Placeholder="Descrição" 
                 VerticalOptions="CenterAndExpand"/>
             <Label 
+                Margin="0, 3"
                 Grid.Row="3"
                 Text=" Escolha uma cor" 
-                TextColor="#636363"
+                TextColor="#9E9E9E"
                 FontSize="18"/>
             <Slider 
                 x:Name="cor"
@@ -98,16 +97,21 @@
         
         <!--Botão criar-->
         
-        <pancake:PancakeView AbsoluteLayout.LayoutBounds="160,600" CornerRadius="5">
+        <pancake:PancakeView 
+            AbsoluteLayout.LayoutBounds="0.99, 0.99" 
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            CornerRadius="10">
             <pancake:PancakeView.Shadow>
-                <pancake:DropShadow BlurRadius="2"/>
+                <pancake:DropShadow BlurRadius="1"/>
             </pancake:PancakeView.Shadow>
             <Button 
                 x:Name="criarItem"
                 Text="Criar"
                 BackgroundColor="#ECEE72"
                 TextColor="#827C93"
-                Clicked="CriarItem_Clicked"/>
+                Clicked="CriarItem_Clicked"
+                HeightRequest="60"
+                WidthRequest="100"/>
         </pancake:PancakeView>
 
         <BoxView 
@@ -121,7 +125,7 @@
         <pancake:PancakeView AbsoluteLayout.LayoutBounds="120, 50, 180, 235" CornerRadius="20">
 
             <pancake:PancakeView.Shadow>
-                <pancake:DropShadow BlurRadius="8"/>
+                <pancake:DropShadow BlurRadius="2"/>
             </pancake:PancakeView.Shadow>
 
             <AbsoluteLayout 
@@ -142,22 +146,14 @@
                 </Frame>
 
                 <!--Botão AddPhoto-->
-                
-                <pancake:PancakeView 
-                    
-                    AbsoluteLayout.LayoutBounds="105,5,70,70"
-                    CornerRadius="0,15,15,0" BackgroundColor="Red">
-                    <pancake:PancakeView.Shadow>
-                        <pancake:DropShadow BlurRadius="3"/>
-                    </pancake:PancakeView.Shadow>
                     
                     <ImageButton 
-                        
+                        AbsoluteLayout.LayoutBounds="105,5,70,70"
                         Padding="15"
                         Source="plus.png"
                         BackgroundColor="#ECEE72"
+                        CornerRadius="15"
                         Clicked="ImageButton_Clicked"/>
-                </pancake:PancakeView>
                 
 
                 <StackLayout

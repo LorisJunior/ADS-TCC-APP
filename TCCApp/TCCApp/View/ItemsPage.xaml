@@ -29,7 +29,7 @@
                     <pancake:PancakeView CornerRadius="20" Grid.Row="1" Grid.Column="1">
 
                         <pancake:PancakeView.Shadow>
-                            <pancake:DropShadow Color="LightGray" BlurRadius="8"/>
+                            <pancake:DropShadow Color="LightGray" BlurRadius="5"/>
                         </pancake:PancakeView.Shadow>
 
                         <AbsoluteLayout BackgroundColor="{Binding Cor}">
@@ -92,50 +92,55 @@
     </ContentPage.Resources>
 
 
-    <AbsoluteLayout BackgroundColor="#FFF8EA">
+    <AbsoluteLayout BackgroundColor="White">
 
-        <Label 
-            Text="Itens" 
+        <!--Header-->
+        <!--#region -->
+            <Label 
+            AbsoluteLayout.LayoutBounds="0.12, 0.055"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            Text="Lista de Itens" 
+            TextColor="#9E9E9E"
             FontAttributes="Bold" 
-            FontSize="30" 
-            AbsoluteLayout.LayoutBounds="42, 15, 68, 42"/>
+            FontSize="30"/>
+        
+        <BoxView 
+            AbsoluteLayout.LayoutBounds="0.5, 0.15, 0.9, 0.005"
+            BackgroundColor="#E4E4E4"
+            AbsoluteLayout.LayoutFlags="All"/>
 
-        <Label 
-            Text="Aqui você pode adicionar os itens que deseja comprar em grupo."
-            FontAttributes="none" 
-            FontSize="16" 
-            AbsoluteLayout.LayoutBounds="42, 55, 258, 42"/>
+        <ImageButton
+            AbsoluteLayout.LayoutBounds="0.75, 0.05"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            WidthRequest="50"
+            HeightRequest="50"
+            CornerRadius="5"
+            Padding="12"
+            Source="plusyellow.png"
+            BackgroundColor="#F5BDEF"
+            Clicked="Adicionar_Clicked"/>
 
-        <CollectionView 
+        <ImageButton
+            AbsoluteLayout.LayoutBounds="0.92, 0.05"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            WidthRequest="50"
+            HeightRequest="50"
+            CornerRadius="5"
+            Padding="10"
+            Source="delete.png"
+            BackgroundColor="#F2A6A6"/>
+        <!--#endregion-->
+
+        <CollectionView
             x:Name="itensCollection"
             ItemTemplate="{StaticResource ItemTemplate}" 
             ItemsLayout="VerticalGrid, 2" 
-            AbsoluteLayout.LayoutBounds="0, 95, 411, 440"
+            AbsoluteLayout.LayoutBounds="0, 95, 411, 505"
             SelectionMode="Single" 
             ItemSizingStrategy="MeasureFirstItem"
             Margin="10">
 
         </CollectionView>
-
-        <pancake:PancakeView AbsoluteLayout.LayoutBounds="78, 533, 255, 60"  CornerRadius="10">
-
-            <pancake:PancakeView.Shadow>
-                <pancake:DropShadow BlurRadius="1" />
-            </pancake:PancakeView.Shadow>
-            <Button 
-                x:Name="Adicionar"
-                Text="Adicionar" 
-                TextColor="#827C93"
-                BackgroundColor="#ECEE72" 
-                Clicked="Adicionar_Clicked"/>
-        </pancake:PancakeView>
-
-        <!--ImageButton 
-            Source="delete.png" 
-            AbsoluteLayout.LayoutBounds="308, 533, 60, 60" 
-            CornerRadius="15" 
-            Padding="10"
-            BackgroundColor="#F2A6A6"/-->
 
     </AbsoluteLayout>
 </ContentPage>

@@ -2,108 +2,178 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.View.ProfilePage"
-             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:circle="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
 
     <ScrollView HeightRequest="850">
 
-        <AbsoluteLayout BackgroundColor="#FFF8EA" HeightRequest="850">
+        <AbsoluteLayout BackgroundColor="#FFF9EE" HeightRequest="850">
 
-            <Frame AbsoluteLayout.LayoutBounds="0, 0, 411, 250" Padding="0">
-                <Image x:Name="image" Source="upload.png" Aspect="AspectFill"/>
-            </Frame>
+            <!--Fundo amarelo-->
+            <BoxView 
+                BackgroundColor="#F8FFCD" 
+                AbsoluteLayout.LayoutBounds="0,0,1,0.3"
+                AbsoluteLayout.LayoutFlags="All"/>
 
-            <Frame 
-                AbsoluteLayout.LayoutBounds="365, 10, 35, 35"
-                Padding="0"
-                CornerRadius="5">
-                <ImageButton 
-                    BackgroundColor="Transparent"
-                    Source="settings.png"/>
-            </Frame>
-
-            <Frame AbsoluteLayout.LayoutBounds="320, 10, 35, 35" 
-                   Padding="0"
-                   CornerRadius="5">
-                <ImageButton 
-                Source="add.png" 
-                AbsoluteLayout.LayoutBounds="300, 10, 35, 35"
-                BackgroundColor="Transparent"
-                Clicked="ImageButton_Clicked"/>
-            </Frame>
-
-
-
-            <Label 
-                Text="fulanodetal@email.com" 
-                FontAttributes="Bold" 
-                AbsoluteLayout.LayoutBounds="120,190, 214, 21" 
-                TextColor="White" 
-                FontSize="18"/>
-
-            <pancake:PancakeView AbsoluteLayout.LayoutBounds="13.5, 190, 386, 172" CornerRadius="20">
+            <!--Perfil-->
+            <pancake:PancakeView 
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0.5, 0.02, 386, 121" 
+                CornerRadius="20">
 
                 <pancake:PancakeView.Shadow>
                     <pancake:DropShadow BlurRadius="2"/>
                 </pancake:PancakeView.Shadow>
 
-                <StackLayout Padding="25" BackgroundColor="White">
+                
 
-                    <StackLayout Orientation="Horizontal">
+                <AbsoluteLayout BackgroundColor="White">
+
+                    <circle:CircleImage
+                        x:Name="profileImage"
+                        AbsoluteLayout.LayoutBounds="-0.05,0.5, 150,100"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        Aspect="AspectFill"
+                        WidthRequest="150"
+                        Source="profile.png">
+                    </circle:CircleImage>
+
+                    <Grid
+                        AbsoluteLayout.LayoutBounds="0.6, 0.5"
+                        AbsoluteLayout.LayoutFlags="PositionProportional">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
 
                         <Label 
-                            Text="Sobre" 
-                            FontAttributes="Bold" 
-                            FontSize="16" 
-                            VerticalOptions="Center"/>
+                            Grid.Row="0"
+                            Text="Luciana"
+                            FontSize="24"
+                            FontAttributes="Bold"/>
 
-                        <ImageButton 
-                            Source="edit.png" 
-                            WidthRequest="30" 
-                            BackgroundColor="Transparent" 
-                            Margin="250, 0, 0, 0"/>
+                        <Label
+                            Grid.Row="2"
+                            Text="fulanodetal@email.com"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="LightGray"/>
+                    </Grid>
 
-                    </StackLayout>
+                    <ImageButton
+                        AbsoluteLayout.LayoutBounds="0.95, 0.25"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        WidthRequest="60"
+                        HeightRequest="60"
+                        CornerRadius="15"
+                        Padding="15"
+                        Source="bell.png"
+                        BackgroundColor="#F5BDEF"/>
 
-                    <Label 
-                        Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-                        FontSize="16"
-                        Margin="0, 15, 0, 0"/>
+                    <Frame
+                        AbsoluteLayout.LayoutBounds="0.03, 0.15"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        WidthRequest="20"
+                        HeightRequest="20"
+                        CornerRadius="15"
+                        Padding="4"
+                        BackgroundColor="#F5BDEF">
+                        
+                        <Image Source="plusyellow.png"/>
+                        
+                    </Frame>
 
-                </StackLayout>
+                </AbsoluteLayout>
 
             </pancake:PancakeView>
 
-            <pancake:PancakeView AbsoluteLayout.LayoutBounds="13.5, 385, 386, 370" CornerRadius="20">
+            <!--Sobre-->
+            <pancake:PancakeView 
+                AbsoluteLayout.LayoutBounds="0.5, 0.22, 386, 172" 
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                CornerRadius="20">
+
+                <pancake:PancakeView.Shadow>
+                    <pancake:DropShadow BlurRadius="2"/>
+                </pancake:PancakeView.Shadow>
+
+
+                <AbsoluteLayout BackgroundColor="#FFA8BD" Padding="15">
+
+                    <ImageButton
+                        AbsoluteLayout.LayoutBounds="1, 0"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        WidthRequest="60"
+                        HeightRequest="60"
+                        CornerRadius="15"
+                        Padding="15"
+                        Source="plusyellow.png"
+                        BackgroundColor="#F5BDEF"/>
+
+                    <Label 
+                        AbsoluteLayout.LayoutBounds="0.05, 0.05"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        VerticalOptions="Center"
+                        Text="Sobre" 
+                        FontAttributes="Bold" 
+                        FontSize="24" 
+                        TextColor="White"/>
+
+                    <Grid
+                        AbsoluteLayout.LayoutBounds="15, 70, 325,70">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label 
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            Lorem Ipsum has been th"
+                            FontSize="16"/>
+                    </Grid>
+                </AbsoluteLayout>
+            </pancake:PancakeView>
+
+
+            <!--Notificações-->
+            <pancake:PancakeView 
+                BackgroundColor="White"
+                AbsoluteLayout.LayoutBounds="0.5, 0.7, 386, 370" 
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                CornerRadius="20">
+
+                <pancake:PancakeView.Border>
+                    <pancake:Border Thickness="1" Color="LightGray"/>
+                </pancake:PancakeView.Border>
 
                 <pancake:PancakeView.Shadow>
                     <pancake:DropShadow BlurRadius="2" />
                 </pancake:PancakeView.Shadow>
 
-                <StackLayout BackgroundColor="White" Padding="25">
 
-                    <StackLayout Orientation="Horizontal">
+                <AbsoluteLayout Padding="25">
 
-                        <Label 
-                            Text="Notificações" 
-                            FontAttributes="Bold" 
-                            FontSize="16" 
-                            VerticalOptions="Center" 
-                            HorizontalOptions="Start"/>
+                    <Label 
+                        Text="Notificações" 
+                        FontAttributes="Bold" 
+                        FontSize="24"/>
 
-                        <ImageButton 
-                            Source="delete.png" 
-                            BackgroundColor="Transparent"
-                            WidthRequest="30"
-                            Margin="200,0,0,0"/>
-
-                    </StackLayout>
-
-                </StackLayout>
-
+                    <ImageButton
+                            AbsoluteLayout.LayoutBounds="1, 0"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            WidthRequest="60"
+                            HeightRequest="60"
+                            CornerRadius="15"
+                            Padding="12"
+                            Source="deleteyellow.png"
+                            BackgroundColor="#F5BDEF"/>
+                </AbsoluteLayout>
             </pancake:PancakeView>
-
         </AbsoluteLayout>
-
     </ScrollView>
 </ContentPage>

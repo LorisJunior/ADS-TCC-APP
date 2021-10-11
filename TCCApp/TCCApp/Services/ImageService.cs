@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using TCCApp.Model;
 using Xamarin.Forms;
+using ImageCircle.Forms.Plugin.Abstractions;
 
 namespace TCCApp.Services
 {
@@ -47,8 +48,11 @@ namespace TCCApp.Services
                  },
              };*/
 
-            var i = new Image();
-            i.Source = ImageSource.FromStream(() => new MemoryStream(user.Buffer));
+            var i = new CircleImage
+            {
+                Aspect = Aspect.AspectFill,
+                Source = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(user.Buffer)),
+            };
             AbsoluteLayout.SetLayoutBounds(i, new Rectangle(x: 0, y: 0, width: width, height: height));
 
             return (new StackLayout

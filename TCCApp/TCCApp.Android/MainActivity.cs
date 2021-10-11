@@ -13,6 +13,7 @@ using Plugin.FacebookClient;
 using Xamarin.Facebook;
 using Android;
 using System.IO;
+using FFImageLoading.Forms.Platform;
 
 [assembly: Dependency(typeof(TCCApp.Droid.SetStatusBar))]
 namespace TCCApp.Droid
@@ -26,6 +27,7 @@ namespace TCCApp.Droid
             Manifest.Permission.AccessCoarseLocation,
             Manifest.Permission.AccessFineLocation
         };
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -34,6 +36,8 @@ namespace TCCApp.Droid
             FacebookClientManager.Initialize(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            CachedImageRenderer.Init(enableFastRenderer: true);
+            CachedImageRenderer.InitImageViewHandler();
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
 
             var databasePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "MyData.db");

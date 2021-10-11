@@ -19,11 +19,25 @@ namespace TCCApp.View
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
             SetProfileImage();
+
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += (s, e) =>
+            {
+                PickPhoto();
+            };
+            profileImage.GestureRecognizers.Add(tapGestureRecognizer);
+        }
+        public async void PickPhoto()
+        {
+            var media = await MediaPicker.PickPhotoAsync();
+            var stream = await media.OpenReadAsync();
+            var buffer = ImageService.ConvertToByte(stream);
+            profileImage.Source = ImageSource.FromStream(() => new MemoryStream(buffer));
         }
         public async void SetProfileImage()
         {
             App.user = await DatabaseService.GetUser(App.user.Id);
-            image.Source = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer));
+            //image.Source = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer));
         }
         private async void ImageButton_Clicked(object sender, EventArgs e)
         {
@@ -32,7 +46,7 @@ namespace TCCApp.View
                 var media = await MediaPicker.PickPhotoAsync();
                 var stream = await media.OpenReadAsync();
                 var buffer = ImageService.ConvertToByte(stream);
-                image.Source = ImageSource.FromStream(() => new MemoryStream(buffer));
+                //image.Source = ImageSource.FromStream(() => new MemoryStream(buffer));
 
                 App.user.Buffer = buffer;
                 await DatabaseService.UpdateUser(App.user);

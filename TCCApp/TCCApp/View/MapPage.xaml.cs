@@ -45,7 +45,6 @@ namespace TCCApp.View
             map.PinClicked += Map_PinClicked;
             //NavigationPage.SetHasNavigationBar(this, false);
         }
-
         
 
         protected async override void OnAppearing()
