@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TCCApp.Model;
 using TCCApp.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -57,7 +58,7 @@ namespace TCCApp.View
             var center = new Position(position.Latitude, position.Longitude);
             CreateCircleShapeAt(center);
 
-            CreatePin(center);
+            CreatePin(App.user, true);
             locator.PositionChanged += Locator_PositionChanged;
 
             map.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(5000)), true);
@@ -86,27 +87,45 @@ namespace TCCApp.View
         private void Locator_PositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs e)
         {
             var center = new Position(e.Position.Latitude, e.Position.Longitude);
-            userPin.Position = center;
+            //TODO
+            //App.user = User.UpdatePosition(App.user, center);
+            try
+            {
+                userPin.Position = center;
+
+            }
+            catch (Exception)
+            {
+            }
             CreateCircleShapeAt(center);
             map.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(5000)), true);
         }
-        public void CreatePin(Position position)
+        public void CreatePin(User user, bool isMyPin)
         {
             //TODO
-            userPin = new Pin()
+            Pin pin = new Pin()
             {
-                Icon = BitmapDescriptorFactory.FromStream(new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.imageIcon.png", App.assembly))),
+                //Icon = BitmapDescriptorFactory.FromStream(new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.imageIcon.png", App.assembly))),
+                Icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user, 75, 75)),
                 Type = PinType.Place,
                 Label = "Olá, vms comprar juntos!",
                 ZIndex = 5,
                 //Tag = user.Id
             };
-            //if (user.Latitude != 0 || user.Longitude != 0)
-            //{
-                //userPin.Position = new Position(user.Latitude, user.Longitude);
-                userPin.Position = position;
-            //}
-            map.Pins.Add(userPin);
+            if (user.Latitude != 0 || user.Longitude != 0)
+            {
+                pin.Position = new Position(user.Latitude, user.Longitude);
+            }
+
+            if (isMyPin == true)
+            {
+                userPin = pin;
+                map.Pins.Add(userPin);
+            }
+            else
+            {
+                map.Pins.Add(pin);
+            }
         }
         public void CreateCircleShapeAt(Position position)
         {
