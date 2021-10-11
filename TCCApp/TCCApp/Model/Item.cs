@@ -12,5 +12,6 @@ namespace TCCApp.Model
         public String Descricao { get; set; }
         public Color Cor { get; set; }
         public ImageSource ImageUrl { get; set; }
+        public byte[] ByteImage { get; set; }
     }
 }

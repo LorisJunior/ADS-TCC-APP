@@ -34,8 +34,7 @@
                         AbsoluteLayout.LayoutBounds="-0.05,0.5, 150,100"
                         AbsoluteLayout.LayoutFlags="PositionProportional"
                         Aspect="AspectFill"
-                        WidthRequest="150"
-                        Source="profile.png">
+                        WidthRequest="150">
                     </circle:CircleImage>
 
                     <Grid
@@ -47,11 +46,16 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <Label 
+                        <Entry
+                            x:Name="nome"
+                            ClearButtonVisibility="WhileEditing"
+                            IsSpellCheckEnabled="False"
+                            Placeholder="Informe seu nome!"
+                            Opacity="0.5"
                             Grid.Row="0"
-                            Text="Luciana"
-                            FontSize="24"
-                            FontAttributes="Bold"/>
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            Completed="Nome_Completed"/>
 
                         <Label
                             Grid.Row="2"
@@ -90,7 +94,7 @@
 
             <!--Sobre-->
             <pancake:PancakeView 
-                AbsoluteLayout.LayoutBounds="0.5, 0.22, 386, 172" 
+                AbsoluteLayout.LayoutBounds="0.5, 0.225, 386, 192" 
                 AbsoluteLayout.LayoutFlags="PositionProportional"
                 CornerRadius="20">
 
@@ -102,14 +106,16 @@
                 <AbsoluteLayout BackgroundColor="#FFA8BD" Padding="15">
 
                     <ImageButton
+                        x:Name="deleteSobre"
                         AbsoluteLayout.LayoutBounds="1, 0"
                         AbsoluteLayout.LayoutFlags="PositionProportional"
                         WidthRequest="60"
                         HeightRequest="60"
                         CornerRadius="15"
-                        Padding="15"
-                        Source="plusyellow.png"
-                        BackgroundColor="#F5BDEF"/>
+                        Padding="12"
+                        Source="deleteyellow.png"
+                        BackgroundColor="#F5BDEF"
+                        Clicked="DeleteSobre_Clicked"/>
 
                     <Label 
                         AbsoluteLayout.LayoutBounds="0.05, 0.05"
@@ -120,22 +126,19 @@
                         FontSize="24" 
                         TextColor="White"/>
 
-                    <Grid
-                        AbsoluteLayout.LayoutBounds="15, 70, 325,70">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label 
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                            Lorem Ipsum has been th"
-                            FontSize="16"/>
-                    </Grid>
+                    <Editor
+                        x:Name="sobre"
+                        AbsoluteLayout.LayoutBounds="15, 68, 325,95"
+                        HeightRequest="150"
+                        Placeholder="Escreva algo sobre você."
+                        Keyboard="Chat"
+                        MaxLength="200"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Text="Lorem Ipsum is simply dummy text simplymy text of the p an typeset Lorem Ipsum is simply dummy text simplymy text"
+                        Opacity="0.5"
+                        FontSize="16"/>
+                    
                 </AbsoluteLayout>
             </pancake:PancakeView>
 
@@ -143,7 +146,7 @@
             <!--Notificações-->
             <pancake:PancakeView 
                 BackgroundColor="White"
-                AbsoluteLayout.LayoutBounds="0.5, 0.7, 386, 370" 
+                AbsoluteLayout.LayoutBounds="0.5, 0.97, 386, 485" 
                 AbsoluteLayout.LayoutFlags="PositionProportional"
                 CornerRadius="20">
 

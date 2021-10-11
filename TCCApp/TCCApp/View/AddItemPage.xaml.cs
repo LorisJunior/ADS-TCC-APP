@@ -30,13 +30,9 @@ namespace TCCApp.View
         {
             try
             {
-                //SOLUÇÃO DO BUG QUE IMPOSSIBILITAVA ESCOLHER A MESMA IMAGEM DA GALERIA DUAS VEZES
 
-                //Guardo a imagem em media
                 var media = await MediaPicker.PickPhotoAsync();
-                //Transformo em uma stream
                 var stream = await media.OpenReadAsync();
-                //passo um novo conteiner para source
                 itemImage.Source = ImageSource.FromStream(() => new MemoryStream(ImageService.ConvertToByte(stream)));
                 itemImage.Margin = 0;
             }
@@ -53,6 +49,8 @@ namespace TCCApp.View
 
                 if (icone != null)
                 {
+                    //TODO
+                    //Serve para adicionaro ao banco de dados => icone.ByteIcon
                     itemImage.Source = icone.IconImage;
                     itemImage.Margin = 15;
                 }

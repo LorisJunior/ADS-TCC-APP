@@ -18,43 +18,59 @@ namespace TCCApp.View
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            SetProfileImage();
+            SetProfile();
 
             var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (s, e) =>
-            {
-                PickPhoto();
-            };
+            tapGestureRecognizer.Tapped += (s, e) => PickPhoto();
             profileImage.GestureRecognizers.Add(tapGestureRecognizer);
         }
         public async void PickPhoto()
-        {
-            var media = await MediaPicker.PickPhotoAsync();
-            var stream = await media.OpenReadAsync();
-            var buffer = ImageService.ConvertToByte(stream);
-            profileImage.Source = ImageSource.FromStream(() => new MemoryStream(buffer));
-        }
-        public async void SetProfileImage()
-        {
-            App.user = await DatabaseService.GetUser(App.user.Id);
-            //image.Source = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer));
-        }
-        private async void ImageButton_Clicked(object sender, EventArgs e)
         {
             try
             {
                 var media = await MediaPicker.PickPhotoAsync();
                 var stream = await media.OpenReadAsync();
                 var buffer = ImageService.ConvertToByte(stream);
-                //image.Source = ImageSource.FromStream(() => new MemoryStream(buffer));
+                profileImage.Source = ImageSource.FromStream(() => new MemoryStream(buffer));
 
                 App.user.Buffer = buffer;
                 await DatabaseService.UpdateUser(App.user);
-
             }
-            catch (NullReferenceException)
+            catch (Exception)
             {
             }
+        }
+        public async void SetProfile()
+        {
+            App.user = await DatabaseService.GetUser(App.user.Id);
+
+            if (App.user.Buffer == null)
+            {
+                profileImage.Source = "user.png";
+            }
+            else
+            {
+                profileImage.Source = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer));
+            }
+
+            if (App.user.Nome != null)
+            {
+                nome.Text = App.user.Nome;
+            }
+        }
+        private async void Nome_Completed(object sender, EventArgs e)
+        {
+            App.user.Nome = nome.Text;
+            await DatabaseService.UpdateUser(App.user);
+        }
+        private async void DeleteSobre_Clicked(object sender, EventArgs e)
+        {
+            var action = await DisplayAlert("Apagar sobre", "Tem certeza que deseja apagar o conteúdo sobre você?", "não", "sim");
+            if (!action)
+            {
+                sobre.Text = string.Empty;
+            }
+            return;
         }
     }
 }

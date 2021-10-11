@@ -234,9 +234,6 @@
     <AndroidResource Include="Resources\drawable\profile.jpeg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\upload.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\shorts.png" />
   </ItemGroup>
   <ItemGroup>
