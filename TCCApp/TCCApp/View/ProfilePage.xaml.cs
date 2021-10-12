@@ -20,9 +20,9 @@ namespace TCCApp.View
             NavigationPage.SetHasNavigationBar(this, false);
             SetProfile();
 
-            var tapGestureRecognizer = new TapGestureRecognizer();
+            /*var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += (s, e) => PickPhoto();
-            profileImage.GestureRecognizers.Add(tapGestureRecognizer);
+            profileImage.GestureRecognizers.Add(tapGestureRecognizer);*/
         }
         public async void PickPhoto()
         {
@@ -44,19 +44,27 @@ namespace TCCApp.View
         {
             App.user = await DatabaseService.GetUser(App.user.Id);
 
-            if (App.user.Buffer == null)
+            try
             {
-                profileImage.Source = "user.png";
-            }
-            else
-            {
-                profileImage.Source = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer));
-            }
+                email.Text = App.user.Email;
 
-            if (App.user.Nome != null)
-            {
-                nome.Text = App.user.Nome;
+                if (App.user.Sobre != null)
+                {
+                    sobre.Text = App.user.Sobre;
+                }
+                if (App.user.Buffer != null)
+                {
+                    profileImage.Source = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer));
+                }
+                if (App.user.Nome != null)
+                {
+                    nome.Text = App.user.Nome;
+                }
             }
+            catch (Exception)
+            {
+            }
+            
         }
         private async void Nome_Completed(object sender, EventArgs e)
         {
@@ -71,6 +79,17 @@ namespace TCCApp.View
                 sobre.Text = string.Empty;
             }
             return;
+        }
+
+        private async void Sobre_Completed(object sender, EventArgs e)
+        {
+            App.user.Sobre = sobre.Text;
+            await DatabaseService.UpdateUser(App.user);
+        }
+
+        private void profileImage_Clicked(object sender, EventArgs e)
+        {
+            PickPhoto();
         }
     }
 }

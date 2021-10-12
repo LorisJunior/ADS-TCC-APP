@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using TCCApp.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,9 +19,10 @@ namespace TCCApp.View
 
             MessagingCenter.Subscribe<object, int>(this, "click", (arg, idx) =>
             {
-                /*var chat = this.Children[idx] as ChatPage;
+                var chat = this.Children[idx] as ChatPage;
                 var localUser = arg as User;
-                chat.LocalUser = localUser;*/
+                //TODO
+                //chat.LocalUser = localUser;
                 CurrentPage = this.Children[idx];
             });
         }

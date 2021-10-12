@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.View.ProfilePage"
-             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             xmlns:circle="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
 
     <ScrollView HeightRequest="850">
 
@@ -29,13 +28,15 @@
 
                 <AbsoluteLayout BackgroundColor="White">
 
-                    <circle:CircleImage
+                    <ImageButton
                         x:Name="profileImage"
-                        AbsoluteLayout.LayoutBounds="-0.05,0.5, 150,100"
+                        Source="user.png"
+                        AbsoluteLayout.LayoutBounds="0.05, 0.5, 100, 100"
                         AbsoluteLayout.LayoutFlags="PositionProportional"
                         Aspect="AspectFill"
-                        WidthRequest="150">
-                    </circle:CircleImage>
+                        CornerRadius="50"
+                        Clicked="profileImage_Clicked"
+                        BackgroundColor="White"/>
 
                     <Grid
                         AbsoluteLayout.LayoutBounds="0.6, 0.5"
@@ -58,6 +59,7 @@
                             Completed="Nome_Completed"/>
 
                         <Label
+                            x:Name="email"
                             Grid.Row="2"
                             Text="fulanodetal@email.com"
                             FontSize="16"
@@ -137,7 +139,8 @@
                         VerticalOptions="Center"
                         Text="Lorem Ipsum is simply dummy text simplymy text of the p an typeset Lorem Ipsum is simply dummy text simplymy text"
                         Opacity="0.5"
-                        FontSize="16"/>
+                        FontSize="16"
+                        Completed="Sobre_Completed"/>
                     
                 </AbsoluteLayout>
             </pancake:PancakeView>

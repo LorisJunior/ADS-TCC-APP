@@ -36,6 +36,8 @@ namespace TCCApp.Services
               .OnceAsync<User>()).Select(item => new User
               {
                   Id = item.Object.Id,
+                  Email = item.Object.Email,
+                  Sobre = item.Object.Sobre,
                   Nome = item.Object.Nome,
                   Buffer = item.Object.Buffer,
                   Latitude = item.Object.Latitude,

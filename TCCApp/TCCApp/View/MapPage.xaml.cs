@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TCCApp.Model;
 using TCCApp.Services;
 using Xamarin.Forms;
@@ -43,7 +41,8 @@ namespace TCCApp.View
             map.MyLocationEnabled = true;
             map.UiSettings.MyLocationButtonEnabled = true;
             map.PinClicked += Map_PinClicked;
-            //NavigationPage.SetHasNavigationBar(this, false);
+            CreatePin(App.user, true);
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(App.user.Latitude, App.user.Longitude), Distance.FromMeters(5000)), true);
         }
         
 
@@ -55,43 +54,36 @@ namespace TCCApp.View
             await locator.StartListeningAsync(new TimeSpan(0, 0, 0), 100);
             var position = await locator.GetPositionAsync();
             var center = new Position(position.Latitude, position.Longitude);
+
             CreateCircleShapeAt(center);
-
             CreatePin(App.user, true);
-            locator.PositionChanged += Locator_PositionChanged;
-
             map.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(5000)), true);
-            //TODO
-        }
 
+            App.user.Latitude = center.Latitude;
+            App.user.Longitude = center.Longitude;
+            await DatabaseService.UpdateUser(App.user);
+
+            locator.PositionChanged += Locator_PositionChanged;
+        }
         protected async override void OnDisappearing()
         {
             base.OnDisappearing();
 
             CleanMap(map.Pins);
+
             //Para de receber as posições
             await locator.StopListeningAsync();
         }
-        private void Map_PinClicked(object sender, PinClickedEventArgs e)
-        {
-            //TODO
-            Pin pin = e.Pin;
-            //int userId = (int)pin.Tag;
-            //var user = User.GetById(userId);
-
-            //Envio uma mensagem para a TabPage ir para a ChatPage
-            //MessagingCenter.Send<object, int>(user, "click", 2);
-            MessagingCenter.Send<object, int>(this, "click", 3);
-        }
-        private void Locator_PositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs e)
+        private async void Locator_PositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs e)
         {
             var center = new Position(e.Position.Latitude, e.Position.Longitude);
-            //TODO
-            //App.user = User.UpdatePosition(App.user, center);
+            
             try
             {
+                App.user.Latitude = center.Latitude;
+                App.user.Longitude = center.Longitude;
+                await DatabaseService.UpdateUser(App.user);
                 userPin.Position = center;
-
             }
             catch (Exception)
             {
@@ -99,17 +91,34 @@ namespace TCCApp.View
             CreateCircleShapeAt(center);
             map.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(5000)), true);
         }
-        public void CreatePin(User user, bool isMyPin)
+        private void Map_PinClicked(object sender, PinClickedEventArgs e)
         {
             //TODO
+            Pin pin = e.Pin;
+            int userId = (int)pin.Tag;
+            var user = DatabaseService.GetUser(userId);
+
+            //Envio uma mensagem para a TabPage ir para a ChatPage
+            //TODO CHAT PAGE
+            MessagingCenter.Send<object, int>(user, "click", 3);
+        }
+        public void CreatePin(User user, bool isMyPin)
+        {
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream(user.Buffer);
+            }
+            catch (Exception)
+            {
+            }
             Pin pin = new Pin()
             {
-                //Icon = BitmapDescriptorFactory.FromStream(new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.imageIcon.png", App.assembly))),
-                Icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user, 75, 75)),
+                Icon = BitmapDescriptorFactory.FromView(new BindingPinView(stream)),
                 Type = PinType.Place,
                 Label = "Olá, vms comprar juntos!",
                 ZIndex = 5,
-                //Tag = user.Id
+                Tag = user.Id
             };
             if (user.Latitude != 0 || user.Longitude != 0)
             {
@@ -147,16 +156,52 @@ namespace TCCApp.View
         {
             if (o is IList<Circle> && o != null)
             {
-                map.Circles.Clear();
+                try
+                {
+                    map.Circles.Clear();
+                }
+                catch (Exception)
+                {
+                }
             }
             else if (o is IList<Pin> && o != null)
             {
-                map.Pins.Clear();
+                try
+                {
+                    map.Pins.Clear();
+                }
+                catch (Exception)
+                {
+                }
             }
             else
             {
                 return;
             }
+        }
+        private void NearUsersClicked(object sender, EventArgs e)
+        {
+            CleanMap(map.Pins);
+            CreatePin(App.user, true);
+            AddNearUsers();
+        }
+        public async void AddNearUsers()
+        {
+            var allUsers = await DatabaseService.GetUsers() as IList<User>;
+            var nearUsers = allUsers.Where(u => u.Id != App.user.Id &&
+                    DistanceService
+                    .CompareDistance(App.user.Latitude, App.user.Longitude, u.Latitude, u.Longitude) <= (raio / 1000));
+            try
+            {
+                foreach (var user in nearUsers)
+                {
+                    CreatePin(user, false);
+                }
+            }
+            catch (Exception)
+            {
+            }
+            
         }
     }
 }
