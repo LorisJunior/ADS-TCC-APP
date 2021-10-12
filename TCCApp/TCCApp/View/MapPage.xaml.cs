@@ -44,7 +44,6 @@ namespace TCCApp.View
             CreatePin(App.user, true);
             map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(App.user.Latitude, App.user.Longitude), Distance.FromMeters(5000)), true);
         }
-        
 
         protected async override void OnAppearing()
         {
@@ -61,7 +60,7 @@ namespace TCCApp.View
 
             App.user.Latitude = center.Latitude;
             App.user.Longitude = center.Longitude;
-            await DatabaseService.UpdateUser(App.user);
+            await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
 
             locator.PositionChanged += Locator_PositionChanged;
         }
@@ -82,7 +81,7 @@ namespace TCCApp.View
             {
                 App.user.Latitude = center.Latitude;
                 App.user.Longitude = center.Longitude;
-                await DatabaseService.UpdateUser(App.user);
+                await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
                 userPin.Position = center;
             }
             catch (Exception)
@@ -112,6 +111,7 @@ namespace TCCApp.View
             catch (Exception)
             {
             }
+
             Pin pin = new Pin()
             {
                 Icon = BitmapDescriptorFactory.FromView(new BindingPinView(stream)),
@@ -188,9 +188,10 @@ namespace TCCApp.View
         public async void AddNearUsers()
         {
             var allUsers = await DatabaseService.GetUsers() as IList<User>;
-            var nearUsers = allUsers.Where(u => u.Id != App.user.Id &&
+            var nearUsers = allUsers.Where(u => u.Key != App.user.Key &&
                     DistanceService
-                    .CompareDistance(App.user.Latitude, App.user.Longitude, u.Latitude, u.Longitude) <= (raio / 1000));
+                    .CompareDistance(App.user.Latitude, App.user.Longitude, u.Latitude, u.Longitude) <= (raio / 1000)
+                    && u.DisplayUserInMap);
             try
             {
                 foreach (var user in nearUsers)

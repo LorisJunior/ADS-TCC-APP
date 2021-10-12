@@ -14,6 +14,77 @@ namespace TCCApp.Services
     {
         static FirebaseClient firebase = new FirebaseClient("https://dbteste-cbb09-default-rtdb.firebaseio.com/");
 
+        
+        public async static Task<bool> AddUserAsync(User user)
+        {
+            try
+            {
+                user.Key = await GetKey();
+                await UpdateUserAsync(user.Key, user);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        private async static Task<string> GetKey()
+        {
+            //Esse método cria um documento vazio e retorna uma chave
+            var doc = await firebase
+               .Child("Users")
+                  .PostAsync(new User());
+            return doc.Key;
+        }
+        public async static Task<bool> UpdateUserAsync(string key, User user)
+        {
+            try
+            {
+                await firebase
+                    .Child("Users")
+                    .Child(key)
+                    .PutAsync(user);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public static async Task<User> GetUserAsync(string key)
+        {
+            try
+            {
+                return await firebase
+                    .Child("Users")
+                    .Child(key)
+                    .OnceSingleAsync<User>();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public async static Task<bool> DeleteItemAsync(string key)
+        {
+            //TODO
+            //IRÁ SERVIR PARA DELETAR ITENS
+            try
+            {
+                await firebase
+                    .Child("Itens")
+                    .Child(key)
+                    .DeleteAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
         public static async Task AddUser(User user)
         {
             //Firebase
@@ -40,10 +111,12 @@ namespace TCCApp.Services
                   Sobre = item.Object.Sobre,
                   Nome = item.Object.Nome,
                   Buffer = item.Object.Buffer,
+                  DisplayUserInMap = item.Object.DisplayUserInMap,
                   Latitude = item.Object.Latitude,
                   Longitude = item.Object.Longitude
               }).ToList();
         }
+        
         public static async Task<User> GetUser(int Id)
         {
             var allUsers = await GetUsers();
@@ -60,7 +133,7 @@ namespace TCCApp.Services
               .OnceAsync<User>();
             return allUsers.Where(u => u.Id == user.Id).FirstOrDefault();
         }
-        public static async Task UpdateUser(User user)
+        /*public static async Task UpdateUser(User user)
         {
             //Firebase
             var toUpdateUser = (await firebase
@@ -72,11 +145,11 @@ namespace TCCApp.Services
                 .Child(toUpdateUser.Key)
                   .PutAsync(user);
             //SQLite
-            /*using (var db = new SQLiteConnection(App.DatabasePath))
+            using (var db = new SQLiteConnection(App.DatabasePath))
             {
                 db.CreateTable<User>();
                 db.Update(user);
-            }*/
-        }
+            }
+        }*/
     }
 }

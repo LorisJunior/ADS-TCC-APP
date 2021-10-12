@@ -15,7 +15,6 @@ namespace TCCApp.Services
             var buffer = memoryStream.ToArray();
             return buffer;
         }
-
         public static byte[] ConvertToByte(Stream stream)
         {
             var memoryStream = new MemoryStream();
@@ -24,7 +23,6 @@ namespace TCCApp.Services
             var buffer = memoryStream.ToArray();
             return buffer;
         }
-
         public static Stream GetImageFromStream(string path, Assembly assembly)
         {
             Stream stream = assembly.GetManifestResourceStream(path);

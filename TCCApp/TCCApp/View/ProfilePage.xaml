@@ -68,6 +68,7 @@
                     </Grid>
 
                     <ImageButton
+                        x:Name="DisplayUser"
                         AbsoluteLayout.LayoutBounds="0.95, 0.25"
                         AbsoluteLayout.LayoutFlags="PositionProportional"
                         WidthRequest="60"
@@ -75,7 +76,8 @@
                         CornerRadius="15"
                         Padding="15"
                         Source="bell.png"
-                        BackgroundColor="#F5BDEF"/>
+                        BackgroundColor="#F5BDEF"
+                        Clicked="DisplayUser_Clicked"/>
 
                     <Frame
                         AbsoluteLayout.LayoutBounds="0.03, 0.15"
@@ -131,7 +133,8 @@
                     <Editor
                         x:Name="sobre"
                         AbsoluteLayout.LayoutBounds="15, 68, 325,95"
-                        HeightRequest="150"
+                        HeightRequest="95"
+                        WidthRequest="325"
                         Placeholder="Escreva algo sobre você."
                         Keyboard="Chat"
                         MaxLength="200"

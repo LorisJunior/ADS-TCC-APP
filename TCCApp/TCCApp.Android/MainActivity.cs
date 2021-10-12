@@ -79,7 +79,6 @@ namespace TCCApp.Droid
             }
         }
     }
-
     public class SetStatusBar : ISetStatusBarColor
     {
         [Obsolete]
