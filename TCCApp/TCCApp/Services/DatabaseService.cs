@@ -102,21 +102,52 @@ namespace TCCApp.Services
         }
         public static async Task<List<User>> GetUsers()
         {
-            return (await firebase
-              .Child("Users")
-              .OnceAsync<User>()).Select(item => new User
-              {
-                  Id = item.Object.Id,
-                  Email = item.Object.Email,
-                  Sobre = item.Object.Sobre,
-                  Nome = item.Object.Nome,
-                  Buffer = item.Object.Buffer,
-                  DisplayUserInMap = item.Object.DisplayUserInMap,
-                  Latitude = item.Object.Latitude,
-                  Longitude = item.Object.Longitude
-              }).ToList();
+            try
+            {
+                return (await firebase
+                .Child("Users")
+                .OnceAsync<User>()).Select(item => new User
+                {
+                    Key = item.Object.Key,
+                    Id = item.Object.Id,
+                    Email = item.Object.Email,
+                    Sobre = item.Object.Sobre,
+                    Nome = item.Object.Nome,
+                    Buffer = item.Object.Buffer,
+                    DisplayUserInMap = item.Object.DisplayUserInMap,
+                    Latitude = item.Object.Latitude,
+                    Longitude = item.Object.Longitude
+                }).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
-        
+
+        public static async Task<List<User>> GetNearUsers()
+        {
+            try
+            {
+                return (await firebase
+                .Child("Users")
+                .OnceAsync<User>()).Select(item => new User
+                {
+                    Key = item.Object.Key,
+                    Sobre = item.Object.Sobre,
+                    Nome = item.Object.Nome,
+                    Buffer = item.Object.Buffer,
+                    DisplayUserInMap = item.Object.DisplayUserInMap,
+                    Latitude = item.Object.Latitude,
+                    Longitude = item.Object.Longitude
+                }).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public static async Task<User> GetUser(int Id)
         {
             var allUsers = await GetUsers();

@@ -17,17 +17,17 @@
                 Value="{Binding Raio}"
                 Maximum="5000"
                 Minimum="1000"
-                DragCompletedCommand="{Binding IncreaseCircleRadiusCommand}"
                 MinimumTrackColor="Gray" 
                 MaximumTrackColor="Gray"/>
             
         </Frame>
         
         <Button 
+            x:Name="Search"
             AbsoluteLayout.LayoutBounds="0.84, 0.95, 80, 60"
             AbsoluteLayout.LayoutFlags="PositionProportional"
             Text="Update"
-            Clicked="NearUsersClicked"/>
+            Clicked="Search_Clicked"/>
         
     </AbsoluteLayout>
 </ContentPage>

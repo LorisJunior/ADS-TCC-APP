@@ -13,5 +13,6 @@ namespace TCCApp.Model
         public Color Cor { get; set; }
         public ImageSource ImageUrl { get; set; }
         public byte[] ByteImage { get; set; }
+        public string UserKey { get; set; }
     }
 }

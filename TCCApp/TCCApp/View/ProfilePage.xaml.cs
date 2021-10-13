@@ -19,10 +19,6 @@ namespace TCCApp.View
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
             SetProfile();
-
-            /*var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += (s, e) => PickPhoto();
-            profileImage.GestureRecognizers.Add(tapGestureRecognizer);*/
         }
         public async void PickPhoto()
         {

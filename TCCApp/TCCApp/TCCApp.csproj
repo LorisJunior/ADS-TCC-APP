@@ -23,6 +23,7 @@
     <None Remove="Images\shorts.png" />
     <None Remove="Images\sneakersIcon.png" />
     <None Remove="Images\trumpetIcon.png" />
+    <None Remove="Images\user.png" />
     <None Remove="Images\violinIcon.png" />
   </ItemGroup>
 
@@ -39,6 +40,7 @@
     <EmbeddedResource Include="Images\shorts.png" />
     <EmbeddedResource Include="Images\sneakersIcon.png" />
     <EmbeddedResource Include="Images\trumpetIcon.png" />
+    <EmbeddedResource Include="Images\user.png" />
     <EmbeddedResource Include="Images\violinIcon.png" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,8 +10,16 @@ namespace TCCApp.View
     {
         public BindingPinView(Stream stream)
         {
-            InitializeComponent();
-            pinImage.Source = ImageSource.FromStream(() => stream);
+            try
+            {
+                InitializeComponent();
+
+                pinImage.Source = ImageSource.FromStream(() => stream);
+
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

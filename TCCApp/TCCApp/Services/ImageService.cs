@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using FFImageLoading.Work;
+using System.IO;
 using System.Reflection;
-
+using TCCApp.Model;
+using Xamarin.Forms;
 
 namespace TCCApp.Services
 {
@@ -28,6 +30,69 @@ namespace TCCApp.Services
             Stream stream = assembly.GetManifestResourceStream(path);
             return stream;
         }
-        
+
+        public static Xamarin.Forms.View GetIcon(User user, double width, double height)
+        {
+            var img = new ImageButton
+            {
+                Source = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(user.Buffer)),
+                Aspect = Aspect.AspectFill,
+                CornerRadius = 38,
+            };
+
+            AbsoluteLayout.SetLayoutBounds(img, new Rectangle(x: 0, y: 0, width: width, height: height));
+
+            return (new StackLayout
+            {
+                WidthRequest = width,
+                HeightRequest = height,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                AnchorX = 0.5,
+                AnchorY = 1,
+                Children =
+                {
+                    new AbsoluteLayout
+                    {
+                        Children =
+                        {
+                            img
+                        }
+                    }
+                }
+            });
+        }
+
+        public static Xamarin.Forms.View GetIcon(byte[] buffer, double width, double height)
+        {
+            var img = new ImageButton
+            {
+                Source = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(buffer)),
+                Aspect = Aspect.AspectFill,
+                CornerRadius = 38,
+            };
+
+            AbsoluteLayout.SetLayoutBounds(img, new Rectangle(x: 0, y: 0, width: width, height: height));
+
+            return (new StackLayout
+            {
+                WidthRequest = width,
+                HeightRequest = height,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                AnchorX = 0.5,
+                AnchorY = 1,
+                Children =
+                {
+                    new AbsoluteLayout
+                    {
+                        Children =
+                        {
+                            img
+                        }
+                    }
+                }
+            });
+        }
     }
 }

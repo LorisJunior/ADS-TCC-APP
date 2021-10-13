@@ -17,6 +17,7 @@ namespace TCCApp.View
         Circle circle;
         Plugin.Geolocator.Abstractions.IGeolocator locator = null;
         Pin userPin;
+
         private double raio = 3000;
 
         public double Raio
@@ -41,25 +42,30 @@ namespace TCCApp.View
             map.MyLocationEnabled = true;
             map.UiSettings.MyLocationButtonEnabled = true;
             map.PinClicked += Map_PinClicked;
-            CreatePin(App.user, true);
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(App.user.Latitude, App.user.Longitude), Distance.FromMeters(5000)), true);
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
 
-            locator = CrossGeolocator.Current;
-            await locator.StartListeningAsync(new TimeSpan(0, 0, 0), 100);
+            try
+            {
+                locator = CrossGeolocator.Current;
+                await locator.StartListeningAsync(new TimeSpan(0, 0, 0), 100);
+            }
+            catch (Exception)
+            {
+            }
+            
             var position = await locator.GetPositionAsync();
             var center = new Position(position.Latitude, position.Longitude);
 
             CreateCircleShapeAt(center);
-            CreatePin(App.user, true);
             map.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(5000)), true);
 
             App.user.Latitude = center.Latitude;
             App.user.Longitude = center.Longitude;
+            CreatePin(App.user, true);
             await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
 
             locator.PositionChanged += Locator_PositionChanged;
@@ -103,26 +109,35 @@ namespace TCCApp.View
         }
         public void CreatePin(User user, bool isMyPin)
         {
-            MemoryStream stream = null;
-            try
+            BitmapDescriptor icon = null;
+
+            if (user.Buffer != null)
             {
-                stream = new MemoryStream(user.Buffer);
+                icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user, 75, 75));
             }
-            catch (Exception)
+            else
             {
+                icon = BitmapDescriptorFactory.FromStream(new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.user.png", App.assembly)));
             }
 
             Pin pin = new Pin()
             {
-                Icon = BitmapDescriptorFactory.FromView(new BindingPinView(stream)),
+                Icon = icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user, 75, 75)),
                 Type = PinType.Place,
                 Label = "Olá, vms comprar juntos!",
                 ZIndex = 5,
                 Tag = user.Id
             };
-            if (user.Latitude != 0 || user.Longitude != 0)
+
+            try
             {
-                pin.Position = new Position(user.Latitude, user.Longitude);
+                if (user.Latitude != 0 || user.Longitude != 0)
+                {
+                    pin.Position = new Position(user.Latitude, user.Longitude);
+                }
+            }
+            catch (Exception)
+            {
             }
 
             if (isMyPin == true)
@@ -134,6 +149,41 @@ namespace TCCApp.View
             {
                 map.Pins.Add(pin);
             }
+        }
+        public void CreatePin(User user, Xamarin.Forms.View view)
+        {
+            BitmapDescriptor icon = null;
+
+            if (user.Buffer != null)
+            {
+                icon = BitmapDescriptorFactory.FromView(view);
+            }
+            else
+            {
+                icon = BitmapDescriptorFactory.FromStream(new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.user.png", App.assembly)));
+            }
+
+            Pin pin = new Pin()
+            {
+                Icon = icon,
+                Type = PinType.Place,
+                Label = "Olá, vms comprar juntos!",
+                ZIndex = 5,
+                Tag = user.Id
+            };
+
+            try
+            {
+                if (user.Latitude != 0 || user.Longitude != 0)
+                {
+                    pin.Position = new Position(user.Latitude, user.Longitude);
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            map.Pins.Add(pin);
         }
         public void CreateCircleShapeAt(Position position)
         {
@@ -174,35 +224,39 @@ namespace TCCApp.View
                 {
                 }
             }
-            else
-            {
-                return;
-            }
         }
-        private void NearUsersClicked(object sender, EventArgs e)
+        private void Search_Clicked(object sender, EventArgs e)
         {
-            CleanMap(map.Pins);
-            CreatePin(App.user, true);
-            AddNearUsers();
-        }
-        public async void AddNearUsers()
-        {
-            var allUsers = await DatabaseService.GetUsers() as IList<User>;
-            var nearUsers = allUsers.Where(u => u.Key != App.user.Key &&
-                    DistanceService
-                    .CompareDistance(App.user.Latitude, App.user.Longitude, u.Latitude, u.Longitude) <= (raio / 1000)
-                    && u.DisplayUserInMap);
+            Search.IsEnabled = false;
             try
             {
-                foreach (var user in nearUsers)
-                {
-                    CreatePin(user, false);
-                }
+                CleanMap(map.Pins);
+                CreatePin(App.user, true);
+                AddNearUsers();
             }
             catch (Exception)
             {
             }
-            
+            Device.StartTimer(TimeSpan.FromSeconds(.8), () =>
+            {
+                Search.IsEnabled = true;
+                return false;
+            });
+        }
+        public async void AddNearUsers()
+        {
+            Search.IsEnabled = false;
+            var allUsers = await DatabaseService.GetNearUsers();
+            var nearUsers = allUsers.Where(u => u.Key != App.user.Key &&
+                    DistanceService
+                    .CompareDistance(App.user.Latitude, App.user.Longitude, u.Latitude, u.Longitude) <= (raio / 1000)
+                    && u.DisplayUserInMap);
+
+            foreach (var user in nearUsers)
+            {
+                CreatePin(user, ImageService.GetIcon(user.Buffer, 75,75));
+            }
+            Search.IsEnabled = true;
         }
     }
 }

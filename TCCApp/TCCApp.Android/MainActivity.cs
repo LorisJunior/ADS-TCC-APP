@@ -36,9 +36,9 @@ namespace TCCApp.Droid
             FacebookClientManager.Initialize(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             CachedImageRenderer.Init(enableFastRenderer: true);
             CachedImageRenderer.InitImageViewHandler();
-            Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
 
             var databasePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "MyData.db");
             LoadApplication(new App(new OAuth2Service(), databasePath));

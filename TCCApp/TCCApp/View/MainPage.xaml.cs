@@ -32,11 +32,6 @@ namespace TCCApp
             await Navigation.PushAsync(new EsqSenhaPage());
         }
 
-        //private async void EntrarButton_Clicked(object sender, EventArgs e)
-       // {
-         //   await Navigation.PushAsync(new HistoryPage());
-        //}
-
         private async void CadastroButton_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CadastroPage());
