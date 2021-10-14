@@ -31,46 +31,51 @@ namespace TCCApp.Services
             return stream;
         }
 
-        public static Xamarin.Forms.View GetIcon(User user, double width, double height)
+        public static Xamarin.Forms.View GetIcon(User user)
         {
+            const double TAM = 75;
+            var stream = new MemoryStream(user.Buffer);
+            Xamarin.Forms.ImageSource temp = Xamarin.Forms.ImageSource.FromStream(() => stream);
+
+
             var img = new ImageButton
             {
-                Source = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(user.Buffer)),
+                Source = temp,
                 Aspect = Aspect.AspectFill,
                 CornerRadius = 38,
-                BackgroundColor = Color.SkyBlue
+                BackgroundColor = Color.Transparent
             };
 
             var placeholder = new ImageButton
             {
-                Source = Xamarin.Forms.ImageSource.FromStream(() =>new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.user.png", App.assembly))),
-                Aspect = Aspect.AspectFill,
+                Source = "user.png",
                 CornerRadius = 38,
-                BackgroundColor = Color.SkyBlue
             };
 
-            AbsoluteLayout.SetLayoutBounds(img, new Rectangle(x: 0, y: 0, width: width, height: height));
-
-            return (new StackLayout
+            AbsoluteLayout.SetLayoutBounds(img, new Rectangle(x: 0, y: 0, width: TAM, height: TAM));
+            AbsoluteLayout.SetLayoutFlags(img, AbsoluteLayoutFlags.None);
+            AbsoluteLayout.SetLayoutBounds(placeholder, new Rectangle(x: 0, y: 0, width: TAM, height: TAM));
+            AbsoluteLayout.SetLayoutFlags(placeholder, AbsoluteLayoutFlags.None);
+            return new AbsoluteLayout
             {
-                WidthRequest = width,
-                HeightRequest = height,
+                WidthRequest = TAM,
+                HeightRequest = TAM,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
                 AnchorX = 0.5,
                 AnchorY = 1,
                 Children =
                 {
-                    new AbsoluteLayout
-                    {
-                        Children =
-                        {
+                   // new StackLayout
+                   // {
+                       // Children =
+                       // {
                             placeholder,
                             img
-                        }
-                    }
+                       // }
+                   // }
                 }
-            });
+            };
         }
     }
 }

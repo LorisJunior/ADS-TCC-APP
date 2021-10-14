@@ -113,7 +113,7 @@ namespace TCCApp.View
 
             if (user.Buffer != null)
             {
-                icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user, 75, 75));
+                icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user));
             }
             else
             {
@@ -122,7 +122,7 @@ namespace TCCApp.View
 
             Pin pin = new Pin()
             {
-                Icon = icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user, 75, 75)),
+                Icon = icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user)),
                 Type = PinType.Place,
                 Label = "Olá, vms comprar juntos!",
                 ZIndex = 5,

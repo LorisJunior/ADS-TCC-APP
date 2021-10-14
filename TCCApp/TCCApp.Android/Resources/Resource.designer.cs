@@ -15789,7 +15789,10 @@ namespace TCCApp.Droid
 			public const int trumpetIcon = 2131165410;
 			
 			// aapt resource value: 0x7F0700E3
-			public const int violinIcon = 2131165411;
+			public const int user = 2131165411;
+			
+			// aapt resource value: 0x7F0700E4
+			public const int violinIcon = 2131165412;
 			
 			static Drawable()
 			{
