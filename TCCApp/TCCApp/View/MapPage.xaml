@@ -24,9 +24,11 @@
         
         <Button 
             x:Name="Search"
-            AbsoluteLayout.LayoutBounds="0.84, 0.95, 80, 60"
+            AbsoluteLayout.LayoutBounds="0.825, 0.969, 80, 63"
             AbsoluteLayout.LayoutFlags="PositionProportional"
             Text="Update"
+            BackgroundColor="White"
+            Opacity=".75"
             Clicked="Search_Clicked"/>
         
     </AbsoluteLayout>

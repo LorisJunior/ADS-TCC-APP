@@ -38,38 +38,15 @@ namespace TCCApp.Services
                 Source = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(user.Buffer)),
                 Aspect = Aspect.AspectFill,
                 CornerRadius = 38,
+                BackgroundColor = Color.SkyBlue
             };
 
-            AbsoluteLayout.SetLayoutBounds(img, new Rectangle(x: 0, y: 0, width: width, height: height));
-
-            return (new StackLayout
+            var placeholder = new ImageButton
             {
-                WidthRequest = width,
-                HeightRequest = height,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
-                AnchorX = 0.5,
-                AnchorY = 1,
-                Children =
-                {
-                    new AbsoluteLayout
-                    {
-                        Children =
-                        {
-                            img
-                        }
-                    }
-                }
-            });
-        }
-
-        public static Xamarin.Forms.View GetIcon(byte[] buffer, double width, double height)
-        {
-            var img = new ImageButton
-            {
-                Source = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(buffer)),
+                Source = Xamarin.Forms.ImageSource.FromStream(() =>new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.user.png", App.assembly))),
                 Aspect = Aspect.AspectFill,
                 CornerRadius = 38,
+                BackgroundColor = Color.SkyBlue
             };
 
             AbsoluteLayout.SetLayoutBounds(img, new Rectangle(x: 0, y: 0, width: width, height: height));
@@ -88,6 +65,7 @@ namespace TCCApp.Services
                     {
                         Children =
                         {
+                            placeholder,
                             img
                         }
                     }

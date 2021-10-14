@@ -150,41 +150,6 @@ namespace TCCApp.View
                 map.Pins.Add(pin);
             }
         }
-        public void CreatePin(User user, Xamarin.Forms.View view)
-        {
-            BitmapDescriptor icon = null;
-
-            if (user.Buffer != null)
-            {
-                icon = BitmapDescriptorFactory.FromView(view);
-            }
-            else
-            {
-                icon = BitmapDescriptorFactory.FromStream(new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.user.png", App.assembly)));
-            }
-
-            Pin pin = new Pin()
-            {
-                Icon = icon,
-                Type = PinType.Place,
-                Label = "Olá, vms comprar juntos!",
-                ZIndex = 5,
-                Tag = user.Id
-            };
-
-            try
-            {
-                if (user.Latitude != 0 || user.Longitude != 0)
-                {
-                    pin.Position = new Position(user.Latitude, user.Longitude);
-                }
-            }
-            catch (Exception)
-            {
-            }
-
-            map.Pins.Add(pin);
-        }
         public void CreateCircleShapeAt(Position position)
         {
             CleanMap(map.Circles);
@@ -254,7 +219,7 @@ namespace TCCApp.View
 
             foreach (var user in nearUsers)
             {
-                CreatePin(user, ImageService.GetIcon(user.Buffer, 75,75));
+                CreatePin(user, false);
             }
             Search.IsEnabled = true;
         }
