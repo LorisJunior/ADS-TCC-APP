@@ -122,7 +122,7 @@ namespace TCCApp.View
 
             Pin pin = new Pin()
             {
-                Icon = icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user)),
+                Icon = icon,
                 Type = PinType.Place,
                 Label = "Olá, vms comprar juntos!",
                 ZIndex = 5,
@@ -152,16 +152,23 @@ namespace TCCApp.View
         }
         public void CreateCircleShapeAt(Position position)
         {
-            CleanMap(map.Circles);
+            try
+            {
+                CleanMap(map.Circles);
 
-            circle.Center = position;
-            circle.Radius = Distance.FromMeters(Raio);
-            circle.StrokeColor = Color.DodgerBlue;
-            circle.StrokeWidth = 6f;
-            circle.FillColor = Color.FromRgba(0, 0, 255, 32);
-            circle.Tag = "CIRCLE";
+                circle.Center = position;
+                circle.Radius = Distance.FromMeters(Raio);
+                circle.StrokeColor = Color.DodgerBlue;
+                circle.StrokeWidth = 6f;
+                circle.FillColor = Color.FromRgba(0, 0, 255, 32);
+                circle.Tag = "CIRCLE";
 
-            map.Circles.Add(circle);
+                map.Circles.Add(circle);
+            }
+            catch (Exception)
+            {
+            }
+            
         }
         public void UpdateCircleRadius()
         {
@@ -202,7 +209,7 @@ namespace TCCApp.View
             catch (Exception)
             {
             }
-            Device.StartTimer(TimeSpan.FromSeconds(.8), () =>
+            Device.StartTimer(TimeSpan.FromSeconds(2), () =>
             {
                 Search.IsEnabled = true;
                 return false;
@@ -210,7 +217,6 @@ namespace TCCApp.View
         }
         public async void AddNearUsers()
         {
-            Search.IsEnabled = false;
             var allUsers = await DatabaseService.GetNearUsers();
             var nearUsers = allUsers.Where(u => u.Key != App.user.Key &&
                     DistanceService
@@ -221,7 +227,6 @@ namespace TCCApp.View
             {
                 CreatePin(user, false);
             }
-            Search.IsEnabled = true;
         }
     }
 }

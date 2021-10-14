@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fft="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              x:Class="TCCApp.View.BindingPinView"
              WidthRequest="75"
              HeightRequest="75"
@@ -8,13 +10,18 @@
              AnchorY="1">
 
     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-        
-        <ImageButton
+
+        <ff:CachedImage 
+            BitmapOptimizations="True"
+            CacheDuration="7"
             x:Name="pinImage"
-            AbsoluteLayout.LayoutBounds="0, 0, 75, 75"
-            AbsoluteLayout.LayoutFlags="None"
             Aspect="AspectFill"
-            CornerRadius="40"/>
-        
+            AbsoluteLayout.LayoutBounds="0, 0, 75, 75"
+            AbsoluteLayout.LayoutFlags="None" >
+            <ff:CachedImage.Transformations>
+                <fft:CircleTransformation/>
+            </ff:CachedImage.Transformations>
+        </ff:CachedImage>
+
     </AbsoluteLayout>
 </StackLayout>
