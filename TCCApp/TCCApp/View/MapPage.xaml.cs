@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using TCCApp.Model;
 using TCCApp.Services;
 using Xamarin.Forms;
@@ -14,6 +15,9 @@ namespace TCCApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
+        //Permite que apenas uma thread execute por vez
+        //Isso evita a exceção Unmanaged Descriptor
+        SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
         Circle circle;
         Plugin.Geolocator.Abstractions.IGeolocator locator = null;
         Pin userPin;
@@ -107,8 +111,10 @@ namespace TCCApp.View
             //TODO CHAT PAGE
             MessagingCenter.Send<object, int>(user, "click", 3);
         }
-        public void CreatePin(User user, bool isMyPin)
+        public async void CreatePin(User user, bool isMyPin)
         {
+            await semaphoreSlim.WaitAsync();
+
             BitmapDescriptor icon = null;
 
             if (user.Buffer != null)
@@ -149,6 +155,8 @@ namespace TCCApp.View
             {
                 map.Pins.Add(pin);
             }
+
+            semaphoreSlim.Release();
         }
         public void CreateCircleShapeAt(Position position)
         {
@@ -197,9 +205,10 @@ namespace TCCApp.View
                 }
             }
         }
-        private void Search_Clicked(object sender, EventArgs e)
+        private async void Search_Clicked(object sender, EventArgs e)
         {
-            Search.IsEnabled = false;
+            await semaphoreSlim.WaitAsync();
+
             try
             {
                 CleanMap(map.Pins);
@@ -209,14 +218,15 @@ namespace TCCApp.View
             catch (Exception)
             {
             }
-            Device.StartTimer(TimeSpan.FromSeconds(2), () =>
-            {
-                Search.IsEnabled = true;
-                return false;
-            });
+            
+            semaphoreSlim.Release();
         }
         public async void AddNearUsers()
         {
+            //Permite que apenas uma thread execute por vez
+            //Isso evita a exceção Unmanaged Descriptor
+            await semaphoreSlim.WaitAsync();
+
             var allUsers = await DatabaseService.GetNearUsers();
             var nearUsers = allUsers.Where(u => u.Key != App.user.Key &&
                     DistanceService
@@ -227,6 +237,8 @@ namespace TCCApp.View
             {
                 CreatePin(user, false);
             }
+
+            semaphoreSlim.Release();
         }
     }
 }
