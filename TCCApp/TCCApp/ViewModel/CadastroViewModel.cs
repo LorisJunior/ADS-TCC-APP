@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using TCCApp.Helpers;
 using TCCApp.Model;
+using TCCApp.Services;
 using TCCApp.View;
 using Xamarin.Forms;
 
@@ -11,7 +11,7 @@ namespace TCCApp.ViewModel
 {
     class CadastroViewModel : INotifyPropertyChanged
     {
-        public Usuario Usuario { get; set; } = new Usuario();
+        public User Usuario { get; set; } = new User();
         private Page _page;
         public CadastroViewModel(Page page)
         {
@@ -63,15 +63,15 @@ namespace TCCApp.ViewModel
         }
         private async void Cadastrar()
         {
-            if (!UsuarioHelper.IsFormValid(Usuario, _page)) { return; }
+            if (!DatabaseService.IsFormValid(Usuario, _page)) { return; }
             else
             {
                 //Chama o método GetUser, que retornará nulo se o email não for encontrado na base de dados
-                var novoUser = await UsuarioHelper.GetUser(Usuario.Email);
+                var novoUser = await DatabaseService.GetUser(Usuario.Email);
                 if (novoUser == null)
                 {
                     //Chama o método AddUser, que irá inserir o usuário no base de dados
-                    var user = await UsuarioHelper.AddUser(Usuario.Email, Usuario.Senha);
+                    var user = await DatabaseService.AddUserAsync(Usuario);
                     //Retorno true se o usuário foi inserido com sucesso   
                     if (user)
                     {

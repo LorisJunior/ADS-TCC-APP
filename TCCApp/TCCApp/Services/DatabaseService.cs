@@ -3,10 +3,13 @@ using Firebase.Database.Query;
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TCCApp.Model;
+using Xamarin.Forms;
 
 namespace TCCApp.Services
 {
@@ -116,7 +119,8 @@ namespace TCCApp.Services
                     Buffer = item.Object.Buffer,
                     DisplayUserInMap = item.Object.DisplayUserInMap,
                     Latitude = item.Object.Latitude,
-                    Longitude = item.Object.Longitude
+                    Longitude = item.Object.Longitude,
+                    Senha = item.Object.Senha
                 }).ToList();
             }
             catch (Exception)
@@ -164,6 +168,14 @@ namespace TCCApp.Services
               .OnceAsync<User>();
             return allUsers.Where(u => u.Id == user.Id).FirstOrDefault();
         }
+        public static async Task<User> GetUser(string email)
+        {
+            var allUsers = await GetUsers();
+            await firebase
+              .Child("Users")
+              .OnceAsync<User>();
+            return allUsers.Where(a => a.Email == email).FirstOrDefault();
+        }
         /*public static async Task UpdateUser(User user)
         {
             //Firebase
@@ -182,5 +194,88 @@ namespace TCCApp.Services
                 db.Update(user);
             }
         }*/
+        public static bool IsFormValid(object model, Page page)
+        {
+            HideValidationFields(model, page);
+            var errors = new List<ValidationResult>();
+            var context = new ValidationContext(model);
+            bool isValid = Validator.TryValidateObject(model, context, errors, true);
+            if (!isValid)
+            {
+                ShowValidationFields(errors, model, page);
+            }
+            return errors.Count() == 0;
+        }
+        private static void HideValidationFields
+            (object model, Page page, string validationLabelSuffix = "Error")
+        {
+            if (model == null) { return; }
+            var properties = GetValidatablePropertyNames(model);
+            foreach (var propertyName in properties)
+            {
+                var errorControlName =
+                $"{propertyName.Replace(".", "_")}{validationLabelSuffix}";
+                var control = page.FindByName<Label>(errorControlName);
+                if (control != null)
+                {
+                    control.IsVisible = false;
+                }
+            }
+        }
+        private static void ShowValidationFields(List<ValidationResult> errors, object model, Page page, string validationLabelSuffix = "Error")
+        {
+            const string senhaRequired = "The Senha field is required.";
+            const string emailRequired = "The Email field is required.";
+            const string emailValid = "The Email field is not a valid e-mail address.";
+            const string senhaObrigatorio = "O campo Senha é obrigatório.";
+            const string emailObrigatorio = "O campo Email é obrigatório.";
+            const string emailValido = "Por favor, entre com um email válido.";
+
+            if (model == null) { return; }
+            foreach (var error in errors)
+            {
+                var memberName = $"{model.GetType().Name}_{error.MemberNames.FirstOrDefault()}";
+                memberName = memberName.Replace(".", "_");
+                var errorControlName = $"{memberName}{validationLabelSuffix}";
+                var control = page.FindByName<Label>(errorControlName);
+                if (control != null)
+                {
+                    switch (error.ErrorMessage)
+                    {
+                        case senhaRequired:
+                            control.Text = senhaObrigatorio;
+                            break;
+                        case emailRequired:
+                            control.Text = emailObrigatorio;
+                            break;
+                        case emailValid:
+                            control.Text = emailValido;
+                            break;
+                        default:
+                            control.Text = $"{error.ErrorMessage}{Environment.NewLine}";
+                            break;
+                    }
+                    control.IsVisible = true;
+                }
+            }
+        }
+        private static IEnumerable<string> GetValidatablePropertyNames(object model)
+        {
+            var validatableProperties = new List<string>();
+            var properties = GetValidatableProperties(model);
+            foreach (var propertyInfo in properties)
+            {
+                var errorControlName = $"{propertyInfo.DeclaringType.Name}.{propertyInfo.Name}";
+                validatableProperties.Add(errorControlName);
+            }
+            return validatableProperties;
+        }
+        private static List<PropertyInfo> GetValidatableProperties(object model)
+        {
+            var properties = model.GetType().GetProperties().Where(prop => prop.CanRead
+                && prop.GetCustomAttributes(typeof(ValidationAttribute), true).Any()
+                && prop.GetIndexParameters().Length == 0).ToList();
+            return properties;
+        }
     }
 }

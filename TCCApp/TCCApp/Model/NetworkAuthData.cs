@@ -13,5 +13,7 @@
         public string Background { get; set; }
 
         public string Foreground { get; set; }
+
+        public string Email { get; set; }
     }
 }

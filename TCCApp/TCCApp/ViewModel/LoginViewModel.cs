@@ -18,7 +18,7 @@ namespace TCCApp.ViewModel
 {
     class LoginViewModel : INotifyPropertyChanged
     {
-        public Usuario Usuario { get; set; } = new Usuario();
+        public User Usuario { get; set; } = new User();
         private Page _page;
         public event PropertyChangedEventHandler PropertyChanged;
         IGoogleClientManager _googleService = CrossGoogleClient.Current;
@@ -60,16 +60,17 @@ namespace TCCApp.ViewModel
         private async void Login()
         {
             //Checa se o email é valído ou se campo email ou senha estão vazios
-            if (!UsuarioHelper.IsFormValid(Usuario, _page)){ return; }
+            if (!DatabaseService.IsFormValid(Usuario, _page)){ return; }
             else
             {
                 //Chama o método GetUser, que retornará nulo se o email não for encontrado na base de dados
-                var user = await UsuarioHelper.GetUser(Usuario.Email);
+                var user = await DatabaseService.GetUser(Usuario.Email);
                 if (user != null)
                 {
                     if (Usuario.Email == user.Email && Usuario.Senha == user.Senha)
                     {
                         //Abre a tela de HistoryPage após o sucesso do Login    
+                        App.user.Key = user.Key;
                         await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
                     }
                     else
@@ -132,7 +133,7 @@ namespace TCCApp.ViewModel
                         case GoogleActionStatus.Completed:
                             #if DEBUG
                             var googleUserString = JsonConvert.SerializeObject(e.Data);
-                            Debug.WriteLine($"Google Logged in succesfully: {googleUserString}");
+                            Debug.WriteLine($"Login Google realizado com sucesso: {googleUserString}");
                             #endif
 
                             var socialLoginData = new NetworkAuthData
@@ -143,18 +144,40 @@ namespace TCCApp.ViewModel
                                 Background = authNetwork.Background,
                                 Picture = e.Data.Picture.AbsoluteUri,
                                 Name = e.Data.Name,
+                                Email = e.Data.Email,
                             };
-
-                            await App.Current.MainPage.Navigation.PushModalAsync(new HistoryPage());
+                            var user = await DatabaseService.GetUser(socialLoginData.Email);
+                            if (user != null)
+                            {   
+                                App.user.Key = user.Key;
+                                await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                            }
+                            else
+                            {
+                                user = new User();
+                                user.Email = socialLoginData.Email;
+                                user.Nome = socialLoginData.Name;
+                                socialLoginData.Picture = socialLoginData.Picture;
+                                var adicionado = await DatabaseService.AddUserAsync(user);
+                                //Retorno true se o usuário foi inserido com sucesso   
+                                if (adicionado)
+                                {
+                                    user = await DatabaseService.GetUser(socialLoginData.Email);
+                                    App.user.Key = user.Key;
+                                    await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                                }
+                                else
+                                    await App.Current.MainPage.DisplayAlert("Erro", "", "OK");
+                            }           
                             break;
                         case GoogleActionStatus.Canceled:
-                            await App.Current.MainPage.DisplayAlert("Google Auth", "Canceled", "Ok");
+                            await App.Current.MainPage.DisplayAlert("Autenticação Google", "Cancelado", "Ok");
                             break;
                         case GoogleActionStatus.Error:
-                            await App.Current.MainPage.DisplayAlert("Google Auth", "Error", "Ok");
+                            await App.Current.MainPage.DisplayAlert("Autenticação Google", "Erro", "Ok");
                             break;
                         case GoogleActionStatus.Unauthorized:
-                            await App.Current.MainPage.DisplayAlert("Google Auth", "Unauthorized", "Ok");
+                            await App.Current.MainPage.DisplayAlert("Autenticação Google", "Não autorizado", "Ok");
                             break;
                     }
 
@@ -197,17 +220,40 @@ namespace TCCApp.ViewModel
                                 Background = authNetwork.Background,
                                 Picture = facebookProfile.Picture.Data.Url,
                                 Name = $"{facebookProfile.FirstName} {facebookProfile.LastName}",
+                                Email = facebookProfile.Email,
                             };
-                            await App.Current.MainPage.Navigation.PushModalAsync(new HistoryPage());
+                            var user = await DatabaseService.GetUser(socialLoginData.Email);
+                            if (user != null)
+                            {
+                                App.user.Key = user.Key;
+                                await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                            }
+                            else
+                            {
+                                user = new User();
+                                user.Email = socialLoginData.Email;
+                                user.Nome = socialLoginData.Name;
+                                socialLoginData.Picture = socialLoginData.Picture;
+                                var adicionado = await DatabaseService.AddUserAsync(user);
+                                //Retorno true se o usuário foi inserido com sucesso   
+                                if (adicionado)
+                                {
+                                    user = await DatabaseService.GetUser(socialLoginData.Email);
+                                    App.user.Key = user.Key;
+                                    await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                                }
+                                else
+                                    await App.Current.MainPage.DisplayAlert("Erro", "", "OK");
+                            }
                             break;
                         case FacebookActionStatus.Canceled:
-                            await App.Current.MainPage.DisplayAlert("Facebook Auth", "Canceled", "Ok");
+                            await App.Current.MainPage.DisplayAlert("Autenticação Facebook", "Cancelado", "Ok");
                             break;
                         case FacebookActionStatus.Error:
-                            await App.Current.MainPage.DisplayAlert("Facebook Auth", "Error", "Ok");
+                            await App.Current.MainPage.DisplayAlert("Autenticação Facebook", "Erro", "Ok");
                             break;
                         case FacebookActionStatus.Unauthorized:
-                            await App.Current.MainPage.DisplayAlert("Facebook Auth", "Unauthorized", "Ok");
+                            await App.Current.MainPage.DisplayAlert("Autenticação Facebook", "Não autorizado", "Ok");
                             break;
                     }
 

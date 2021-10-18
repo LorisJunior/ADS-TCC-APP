@@ -19,13 +19,13 @@
             <Entry Placeholder="Email"
             Text="{Binding Usuario.Email}"
             Keyboard="Email"/>
-            <Label x:Name="Usuario_EmailError" 
+            <Label x:Name="User_EmailError" 
                 IsVisible="False" TextColor="Red" />
 
             <Entry Placeholder="Senha"
             Text="{Binding Usuario.Senha}"
             IsPassword="True"/>
-            <Label x:Name="Usuario_SenhaError" 
+            <Label x:Name="User_SenhaError" 
                 IsVisible="False" TextColor="Red" />
 
             <Entry Placeholder="Confirmar senha"
