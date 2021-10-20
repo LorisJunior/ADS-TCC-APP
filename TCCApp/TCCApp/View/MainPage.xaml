@@ -69,6 +69,8 @@
                             HeightRequest="45"
                             TextColor="{Binding Foreground}"
                             BackgroundColor="{Binding Background}"
+                            BorderColor="DarkGray"
+                                BorderWidth="1"
                             WidthRequest="220"
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="FillAndExpand"/>

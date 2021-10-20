@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TCCApp.Model;
 using TCCApp.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,14 +11,14 @@ using Xamarin.Forms.Xaml;
 namespace TCCApp.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EsqSenhaPage : ContentPage
+    public partial class TrocarSenhaPage : ContentPage
     {
-        EsqSenhaViewModel esqSenhaViewModel;
-        public EsqSenhaPage()
+        TrocarSenhaViewModel trocarSenhaViewModel;
+        public TrocarSenhaPage(User puser)
         {
-            esqSenhaViewModel = new EsqSenhaViewModel();
+            trocarSenhaViewModel = new TrocarSenhaViewModel(this, puser);
             InitializeComponent();
-            BindingContext = esqSenhaViewModel;
+            BindingContext = trocarSenhaViewModel;
             NavigationPage.SetHasNavigationBar(this, false);
         }
     }
