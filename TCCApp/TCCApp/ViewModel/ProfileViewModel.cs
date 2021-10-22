@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Input;
+using TCCApp.Model;
 using TCCApp.Services;
+using TCCApp.View;
 using TCCApp.ViewModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -13,6 +17,10 @@ namespace TCCApp.ViewModel
 {
     public class ProfileViewModel : BaseViewModel
     {
+        public ObservableCollection<Notification> Notifications { get; private set; }
+
+        SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
+
         private Color displayButtonColor;
         public Color DisplayButtonColor
         {
@@ -35,13 +43,11 @@ namespace TCCApp.ViewModel
         }
 
         private string email;
-
         public string Email
         {
             get { return email; }
             set => Set(ref email, value);
         }
-
 
         private ImageSource profileImage;
         public ImageSource ProfileImage
@@ -52,9 +58,52 @@ namespace TCCApp.ViewModel
 
         public ProfileViewModel()
         {
+            Notifications = new ObservableCollection<Notification>();
             DisplayButtonColor = Color.FromHex("#F5BDEF");
+            InitChatData();
         }
+        public void InitChatData()
+        {
+            Notifications = new ObservableCollection<Notification>
+            {
+                new Notification
+                {
+                    Author = "Lucia",
+                    GroupKey = "Conversa1"
+                },
+                new Notification
+                {
+                    Author = "Junior",
+                    GroupKey = "Conversa2"
+                },
+                new Notification
+                {
+                    Author = "Ronaldo",
+                    GroupKey = "Conversa3"
+                },
+            };
+        }
+        public ICommand GoToChat => new Command(async sender =>
+        {
+            CollectionView view = sender as CollectionView;
 
+            if (view.SelectedItem != null)
+            {
+                await semaphoreSlim.WaitAsync();
+
+                var selected = view.SelectedItem as Notification;
+
+                //Chat.Author = selected.Author;
+
+                //Chat.GroupKey = selected.GroupKey;
+
+                await Application.Current.MainPage.Navigation.PushAsync(new ChatPage());
+
+                view.SelectedItem = null;
+
+                semaphoreSlim.Release();
+            }
+        });
         public async void SetProfile()
         {
             App.user = await DatabaseService.GetUserAsync(App.user.Key);
@@ -80,7 +129,6 @@ namespace TCCApp.ViewModel
             {
             }
         }
-
         public ICommand DisplayUser => new Command(async() =>
         {
             if (App.user.DisplayUserInMap)

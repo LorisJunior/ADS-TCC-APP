@@ -4,6 +4,70 @@
              x:Class="TCCApp.View.ProfilePage"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="NotificationTemplate">
+                <Grid Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Frame 
+                        BackgroundColor="LightGray" 
+                        HasShadow="False"
+                        CornerRadius="15"
+                        Padding="10"
+                        HorizontalOptions="Center">
+
+
+                        <Grid WidthRequest="320">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ImageButton
+                                Grid.RowSpan="3"
+                                Grid.Column="0"
+                                BackgroundColor="SkyBlue"
+                                HeightRequest="80"
+                                WidthRequest="80"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start"
+                                CornerRadius="40"
+                                IsEnabled="False"/>
+
+                            <Label 
+                                x:Name="name"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding Author}"
+                                TextColor="DarkSlateGray"
+                                FontSize="Medium"/>
+
+                            <Label 
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Text="Te convidou para conversar"
+                                TextColor="DarkSlateGray"
+                                FontSize="16"
+                                FontAttributes="Bold"/>
+
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ScrollView HeightRequest="850">
 
         <AbsoluteLayout BackgroundColor="#FFF9EE" HeightRequest="850">
@@ -181,67 +245,23 @@
                             Source="deleteyellow.png"
                             BackgroundColor="#F5BDEF"/>
 
-                    <ScrollView
+                    <BoxView 
+                        AbsoluteLayout.LayoutBounds="0.5, 0.17, 1, 0.002"
+                        BackgroundColor="Gray"
+                        AbsoluteLayout.LayoutFlags="All"/>
+
+                    <CollectionView 
+                        x:Name="NotificationList"
                         AbsoluteLayout.LayoutBounds="0, 0.95, 1, 0.81"
-                        AbsoluteLayout.LayoutFlags="All">
+                        AbsoluteLayout.LayoutFlags="All"
+                        ItemsSource="{Binding Notifications}"
+                        ItemTemplate="{StaticResource NotificationTemplate}"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding GoToChat}"
+                        SelectionChangedCommandParameter="{x:Reference NotificationList}">
 
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Frame 
-                        BackgroundColor="LightGray" 
-                        HasShadow="False"
-                        CornerRadius="15"
-                        Padding="10"
-                        HorizontalOptions="Center">
-
-                                <Grid WidthRequest="320">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <ImageButton
-                                        Grid.RowSpan="3"
-                                        Grid.Column="0"
-                                        BackgroundColor="SkyBlue"
-                                        HeightRequest="80"
-                                        WidthRequest="80"
-                                        VerticalOptions="Center"
-                                        HorizontalOptions="Start"
-                                        CornerRadius="40"
-                                        IsEnabled="False"/>
-
-                                    <Label 
-                                        x:Name="name"
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        Text="Lucia"
-                                        TextColor="DarkSlateGray"
-                                        FontSize="Medium"/>
-
-                                    <Label 
-                                        Grid.Row="2"
-                                        Grid.Column="1"
-                                        Text="Te convidou para uma conversa"
-                                        TextColor="DarkSlateGray"
-                                        FontSize="15"
-                                        FontAttributes="Bold"/>
-
-                                </Grid>
-                            </Frame>
-                        </Grid>
-                    </ScrollView>
+                        
+                    </CollectionView>
                     
                 </AbsoluteLayout>
             </pancake:PancakeView>
