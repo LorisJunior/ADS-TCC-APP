@@ -66,14 +66,8 @@ namespace TCCApp.Services
                 AnchorY = 1,
                 Children =
                 {
-                   // new StackLayout
-                   // {
-                       // Children =
-                       // {
-                            placeholder,
-                            img
-                       // }
-                   // }
+                    placeholder,
+                    img
                 }
             };
         }
