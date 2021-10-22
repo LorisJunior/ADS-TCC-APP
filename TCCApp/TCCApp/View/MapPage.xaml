@@ -6,10 +6,13 @@
 
     <AbsoluteLayout>
         
-        <map:Map x:Name="map" AbsoluteLayout.LayoutBounds="1,1,1,1"
-                 AbsoluteLayout.LayoutFlags="All"/>
+        <map:Map 
+            x:Name="map" 
+            AbsoluteLayout.LayoutBounds="1,1,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            MyLocationEnabled="True"/>
         
-        <Frame AbsoluteLayout.LayoutBounds="0.10, 0.965, 250, 60"
+        <Frame AbsoluteLayout.LayoutBounds="0.10, 0.965, 235, 60"
                AbsoluteLayout.LayoutFlags="PositionProportional" CornerRadius="5"
                Opacity="0.8" >
 
@@ -21,15 +24,23 @@
                 MaximumTrackColor="Gray"/>
             
         </Frame>
-        
-        <Button 
-            x:Name="Search"
-            AbsoluteLayout.LayoutBounds="0.825, 0.969, 80, 63"
+
+        <Frame
+            AbsoluteLayout.LayoutBounds="0.823, 0.965, 97, 62"
             AbsoluteLayout.LayoutFlags="PositionProportional"
-            Text="Update"
+            Opacity=".76"
+            Padding="0"
+            Margin="0"
+            CornerRadius="6">
+
+            <Button 
+            x:Name="Search"
+            Text="Procurar"
             BackgroundColor="White"
-            Opacity=".75"
             Clicked="Search_Clicked"/>
+
+        </Frame>
+        
         
     </AbsoluteLayout>
 </ContentPage>

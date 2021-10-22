@@ -18,12 +18,11 @@ namespace TCCApp.View
         //Permite que apenas uma thread execute por vez
         //Isso evita a exceção Unmanaged Descriptor
         SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
-        Circle circle;
+        Circle circle = new Circle();
         Plugin.Geolocator.Abstractions.IGeolocator locator = null;
         Pin userPin;
 
         private double raio = 3000;
-
         public double Raio
         {
             get => raio;
@@ -39,11 +38,9 @@ namespace TCCApp.View
         }
         public MapPage()
         {
-            circle = new Circle();
             InitializeComponent();
             BindingContext = this;
 
-            map.MyLocationEnabled = true;
             map.UiSettings.MyLocationButtonEnabled = true;
             map.PinClicked += Map_PinClicked;
         }
