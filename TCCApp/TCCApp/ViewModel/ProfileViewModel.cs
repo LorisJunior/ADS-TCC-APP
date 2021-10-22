@@ -56,10 +56,13 @@ namespace TCCApp.ViewModel
             set => Set(ref profileImage, value);
         }
 
+        ChatViewModel chatViewModel;
+
         public ProfileViewModel()
         {
             Notifications = new ObservableCollection<Notification>();
             DisplayButtonColor = Color.FromHex("#F5BDEF");
+            chatViewModel = DependencyService.Get<ChatViewModel>();
             InitChatData();
         }
         public void InitChatData()
@@ -83,27 +86,6 @@ namespace TCCApp.ViewModel
                 },
             };
         }
-        public ICommand GoToChat => new Command(async sender =>
-        {
-            CollectionView view = sender as CollectionView;
-
-            if (view.SelectedItem != null)
-            {
-                await semaphoreSlim.WaitAsync();
-
-                var selected = view.SelectedItem as Notification;
-
-                //Chat.Author = selected.Author;
-
-                //Chat.GroupKey = selected.GroupKey;
-
-                await Application.Current.MainPage.Navigation.PushAsync(new ChatPage());
-
-                view.SelectedItem = null;
-
-                semaphoreSlim.Release();
-            }
-        });
         public async void SetProfile()
         {
             App.user = await DatabaseService.GetUserAsync(App.user.Key);
@@ -129,6 +111,27 @@ namespace TCCApp.ViewModel
             {
             }
         }
+        public ICommand GoToChat => new Command(async sender =>
+        {
+            CollectionView view = sender as CollectionView;
+
+            if (view.SelectedItem != null)
+            {
+                await semaphoreSlim.WaitAsync();
+
+                var selected = view.SelectedItem as Notification;
+
+                chatViewModel.Author = App.user.Nome;
+
+                chatViewModel.GroupKey = selected.GroupKey;
+
+                await Application.Current.MainPage.Navigation.PushAsync(new ChatPage());
+
+                view.SelectedItem = null;
+
+                semaphoreSlim.Release();
+            }
+        });
         public ICommand DisplayUser => new Command(async() =>
         {
             if (App.user.DisplayUserInMap)

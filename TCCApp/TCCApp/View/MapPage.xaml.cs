@@ -105,11 +105,11 @@ namespace TCCApp.View
             //TODO
             Pin pin = e.Pin;
             int userId = (int)pin.Tag;
-            var user = DatabaseService.GetUser(userId);
+            //var user = DatabaseService.GetUser(userId);
 
             //Envio uma mensagem para a TabPage ir para a ChatPage
             //TODO CHAT PAGE
-            MessagingCenter.Send<object, int>(user, "click", 3);
+            //MessagingCenter.Send<object, int>(user, "click", 3);
         }
         public async void CreatePin(User user, bool isMyPin)
         {

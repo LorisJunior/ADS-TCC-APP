@@ -11,6 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModel\Commands\**" />
+    <EmbeddedResource Remove="ViewModel\Commands\**" />
+    <None Remove="ViewModel\Commands\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\beerIcon.png" />
     <None Remove="Images\camisaIcon.png" />
     <None Remove="Images\clothesIcon.png" />
@@ -97,9 +103,5 @@
     <EmbeddedResource Update="View\TrocarSenhaPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModel\Commands\" />
   </ItemGroup>
 </Project>

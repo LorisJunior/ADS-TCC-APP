@@ -15,14 +15,118 @@ namespace TCCApp.Services
 {
     public class DatabaseService
     {
-        static FirebaseClient firebase = new FirebaseClient("https://dbteste-cbb09-default-rtdb.firebaseio.com/");
+        public static FirebaseClient firebase = new FirebaseClient("https://dbteste-cbb09-default-rtdb.firebaseio.com/");
 
-        
+        public async static Task<bool> AddMessage(OutboundMessage message, string groupKey)
+        {
+            try
+            {
+                message.Key = await GetChatKey(groupKey);
+                await UpdateMessageAsync(message.Key, groupKey, message);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async static Task<bool> UpdateMessageAsync(string key, string groupKey, OutboundMessage message)
+        {
+            try
+            {
+                await firebase
+                    .Child("Chat")
+                    .Child(groupKey)
+                    .Child(key)
+                    .PutAsync(message);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        public async static Task<string> GetConversaKey(string table)
+        {
+            //Esse método cria um documento vazio e retorna uma chave
+            var doc = await firebase
+               .Child(table)
+               .PostAsync(new Message { Author = "temp" });
+            return doc.Key;
+        }
+        public async static Task<string> GetNewChatGroupKey()
+        {
+            //Esse método cria um documento vazio e retorna uma chave
+            var doc = await firebase
+               .Child("Chat")
+                  .PostAsync(new OutboundMessage());
+            return doc.Key;
+        }
+        public async static Task<string> GetChatKey(string value)
+        {
+            //Esse método cria um documento vazio e retorna uma chave
+            var doc = await firebase
+               .Child("Chat")
+               .Child(value)
+                  .PostAsync(new OutboundMessage());
+            return doc.Key;
+        }
+        public async static Task<List<OutboundMessage>> GetMessages(string groupKey)
+        {
+            try
+            {
+                return (await firebase
+                .Child("Chat")
+                .Child(groupKey)
+                .OnceAsync<OutboundMessage>()).Select(item => new OutboundMessage
+                {
+                    Author = item.Object.Author,
+                    Content = item.Object.Content
+                }).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public async static Task<bool> AddNotificacao(Notification notification)
+        {
+            try
+            {
+                notification.Key = await GetConversaKey("Notificacao");
+                await UpdateNotificacao(notification.Key, notification);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        public async static Task<bool> UpdateNotificacao(string key, Notification notification)
+        {
+            try
+            {
+                await firebase
+                    .Child("Notificacao")
+                    .Child(key)
+                    .PutAsync(notification);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
         public async static Task<bool> AddUserAsync(User user)
         {
             try
             {
-                user.Key = await GetKey();
+                user.Key = await GetUserKeyAsync();
                 await UpdateUserAsync(user.Key, user);
             }
             catch (Exception)
@@ -32,7 +136,7 @@ namespace TCCApp.Services
 
             return true;
         }
-        private async static Task<string> GetKey()
+        public async static Task<string> GetUserKeyAsync()
         {
             //Esse método cria um documento vazio e retorna uma chave
             var doc = await firebase
@@ -70,39 +174,6 @@ namespace TCCApp.Services
                 return null;
             }
         }
-        public async static Task<bool> DeleteItemAsync(string key)
-        {
-            //TODO
-            //IRÁ SERVIR PARA DELETAR ITENS
-            try
-            {
-                await firebase
-                    .Child("Itens")
-                    .Child(key)
-                    .DeleteAsync();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
-        }
-        public static async Task AddUser(User user)
-        {
-            //Firebase
-            await firebase
-               .Child("Users")
-                  .PostAsync(user);
-
-            //SQLite
-            using (var db = new SQLiteConnection(App.DatabasePath))
-            {
-                db.CreateTable<User>();
-                db.Insert(GetUser(user));
-            }
-
-        }
         public static async Task<List<User>> GetUsers()
         {
             try
@@ -128,7 +199,6 @@ namespace TCCApp.Services
                 return null;
             }
         }
-
         public static async Task<List<User>> GetNearUsers()
         {
             try
@@ -151,31 +221,57 @@ namespace TCCApp.Services
                 return null;
             }
         }
+        public async static Task<bool> DeleteItemAsync(string key)
+        {
+            //TODO
+            //IRÁ SERVIR PARA DELETAR ITENS
+            try
+            {
+                await firebase
+                    .Child("Itens")
+                    .Child(key)
+                    .DeleteAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
-        public static async Task<User> GetUser(int Id)
+            return true;
+        }
+        
+
+        /*public static async Task AddUser(User user)
+        {
+            //Firebase
+            await firebase
+               .Child("Users")
+                  .PostAsync(user);
+
+            //SQLite
+            using (var db = new SQLiteConnection(App.DatabasePath))
+            {
+                db.CreateTable<User>();
+                db.Insert(GetUser(user));
+            }
+
+        }*/
+        /*public static async Task<User> GetUser(int Id)
         {
             var allUsers = await GetUsers();
             await firebase
               .Child("Users")
               .OnceAsync<User>();
             return allUsers.Where(u => u.Id == Id).FirstOrDefault();
-        }
-        public static async Task<User> GetUser(User user)
+        }*/
+        /*public static async Task<User> GetUser(User user)
         {
             var allUsers = await GetUsers();
             await firebase
               .Child("Users")
               .OnceAsync<User>();
             return allUsers.Where(u => u.Id == user.Id).FirstOrDefault();
-        }
-        public static async Task<User> GetUser(string email)
-        {
-            var allUsers = await GetUsers();
-            await firebase
-              .Child("Users")
-              .OnceAsync<User>();
-            return allUsers.Where(a => a.Email == email).FirstOrDefault();
-        }
+        }*/
         /*public static async Task UpdateUser(User user)
         {
             //Firebase
@@ -194,6 +290,15 @@ namespace TCCApp.Services
                 db.Update(user);
             }
         }*/
+
+        public static async Task<User> GetUser(string email)
+        {
+            var allUsers = await GetUsers();
+            await firebase
+              .Child("Users")
+              .OnceAsync<User>();
+            return allUsers.Where(a => a.Email == email).FirstOrDefault();
+        }
         public static bool IsFormValid(object model, Page page)
         {
             HideValidationFields(model, page);
