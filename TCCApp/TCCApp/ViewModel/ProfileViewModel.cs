@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Input;
@@ -18,6 +19,7 @@ namespace TCCApp.ViewModel
     public class ProfileViewModel : BaseViewModel
     {
         public ObservableCollection<Notification> Notifications { get; private set; }
+        public IDisposable Subscription { get; set; }
 
         SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
@@ -86,6 +88,31 @@ namespace TCCApp.ViewModel
                 },
             };
         }
+        //Todo - Descomentar quando o banco estiver organizado
+        /*public async void InitSubscription()
+        {
+            await semaphoreSlim.WaitAsync();
+
+            var observable = DatabaseService
+                .firebase.Child("Notificacao")
+                .AsObservable<Notification>();
+
+            Subscription = observable
+            .Where(f => !string.IsNullOrEmpty(f.Key)
+            //&& f.Object?.Author != Author
+            && !string.IsNullOrEmpty(f.Object.Author))
+            .Subscribe(f =>
+            {
+                var talk = new Notification
+                {
+                    Author = f.Object.Author,
+                    GroupKey = f.Object.GroupKey,
+                };
+                Notifications.Add(talk);
+            });
+
+            semaphoreSlim.Release();
+        }*/
         public async void SetProfile()
         {
             App.user = await DatabaseService.GetUserAsync(App.user.Key);
