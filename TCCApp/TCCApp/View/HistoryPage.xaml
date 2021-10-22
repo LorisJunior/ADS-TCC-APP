@@ -12,6 +12,6 @@
     <local:ProfilePage Title="Perfil" IconImageSource="person.png"/>
     <local:ItemsPage Title="Items" IconImageSource="list.png"/>
     <local:MapPage Title="Mapa" IconImageSource="map.png"/>
-    <local:ChatPage Title="Chat" IconImageSource="chat.png"/>
+    <local:ChatListPage Title="ChatList" IconImageSource="chat.png"/>
 
 </TabbedPage>
