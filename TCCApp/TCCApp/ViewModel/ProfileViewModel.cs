@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Plugin.Media;
+using Plugin.Media.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -208,8 +210,14 @@ namespace TCCApp.ViewModel
         {
             try
             {
-                var media = await MediaPicker.PickPhotoAsync();
-                var stream = await media.OpenReadAsync();
+                var media = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions 
+                {
+                    PhotoSize = PhotoSize.Medium,
+                    CompressionQuality = 90,
+                });
+
+                var stream = media.GetStream();
+                
                 var buffer = ImageService.ConvertToByte(stream);
                 ProfileImage = ImageSource.FromStream(() => new MemoryStream(buffer));
 
