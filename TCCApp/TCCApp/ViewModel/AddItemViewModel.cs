@@ -29,11 +29,11 @@ namespace TCCApp.ViewModel
             set => Set(ref itemMargin, value);
         }
 
-        private string nome;
-        public string Nome
+        private string tipo;
+        public string Tipo
         {
-            get { return nome; }
-            set => Set(ref nome, value);
+            get { return tipo; }
+            set => Set(ref tipo, value);
         }
 
         private double quantidade;
@@ -68,6 +68,8 @@ namespace TCCApp.ViewModel
             }
         }
 
+        public byte[] ByteItemImage { get; set; }
+
         ItemViewModel itemViewModel;
         public AddItemViewModel()
         {
@@ -75,23 +77,36 @@ namespace TCCApp.ViewModel
             ItemImage = "shorts.png";
             ItemMargin = 15;
             Hue = 0;
+            Quantidade = 1;
         }
         public ICommand CreateItem => new Command(async() =>
         {
             Item item = new Item
             {
-                Nome = nome,
+                Tipo = tipo,
                 Quantidade = quantidade,
                 Descricao = descricao,
                 Cor = iconColor,
-                ImageUrl = itemImage
+                Hue = hue,
+                ByteImage = ByteItemImage
             };
 
+            await DatabaseService.AddItem(item);
+
+            //Deve inserir no banco de dados antes de setar imageUrl o firebase nao aceita imageurl
+            item.ImageUrl = ImageSource.FromStream(() => new MemoryStream(ByteItemImage));
             itemViewModel.Items.Add(item);
+
+            await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
 
             await Application.Current.MainPage.DisplayAlert("Sucesso!", "O item foi criado com sucesso", "ok");
 
             await Application.Current.MainPage.Navigation.PopAsync();
+
+            //Voltando os valores para default
+            Tipo = string.Empty;
+            Quantidade = 1;
+            Descricao = string.Empty;
         });
         public ICommand SelectIcon => new Command(s =>
         {
@@ -102,8 +117,7 @@ namespace TCCApp.ViewModel
 
                 if (icone != null)
                 {
-                    //TODO
-                    //Serve para adicionaro ao banco de dados => icone.ByteIcon
+                    ByteItemImage = icone.ByteIcon;
                     ItemImage = icone.IconImage;
                     ItemMargin = 15;
                 }
@@ -124,7 +138,8 @@ namespace TCCApp.ViewModel
                 });
                 var stream = media.GetStream();
 
-                ItemImage = ImageSource.FromStream(() => new MemoryStream(ImageService.ConvertToByte(stream)));
+                ByteItemImage = ImageService.ConvertToByte(stream);
+                ItemImage = ImageSource.FromStream(() => stream);
                 ItemMargin = 0;
             }
             catch (Exception)

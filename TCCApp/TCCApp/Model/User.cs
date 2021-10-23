@@ -24,6 +24,5 @@ namespace TCCApp.Model
         public bool DisplayUserInMap { get; set; }
         [Required]
         public string Senha { get; set; }
-
     }
 }

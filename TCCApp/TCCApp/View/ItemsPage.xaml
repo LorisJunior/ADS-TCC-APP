@@ -2,13 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.View.ItemsPage"
-             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             xmlns:local="clr-namespace:TCCApp.Model">
-
-
-    <!--ContentPage.BindingContext>
-        <local:ItemData/>
-    </ContentPage.BindingContext-->
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -57,7 +51,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.RowSpan="1" Grid.Column="1"
-                                        Text="{Binding Nome}" 
+                                        Text="{Binding Tipo}" 
                                         FontSize="20"/>         
                                     <Label Grid.Row="1" Grid.Column="1" HorizontalOptions="End"
                                          Text="{Binding Quantidade, StringFormat='x{0}'}" 
@@ -142,6 +136,18 @@
             SelectionMode="Single" 
             ItemSizingStrategy="MeasureFirstItem"
             Margin="10">
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <StackLayout 
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center">
+                        <Label 
+                            Text="Clique no sinal de + para adicionar itens"
+                            FontSize="30"
+                            HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                </ContentView>
+            </CollectionView.EmptyView>
 
         </CollectionView>
 

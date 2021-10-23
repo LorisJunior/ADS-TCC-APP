@@ -70,7 +70,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label 
-                            BindingContext="{x:Reference nome}"
+                            BindingContext="{x:Reference tipo}"
                             Grid.RowSpan="1" Grid.Column="1"
                             Text="{Binding Text}" 
                             FontSize="25"/>
@@ -147,10 +147,10 @@
             </Grid.ColumnDefinitions>
 
             <Entry 
-                x:Name="nome"
-                Text="{Binding Nome}"
+                x:Name="tipo"
+                Text="{Binding Tipo}"
                 Grid.Row="0"
-                Placeholder="Nome do produto" 
+                Placeholder="Tipo do produto" 
                 VerticalOptions="CenterAndExpand"/>
             <Stepper 
                 x:Name="quantidade"

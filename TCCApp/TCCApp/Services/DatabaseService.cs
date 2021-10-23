@@ -4,6 +4,7 @@ using SQLite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -87,6 +88,86 @@ namespace TCCApp.Services
                 return false;
             }
             return true;
+        }
+
+
+        public static async Task<bool> AddItem(Item item)
+        {
+            try
+            {
+                item.Key = await GetItemKey();
+                await UpdateItem(item);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        private static async Task<string> GetItemKey()
+        {
+            //Esse método cria um documento vazio e retorna uma chave
+            var doc = await firebase
+               .Child("Item")
+               .Child(App.user.Key)
+                  .PostAsync(1);
+            return doc.Key;
+        }
+
+        private async static Task<bool> UpdateItem(Item item)
+        {
+            try
+            {
+                await firebase
+                    .Child("Item")
+                    .Child(App.user.Key)
+                    .Child(item.Key)
+                    .PutAsync(item);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async static Task<bool> DeleteItemAsync(string key)
+        {
+            try
+            {
+                await firebase
+                    .Child("Item")
+                    .Child(App.user.Key)
+                    .Child(key)
+                    .DeleteAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        public static async Task<List<Item>> GetItems()
+        {
+            try
+            {
+                return (await firebase
+                .Child("Item")
+                .Child(App.user.Key)
+                .OnceAsync<Item>()).Select(item => new Item
+                {
+                    Key = item.Object.Key,
+                    Tipo = item.Object.Tipo,
+                    Quantidade = item.Object.Quantidade,
+                    Descricao = item.Object.Descricao,
+                    Cor = Color.FromHsla(item.Object.Hue, 0.73, 0.85, 1),
+                    ImageUrl = ImageSource.FromStream(() => new MemoryStream(item.Object.ByteImage))
+                }).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
 
@@ -189,24 +270,7 @@ namespace TCCApp.Services
                 return null;
             }
         }
-        public async static Task<bool> DeleteItemAsync(string key)
-        {
-            //TODO
-            //IRÁ SERVIR PARA DELETAR ITENS
-            try
-            {
-                await firebase
-                    .Child("Itens")
-                    .Child(key)
-                    .DeleteAsync();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
-        }
+        
         
 
         /*public static async Task AddUser(User user)

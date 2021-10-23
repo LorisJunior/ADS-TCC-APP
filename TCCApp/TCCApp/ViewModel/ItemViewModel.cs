@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using TCCApp.Model;
+using TCCApp.Services;
 using TCCApp.View;
 using TCCApp.ViewModel;
 using Xamarin.Forms;
@@ -11,47 +12,34 @@ using Xamarin.Forms;
 [assembly:Dependency(typeof(ItemViewModel))]
 namespace TCCApp.ViewModel
 {
-    class ItemViewModel
+    public class ItemViewModel
     {
         public ObservableCollection<Item> Items { get; private set; }
 
         public ItemViewModel()
         {
-            Items = new ObservableCollection<Item>
-            {
-                new Item
-                {
-                    Nome = "Camisa",
-                    Cor = Color.FromHex("#BDF5F5"),
-                    ImageUrl = "camisaIcon.png",
-                    Descricao = "test",
-                    Quantidade = 5
-                },
-
-                new Item
-                {
-                    Nome = "Shorts",
-                    Cor = Color.FromHex("#F5BDEF"),
-                    ImageUrl = "shorts.png",
-                    Descricao = "",
-                    Quantidade = 6
-                },
-
-                new Item
-                {
-                    Nome = "Garrafa",
-                    Cor = Color.FromHex("#EDF5BD"),
-                    ImageUrl = "garrafaIcon.png",
-                    Descricao = "",
-                    Quantidade = 2
-                }
-            };
+            Items = new ObservableCollection<Item>();
+            InitItems();
         }
-        public ICommand DeleteItem => new Command(s =>
+
+        public async void InitItems()
+        {
+            var items = await DatabaseService.GetItems();
+            if (items != null)
+            {
+                foreach (var item in items)
+                {
+                    Items.Add(item);
+                }
+            }
+        }
+        public ICommand DeleteItem => new Command(async s =>
         {
             CollectionView collectionView = s as CollectionView;
             var item = collectionView.SelectedItem as Item;
             Items.Remove(item);
+
+            await DatabaseService.DeleteItemAsync(item.Key);
         });
         public ICommand GoToAddItemPage => new Command(async() =>
         {

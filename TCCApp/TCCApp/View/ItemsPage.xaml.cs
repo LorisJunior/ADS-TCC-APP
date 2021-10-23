@@ -26,6 +26,7 @@ namespace TCCApp.View
             itemViewModel = DependencyService.Get<ItemViewModel>();
            
             BindingContext = itemViewModel;
+
         }
     }
 }

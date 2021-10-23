@@ -7,7 +7,7 @@ namespace TCCApp.Model
 {
     class Icone
     {
-        public string IconImage { get; set; }
+        public ImageSource IconImage { get; set; }
         public byte[] ByteIcon { get; set; }
     }
 }
