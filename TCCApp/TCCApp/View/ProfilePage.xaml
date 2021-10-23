@@ -138,7 +138,7 @@
                         HeightRequest="60"
                         CornerRadius="15"
                         Padding="15"
-                        Source="bell.png"
+                        Source="{Binding DisplayIcon}"
                         BackgroundColor="{Binding DisplayButtonColor}"
                         Command="{Binding DisplayUser}"/>
 
@@ -179,8 +179,8 @@
                         WidthRequest="60"
                         HeightRequest="60"
                         CornerRadius="15"
-                        Padding="12"
-                        Source="deleteyellow.png"
+                        Padding="10"
+                        Source="clear.png"
                         BackgroundColor="#F5BDEF"
                         Command="{Binding EraseAbout}"/>
 

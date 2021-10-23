@@ -77,6 +77,7 @@ namespace TCCApp.ViewModel
                     {
                         await App.Current.MainPage.DisplayAlert("Successo!", "", "Ok");
                         //Abre a tela de HistoryPage após o sucesso do Login
+
                         await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
                     }
                     else

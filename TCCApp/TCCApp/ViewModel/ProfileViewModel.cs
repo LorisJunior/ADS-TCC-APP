@@ -53,6 +53,14 @@ namespace TCCApp.ViewModel
             set => Set(ref email, value);
         }
 
+        private ImageSource displayIcon;
+        public ImageSource DisplayIcon
+        {
+            get { return displayIcon; }
+            set => Set(ref displayIcon, value);
+        }
+
+
         private ImageSource profileImage;
         public ImageSource ProfileImage
         {
@@ -65,8 +73,10 @@ namespace TCCApp.ViewModel
         public ProfileViewModel()
         {
             Notifications = new ObservableCollection<Notification>();
-            DisplayButtonColor = Color.FromHex("#F5BDEF");
             chatViewModel = DependencyService.Get<ChatViewModel>();
+
+            DisplayButtonColor = Color.FromHex("#FFA8BD");
+            DisplayIcon = "visibility_off.png";
             InitChatData();
         }
         public void InitChatData()
@@ -123,14 +133,22 @@ namespace TCCApp.ViewModel
             {
                 Email = App.user.Email;
 
-                if (App.user.Sobre != null)
-                {
-                    About = App.user.Sobre;
-                }
                 if (App.user.Buffer != null)
                 {
                     ProfileImage = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer));
                 }
+                else
+                {
+                    App.user.Buffer = ImageService.ConvertToByte("TCCApp.Images.user.png", App.assembly);
+                    ProfileImage = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer));
+
+                }
+
+                if (App.user.Sobre != null)
+                {
+                    About = App.user.Sobre;
+                }
+                
                 if (App.user.Nome != null)
                 {
                     Name = App.user.Nome;
@@ -173,6 +191,8 @@ namespace TCCApp.ViewModel
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         DisplayButtonColor = Color.FromHex("#FFA8BD");
+                        DisplayIcon = "visibility_off.png";
+
                     });
                     
                     await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
@@ -187,6 +207,7 @@ namespace TCCApp.ViewModel
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         DisplayButtonColor = Color.FromHex("#F5BDEF");
+                        DisplayIcon = "visibility_on.png";
                     });
                     await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
                 }
@@ -198,6 +219,7 @@ namespace TCCApp.ViewModel
             if (!action)
             {
                 About = string.Empty;
+                App.user.Sobre = string.Empty;
             }
             await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
         });

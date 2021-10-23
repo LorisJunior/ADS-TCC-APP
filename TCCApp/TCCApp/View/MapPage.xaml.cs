@@ -120,7 +120,7 @@ namespace TCCApp.View
             }
             else
             {
-                icon = BitmapDescriptorFactory.FromStream(new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.user.png", App.assembly)));
+                icon = BitmapDescriptorFactory.DefaultMarker(Color.Red);
             }
 
             Pin pin = new Pin()
