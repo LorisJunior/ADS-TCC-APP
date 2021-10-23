@@ -17,6 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="View\LoadView.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\beerIcon.png" />
     <None Remove="Images\camisaIcon.png" />
     <None Remove="Images\clothesIcon.png" />

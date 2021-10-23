@@ -172,7 +172,6 @@ namespace TCCApp.ViewModel
                                 user.Email = socialLoginData.Email;
                                 user.Nome = socialLoginData.Name;
                                 user.Buffer = await ImageService.DownloadImage(socialLoginData.Picture);
-                                //socialLoginData.Picture = socialLoginData.Picture;
                                 var adicionado = await DatabaseService.AddUserAsync(user);
                                 //Retorno true se o usuário foi inserido com sucesso   
                                 if (adicionado)
@@ -257,7 +256,6 @@ namespace TCCApp.ViewModel
                                 user.Email = socialLoginData.Email;
                                 user.Nome = socialLoginData.Name;
                                 user.Buffer = await ImageService.DownloadImage(socialLoginData.Picture);
-                                //socialLoginData.Picture = socialLoginData.Picture;
                                 var adicionado = await DatabaseService.AddUserAsync(user);
                                 //Retorno true se o usuário foi inserido com sucesso   
                                 if (adicionado)
