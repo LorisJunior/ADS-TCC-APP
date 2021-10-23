@@ -26,8 +26,9 @@ namespace TCCApp
 
         private async void EsqSenhaButton_Clicked(object sender, EventArgs e)
         {
-
+            
             await Navigation.PushAsync(new EsqSenhaPage());
+            
         }
 
         private async void CadastroButton_Clicked(object sender, EventArgs e)

@@ -58,28 +58,38 @@ namespace TCCApp.ViewModel
         }
 
         private async void Login()
-        {
+        {            
             //Checa se o email é valído ou se campo email ou senha estão vazios
-            if (!DatabaseService.IsFormValid(Usuario, _page)){ return; }
+            if (!DatabaseService.IsFormValid(Usuario, _page)){ return; }            
             else
             {
+                LoadPage.CallLoadingScreen();
                 //Chama o método GetUser, que retornará nulo se o email não for encontrado na base de dados
                 var user = await DatabaseService.GetUser(Usuario.Email);
                 if (user != null)
                 {
-                    if (Usuario.Email == user.Email && Usuario.Senha == user.Senha)
+                    if (Usuario.Email == user.Email && Criptografia.HashValue(Usuario.Senha) == user.Senha)
                     {
                         //Pega a key do usuário  
                         App.user.Key = user.Key;
                         //Abre a tela de HistoryPage após o sucesso do Login  
                         await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                        //App.Current.MainPage = new HistoryPage();
                     }
                     else
+                    {
                         await App.Current.MainPage.DisplayAlert("Falha no login", "O email ou a senha estão incorretos", "OK");
+                        LoadPage.CloseLoadingScreen();
+                    }
+                        
                 }
                 else
+                {
                     await App.Current.MainPage.DisplayAlert("Falha no login", "Usuário não encontrado", "OK");
+                    LoadPage.CloseLoadingScreen();
+                }
             }
+            
         }
 
         public ICommand OnLoginCommand { get; set; }
@@ -105,6 +115,7 @@ namespace TCCApp.ViewModel
         
         async Task LoginAsync(AuthNetwork authNetwork)
         {
+            LoadPage.CallLoadingScreen();
             switch (authNetwork.Name)
             {
                 case "Facebook":
@@ -114,10 +125,11 @@ namespace TCCApp.ViewModel
                     await LoginGoogleAsync(authNetwork);
                     break;
             }
+            
         }
 
         async Task LoginGoogleAsync(AuthNetwork authNetwork)
-        {
+        {            
             try
             {
                 if (!string.IsNullOrEmpty(_googleService.AccessToken))
@@ -152,13 +164,15 @@ namespace TCCApp.ViewModel
                             {   
                                 App.user.Key = user.Key;
                                 await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                                //App.Current.MainPage = new HistoryPage();
                             }
                             else
                             {
                                 user = new User();
                                 user.Email = socialLoginData.Email;
                                 user.Nome = socialLoginData.Name;
-                                socialLoginData.Picture = socialLoginData.Picture;
+                                user.Buffer = await ImageService.DownloadImage(socialLoginData.Picture);
+                                //socialLoginData.Picture = socialLoginData.Picture;
                                 var adicionado = await DatabaseService.AddUserAsync(user);
                                 //Retorno true se o usuário foi inserido com sucesso   
                                 if (adicionado)
@@ -166,19 +180,26 @@ namespace TCCApp.ViewModel
                                     user = await DatabaseService.GetUser(socialLoginData.Email);
                                     App.user.Key = user.Key;
                                     await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                                    //App.Current.MainPage = new HistoryPage();
                                 }
                                 else
+                                {
                                     await App.Current.MainPage.DisplayAlert("Erro", "", "OK");
+                                    LoadPage.CloseLoadingScreen();
+                                }                                    
                             }           
                             break;
                         case GoogleActionStatus.Canceled:
                             await App.Current.MainPage.DisplayAlert("Autenticação Google", "Cancelado", "Ok");
+                            LoadPage.CloseLoadingScreen();
                             break;
                         case GoogleActionStatus.Error:
                             await App.Current.MainPage.DisplayAlert("Autenticação Google", "Erro", "Ok");
+                            LoadPage.CloseLoadingScreen();
                             break;
                         case GoogleActionStatus.Unauthorized:
                             await App.Current.MainPage.DisplayAlert("Autenticação Google", "Não autorizado", "Ok");
+                            LoadPage.CloseLoadingScreen();
                             break;
                     }
 
@@ -188,6 +209,7 @@ namespace TCCApp.ViewModel
                 _googleService.OnLogin += userLoginDelegate;
 
                 await _googleService.LoginAsync();
+                
             }
             catch (Exception ex)
             {
@@ -234,7 +256,8 @@ namespace TCCApp.ViewModel
                                 user = new User();
                                 user.Email = socialLoginData.Email;
                                 user.Nome = socialLoginData.Name;
-                                socialLoginData.Picture = socialLoginData.Picture;
+                                user.Buffer = await ImageService.DownloadImage(socialLoginData.Picture);
+                                //socialLoginData.Picture = socialLoginData.Picture;
                                 var adicionado = await DatabaseService.AddUserAsync(user);
                                 //Retorno true se o usuário foi inserido com sucesso   
                                 if (adicionado)
@@ -244,17 +267,23 @@ namespace TCCApp.ViewModel
                                     await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
                                 }
                                 else
+                                {
                                     await App.Current.MainPage.DisplayAlert("Erro", "", "OK");
+                                    LoadPage.CloseLoadingScreen();
+                                }                                    
                             }
                             break;
                         case FacebookActionStatus.Canceled:
                             await App.Current.MainPage.DisplayAlert("Autenticação Facebook", "Cancelado", "Ok");
+                            LoadPage.CloseLoadingScreen();
                             break;
                         case FacebookActionStatus.Error:
                             await App.Current.MainPage.DisplayAlert("Autenticação Facebook", "Erro", "Ok");
+                            LoadPage.CloseLoadingScreen();
                             break;
                         case FacebookActionStatus.Unauthorized:
                             await App.Current.MainPage.DisplayAlert("Autenticação Facebook", "Não autorizado", "Ok");
+                            LoadPage.CloseLoadingScreen();
                             break;
                     }
 

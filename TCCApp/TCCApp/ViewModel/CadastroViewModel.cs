@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using TCCApp.Helpers;
 using TCCApp.Model;
 using TCCApp.Services;
 using TCCApp.View;
@@ -62,28 +63,36 @@ namespace TCCApp.ViewModel
             }
         }
         private async void Cadastrar()
-        {
+        {            
             if (!DatabaseService.IsFormValid(Usuario, _page)) { return; }
             else
             {
+                LoadPage.CallLoadingScreen();
                 //Chama o método GetUser, que retornará nulo se o email não for encontrado na base de dados
                 var novoUser = await DatabaseService.GetUser(Usuario.Email);
                 if (novoUser == null)
                 {
+                    Usuario.Senha = Criptografia.HashValue(Usuario.Senha);
                     //Chama o método AddUser, que irá inserir o usuário no base de dados
                     var user = await DatabaseService.AddUserAsync(Usuario);
                     //Retorno true se o usuário foi inserido com sucesso   
                     if (user)
                     {
-                        await App.Current.MainPage.DisplayAlert("Successo!", "", "Ok");
-                        //Abre a tela de HistoryPage após o sucesso do Login
-                        await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                        await App.Current.MainPage.DisplayAlert("", "Usuário criado com successo!", "Ok");
+                        //Volta para tela inicial
+                        await App.Current.MainPage.Navigation.PopToRootAsync();
                     }
                     else
+                    {
                         await App.Current.MainPage.DisplayAlert("Erro", "", "OK");
+                        LoadPage.CloseLoadingScreen();
+                    }                        
                 }
                 else
+                {
                     await App.Current.MainPage.DisplayAlert("Erro", "Esse usuário já existe.", "OK");
+                    LoadPage.CloseLoadingScreen();
+                }                    
             }
         }
     }

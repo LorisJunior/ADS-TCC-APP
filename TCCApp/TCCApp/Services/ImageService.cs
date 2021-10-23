@@ -1,6 +1,9 @@
 ﻿using FFImageLoading.Work;
+using System;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 using TCCApp.Model;
 using Xamarin.Forms;
 
@@ -76,6 +79,17 @@ namespace TCCApp.Services
                    // }
                 }
             };
+        }        
+
+        public static Task<byte[]> DownloadImage(string imageUrl)
+        {
+            HttpClient _client = new HttpClient();
+
+            if (!imageUrl.Trim().StartsWith("https", StringComparison.OrdinalIgnoreCase))
+                throw new Exception("iOS and Android Require Https");
+
+            return _client.GetByteArrayAsync(imageUrl);
         }
+
     }
 }

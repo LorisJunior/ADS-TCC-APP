@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using TCCApp.Helpers;
 using TCCApp.Model;
 using TCCApp.Services;
+using TCCApp.View;
 using Xamarin.Forms;
 
 namespace TCCApp.ViewModel
@@ -67,20 +69,25 @@ namespace TCCApp.ViewModel
             if (!DatabaseService.IsFormValid(Usuario, _page)) { return; }
             else
             {
+                LoadPage.CallLoadingScreen();
                 //Chama o método GetUser, que retornará nulo se o email não for encontrado na base de dados
                 var user = await DatabaseService.GetUser(Usuario.Email);
                 if (user != null)
                 {
                     if (Usuario.Email == user.Email)
-                    {
-                        user.Senha = Usuario.Senha;
+                    {                        
+                        user.Senha = Criptografia.HashValue(Usuario.Senha); ;
                         await DatabaseService.UpdateUserAsync(user.Key, user);
-                        await App.Current.MainPage.DisplayAlert("Sucesso", "Senha trocada com sucesso!", "OK");
+                        await App.Current.MainPage.DisplayAlert("", "Senha trocada com sucesso!", "OK");
+                        //Volta para tela inicial
                         await App.Current.MainPage.Navigation.PopToRootAsync();
                     }
                 }
                 else
+                {
                     await App.Current.MainPage.DisplayAlert("Erro", "Erro", "OK");
+                    LoadPage.CloseLoadingScreen();
+                }                    
             }
             
         }

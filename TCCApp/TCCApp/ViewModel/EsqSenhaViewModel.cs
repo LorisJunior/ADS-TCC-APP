@@ -33,6 +33,7 @@ namespace TCCApp.ViewModel
 
         private async void EnviarEmail()
         {
+            LoadPage.CallLoadingScreen();
             //Chama o método GetUser, que retornará nulo se o email não for encontrado na base de dados
             var user = await DatabaseService.GetUser(Usuario.Email);
             if (user != null)
@@ -44,7 +45,10 @@ namespace TCCApp.ViewModel
                 }
             }
             else
-                await App.Current.MainPage.DisplayAlert("Falha", "O email inserido não existe na base de dados", "OK");
+            {
+                await App.Current.MainPage.DisplayAlert("Erro", "O email inserido não existe na base de dados", "OK");
+                LoadPage.CloseLoadingScreen();
+            }                
         }
     }
 }

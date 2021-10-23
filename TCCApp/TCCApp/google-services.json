@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "244207575030",
-    "project_id": "tccapp-24dea",
-    "storage_bucket": "tccapp-24dea.appspot.com"
+    "project_number": "178608825227",
+    "firebase_url": "https://dbteste-cbb09-default-rtdb.firebaseio.com",
+    "project_id": "dbteste-cbb09",
+    "storage_bucket": "dbteste-cbb09.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:244207575030:android:35c9b8d0eac721bb1971d7",
+        "mobilesdk_app_id": "1:178608825227:android:5028474bff177563bf858e",
         "android_client_info": {
           "package_name": "com.companyname.tccapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "244207575030-6ns4g1bnqj3mmh12pddjgnef42p4t0dk.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.companyname.tccapp",
-            "certificate_hash": "2bc6d67bafd820ce3e451458a5a0a7f5b5165595"
-          }
-        },
-        {
-          "client_id": "244207575030-gdla06sv1546e308panfduu2hmvbl9h8.apps.googleusercontent.com",
+          "client_id": "178608825227-ru36d7og1o58sgeboupe22bk5jhnge6g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAn14hqMS8vlaD6m44xN1OoebjZCzYyiz8"
+          "current_key": "AIzaSyAp07ox7IPM21r6r7FkwjuhLPLFAf4fD_s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "244207575030-gdla06sv1546e308panfduu2hmvbl9h8.apps.googleusercontent.com",
+              "client_id": "178608825227-ru36d7og1o58sgeboupe22bk5jhnge6g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
