@@ -4,6 +4,13 @@
              x:Class="TCCApp.View.ChatPage"
              xmlns:selector="clr-namespace:TCCApp.Helpers">
 
+    <!--ContentPage.Resources>
+        <ResourceDictionary>
+            <selector:MessageSelector 
+                x:Key="SelectMessageTemplate"/>
+        </ResourceDictionary>
+    </ContentPage.Resources-->
+    
     <ScrollView>
         <ScrollView.Orientation>
             <OnPlatform x:TypeArguments="ScrollOrientation">

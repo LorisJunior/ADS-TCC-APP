@@ -70,13 +70,11 @@ namespace TCCApp.ViewModel
 
         ChatViewModel chatViewModel;
 
+        private bool DisplayOption { get; set; }
         public ProfileViewModel()
         {
             Notifications = new ObservableCollection<Notification>();
             chatViewModel = DependencyService.Get<ChatViewModel>();
-
-            DisplayButtonColor = Color.FromHex("#FFA8BD");
-            DisplayIcon = "visibility_off.png";
             InitChatData();
         }
         public void InitChatData()
@@ -132,6 +130,7 @@ namespace TCCApp.ViewModel
             try
             {
                 Email = App.user.Email;
+                DisplayOption = App.user.DisplayUserInMap;
 
                 if (App.user.Buffer != null)
                 {
@@ -141,7 +140,6 @@ namespace TCCApp.ViewModel
                 {
                     App.user.Buffer = ImageService.ConvertToByte("TCCApp.Images.user.png", App.assembly);
                     ProfileImage = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer));
-
                 }
 
                 if (App.user.Sobre != null)
@@ -152,6 +150,24 @@ namespace TCCApp.ViewModel
                 if (App.user.Nome != null)
                 {
                     Name = App.user.Nome;
+                }
+
+                if (App.user.DisplayUserInMap)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DisplayButtonColor = Color.FromHex("#F5BDEF");
+                        DisplayIcon = "visibility_on.png";
+                    });
+                }
+                else
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        DisplayButtonColor = Color.FromHex("#FFA8BD");
+                        DisplayIcon = "visibility_off.png";
+
+                    });
                 }
             }
             catch (Exception)
@@ -181,13 +197,13 @@ namespace TCCApp.ViewModel
         });
         public ICommand DisplayUser => new Command(async() =>
         {
-            if (App.user.DisplayUserInMap)
+            if (DisplayOption)
             {
                 var opt = await Application.Current.MainPage.DisplayAlert("Mudar visibilidade", "Você deseja que os outros usuários não possam te ver no mapa?", "não", "sim");
                 if (!opt)
                 {
 
-                    App.user.DisplayUserInMap = false;
+                    DisplayOption = App.user.DisplayUserInMap = false;
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         DisplayButtonColor = Color.FromHex("#FFA8BD");
@@ -203,7 +219,7 @@ namespace TCCApp.ViewModel
                 var opt = await Application.Current.MainPage.DisplayAlert("Mudar visibilidade", "Você deseja que os outros usuários possam te ver no mapa?", "não", "sim");
                 if (!opt)
                 {
-                    App.user.DisplayUserInMap = true;
+                    DisplayOption = App.user.DisplayUserInMap = true;
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         DisplayButtonColor = Color.FromHex("#F5BDEF");

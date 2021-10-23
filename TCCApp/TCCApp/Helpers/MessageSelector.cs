@@ -21,7 +21,8 @@ namespace TCCApp.Helpers
         }
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            if (((Message)item).Author == chatViewModel.Author)
+            //if (((Message)item).Author == chatViewModel.Author)
+            if (((Message)item).UserKey == App.user.Key)
             {
                 return SimpleTextSelector;
             }
@@ -29,6 +30,17 @@ namespace TCCApp.Helpers
             {
                 return InboundTextSelector;
             }
+            //Todo - escolher entre os dois
+            /*var list = (CollectionView)container;
+
+            if (item is OutboundMessage)
+            {
+                return SimpleTextSelector;
+            }
+            else
+            {
+                return InboundTextSelector;
+            }*/
         }
     }
 }

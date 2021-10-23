@@ -9,7 +9,7 @@ namespace TCCApp.Model
     {
         public string Author { get; set; }
         public string Content { get; set; }
-        public string Key { get; set; }
+        public string UserKey { get; set; }
     }
     public class OutboundMessage : Message
     {

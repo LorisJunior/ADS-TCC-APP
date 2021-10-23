@@ -36,6 +36,7 @@ namespace TCCApp.View
                 }
             }
         }
+
         public MapPage()
         {
             InitializeComponent();

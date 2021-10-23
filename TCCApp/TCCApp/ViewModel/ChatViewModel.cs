@@ -46,11 +46,8 @@ namespace TCCApp.ViewModel
                     foreach (var msg in msgs)
                     {
                         Messages.Add(msg);
-                    }
 
-                    for (int i = 0; i < Messages.Count; i++)
-                    {
-                        if (Messages[i].Author != Author)
+                        if (msg.UserKey != App.user.Key)
                         {
                             messagesFromOtherUsers++;
                         }
@@ -71,7 +68,7 @@ namespace TCCApp.ViewModel
 
             Subscription = observable
             .Where(f => !string.IsNullOrEmpty(f.Key)
-            && f.Object?.Author != Author
+            && f.Object?.UserKey != App.user.Key
             && !string.IsNullOrEmpty(f.Object.Content))
             .Subscribe(f =>
             {
@@ -79,6 +76,7 @@ namespace TCCApp.ViewModel
                 {
                     Author = f.Object.Author,
                     Content = f.Object.Content,
+                    UserKey = f.Object.UserKey
                 };
                 if (CanAddMessage())
                 {
@@ -111,7 +109,8 @@ namespace TCCApp.ViewModel
             var message = new OutboundMessage()
             {
                 Author = Author,
-                Content = this.content
+                Content = this.content,
+                UserKey = App.user.Key
             };
 
             Messages.Add(message);

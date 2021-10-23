@@ -21,26 +21,10 @@ namespace TCCApp.Services
         {
             try
             {
-                message.Key = await GetChatKey(groupKey);
-                await UpdateMessageAsync(message.Key, groupKey, message);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public async static Task<bool> UpdateMessageAsync(string key, string groupKey, OutboundMessage message)
-        {
-            try
-            {
                 await firebase
-                    .Child("Chat")
-                    .Child(groupKey)
-                    .Child(key)
-                    .PutAsync(message);
+                       .Child("Chat")
+                       .Child(groupKey)
+                       .PostAsync(message);
             }
             catch (Exception)
             {
@@ -57,23 +41,6 @@ namespace TCCApp.Services
                .PostAsync(new Message { Author = "temp" });
             return doc.Key;
         }
-        public async static Task<string> GetNewChatGroupKey()
-        {
-            //Esse método cria um documento vazio e retorna uma chave
-            var doc = await firebase
-               .Child("Chat")
-                  .PostAsync(new OutboundMessage());
-            return doc.Key;
-        }
-        public async static Task<string> GetChatKey(string value)
-        {
-            //Esse método cria um documento vazio e retorna uma chave
-            var doc = await firebase
-               .Child("Chat")
-               .Child(value)
-                  .PostAsync(new OutboundMessage());
-            return doc.Key;
-        }
         public async static Task<List<OutboundMessage>> GetMessages(string groupKey)
         {
             try
@@ -84,7 +51,8 @@ namespace TCCApp.Services
                 .OnceAsync<OutboundMessage>()).Select(item => new OutboundMessage
                 {
                     Author = item.Object.Author,
-                    Content = item.Object.Content
+                    Content = item.Object.Content,
+                    UserKey = item.Object.UserKey,
                 }).ToList();
             }
             catch (Exception)
