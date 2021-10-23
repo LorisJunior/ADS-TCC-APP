@@ -33,7 +33,6 @@ namespace TCCApp.Services
             Stream stream = assembly.GetManifestResourceStream(path);
             return stream;
         }
-
         public static Xamarin.Forms.View GetIcon(User user)
         {
             const double TAM = 75;
@@ -69,14 +68,8 @@ namespace TCCApp.Services
                 AnchorY = 1,
                 Children =
                 {
-                   // new StackLayout
-                   // {
-                       // Children =
-                       // {
-                            placeholder,
-                            img
-                       // }
-                   // }
+                    placeholder,
+                    img
                 }
             };
         }        

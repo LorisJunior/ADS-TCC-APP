@@ -18,12 +18,11 @@ namespace TCCApp.View
         //Permite que apenas uma thread execute por vez
         //Isso evita a exceção Unmanaged Descriptor
         SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
-        Circle circle;
+        Circle circle = new Circle();
         Plugin.Geolocator.Abstractions.IGeolocator locator = null;
         Pin userPin;
 
         private double raio = 3000;
-
         public double Raio
         {
             get => raio;
@@ -37,13 +36,12 @@ namespace TCCApp.View
                 }
             }
         }
+
         public MapPage()
         {
-            circle = new Circle();
             InitializeComponent();
             BindingContext = this;
 
-            map.MyLocationEnabled = true;
             map.UiSettings.MyLocationButtonEnabled = true;
             map.PinClicked += Map_PinClicked;
         }
@@ -105,11 +103,11 @@ namespace TCCApp.View
             //TODO
             Pin pin = e.Pin;
             int userId = (int)pin.Tag;
-            var user = DatabaseService.GetUser(userId);
+            //var user = DatabaseService.GetUser(userId);
 
             //Envio uma mensagem para a TabPage ir para a ChatPage
             //TODO CHAT PAGE
-            MessagingCenter.Send<object, int>(user, "click", 3);
+            //MessagingCenter.Send<object, int>(user, "click", 3);
         }
         public async void CreatePin(User user, bool isMyPin)
         {
@@ -123,7 +121,7 @@ namespace TCCApp.View
             }
             else
             {
-                icon = BitmapDescriptorFactory.FromStream(new MemoryStream(ImageService.ConvertToByte("TCCApp.Images.user.png", App.assembly)));
+                icon = BitmapDescriptorFactory.DefaultMarker(Color.Red);
             }
 
             Pin pin = new Pin()

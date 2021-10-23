@@ -11,7 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="View\LoadView.cs" />
+    <Compile Remove="ViewModel\Commands\**" />
+    <EmbeddedResource Remove="ViewModel\Commands\**" />
+    <None Remove="ViewModel\Commands\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +57,7 @@
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Xam.Plugins.Forms.ImageCircle" Version="3.1.1.1-beta" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
@@ -71,10 +74,10 @@
     <EmbeddedResource Update="View\AddItemPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\BindingPinView.xaml">
+    <EmbeddedResource Update="View\CadastroPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="View\CadastroPage.xaml">
+    <EmbeddedResource Update="View\ChatListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\ChatPage.xaml">
@@ -101,9 +104,5 @@
     <EmbeddedResource Update="View\TrocarSenhaPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModel\Commands\" />
   </ItemGroup>
 </Project>

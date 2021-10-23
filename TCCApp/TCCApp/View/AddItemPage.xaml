@@ -3,42 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="TCCApp.View.AddItemPage"
-             xmlns:local="clr-namespace:TCCApp.Model"
-             xmlns:colorHelper="clr-namespace:TCCApp.Helpers">
-
-    <ContentPage.BindingContext>
-        <local:IconeData/>
-    </ContentPage.BindingContext>
+             xmlns:local="clr-namespace:TCCApp.Model">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-
-            <colorHelper:ItemColor x:Key="itemColorHelper"/>
-
-            <DataTemplate x:Key="IconTemplate">
-                <Grid Padding="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50"/>
-                    </Grid.ColumnDefinitions>
-                    <pancake:PancakeView HorizontalOptions="Center" CornerRadius="5">
-                        <pancake:PancakeView.Shadow>
-                            <pancake:DropShadow BlurRadius="5"/>
-                        </pancake:PancakeView.Shadow>
-                        <Frame
-                                BackgroundColor="White"
-                                HorizontalOptions="Center"
-                                HeightRequest="50"
-                                WidthRequest="50"
-                                Padding="0"
-                                CornerRadius="5">
-                            <Image Source="{Binding IconImage}" Margin="5"/>
-                        </Frame>
-                    </pancake:PancakeView>
-                </Grid>
-            </DataTemplate>
+            <local:IconeData x:Key="Icons"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -52,109 +21,40 @@
             HeightRequest="370" 
             BackgroundColor="#F9FBA1"/>
 
-        <Grid AbsoluteLayout.LayoutBounds="0, 385, 411, 220" Margin="15">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="80"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <Entry 
-                x:Name="nome"
-                Grid.Row="0"
-                Placeholder="Nome do produto" 
-                VerticalOptions="CenterAndExpand"/>
-            <Stepper 
-                x:Name="quantidade" 
-                Grid.Row="1" 
-                Minimum="1" 
-                Value="1"/>
-            
-            <Entry 
-                x:Name="descricao"
-                Grid.Row="2"
-                Placeholder="Descrição" 
-                VerticalOptions="CenterAndExpand"/>
-            <Label 
-                Margin="0, 3"
-                Grid.Row="3"
-                Text=" Escolha uma cor" 
-                TextColor="#9E9E9E"
-                FontSize="18"/>
-            <Slider 
-                x:Name="cor"
-                Value="{Binding Hue, Source={StaticResource itemColorHelper}}"
-                Grid.Row="3"
-                VerticalOptions="CenterAndExpand" 
-                MaximumTrackColor="Gray" 
-                MinimumTrackColor="Gray" 
-                ThumbColor="#ECEE72"/>
-        </Grid>
-        
-        <!--Botão criar-->
-        
-        <pancake:PancakeView 
-            AbsoluteLayout.LayoutBounds="0.99, 0.99" 
-            AbsoluteLayout.LayoutFlags="PositionProportional"
-            CornerRadius="10">
-            <pancake:PancakeView.Shadow>
-                <pancake:DropShadow BlurRadius="1"/>
-            </pancake:PancakeView.Shadow>
-            <Button 
-                x:Name="criarItem"
-                Text="Criar"
-                BackgroundColor="#ECEE72"
-                TextColor="#827C93"
-                Clicked="CriarItem_Clicked"
-                HeightRequest="60"
-                WidthRequest="100"/>
-        </pancake:PancakeView>
-
-        <BoxView 
-            AbsoluteLayout.LayoutBounds="16, 310,380,80" 
-            BackgroundColor="White"
-            CornerRadius="10">
-        </BoxView>
-
         <!--Produto-->
-        
-        <pancake:PancakeView AbsoluteLayout.LayoutBounds="120, 50, 180, 235" CornerRadius="20">
-
-            <pancake:PancakeView.Shadow>
-                <pancake:DropShadow BlurRadius="2"/>
-            </pancake:PancakeView.Shadow>
-
+        <Frame 
+            AbsoluteLayout.LayoutBounds="120, 50, 180, 235" 
+            CornerRadius="20" 
+            Padding="0" 
+            HasShadow="True">
+            
             <AbsoluteLayout 
                 x:Name="produtoCor" 
-                BackgroundColor="{Binding HslColor, Source={StaticResource itemColorHelper}}">
-                
+                BackgroundColor="{Binding IconColor}">
+
                 <Frame AbsoluteLayout.LayoutBounds="0, 0,180, 125"
                        AbsoluteLayout.LayoutFlags="PositionProportional"
                        BackgroundColor="Transparent"
                        Padding="0">
-                    
+
                     <Image 
                         x:Name="itemImage" 
-                        Source="shorts.png" 
+                        Source="{Binding ItemImage}" 
                         Aspect="AspectFit"  
-                        Margin="15"/>
-                    
+                        Margin="{Binding ItemMargin}"/>
+
                 </Frame>
 
                 <!--Botão AddPhoto-->
-                    
-                    <ImageButton 
-                        AbsoluteLayout.LayoutBounds="105,5,70,70"
-                        Padding="15"
-                        Source="plus.png"
-                        BackgroundColor="#ECEE72"
-                        CornerRadius="15"
-                        Clicked="ImageButton_Clicked"/>
-                
+
+                <ImageButton 
+                    AbsoluteLayout.LayoutBounds="105,5,70,70"
+                    Padding="15"
+                    Source="plus.png"
+                    BackgroundColor="#ECEE72"
+                    CornerRadius="15"
+                    Command="{Binding GetItemImage}"/>
+
 
                 <StackLayout
                     AbsoluteLayout.LayoutBounds="0, 120, 180, 115"
@@ -170,7 +70,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label 
-                            BindingContext="{x:Reference nome}"
+                            BindingContext="{x:Reference tipo}"
                             Grid.RowSpan="1" Grid.Column="1"
                             Text="{Binding Text}" 
                             FontSize="25"/>
@@ -183,22 +83,116 @@
                 </StackLayout>
 
             </AbsoluteLayout>
-        </pancake:PancakeView>
-
+        </Frame>
+        
+        
+        <BoxView 
+            AbsoluteLayout.LayoutBounds="16, 310,380,80" 
+            BackgroundColor="White"
+            CornerRadius="10"/>
+        
         <!--Icones-->
 
         <CollectionView 
-            x:Name="icones"
-            ItemsSource="{Binding Icones}"
+            x:Name="IconList"
+            ItemsSource="{Binding Icones, Source={StaticResource Icons}}"
             ItemTemplate="{StaticResource IconTemplate}"
             ItemsLayout="HorizontalList"
             Margin="10"
             AbsoluteLayout.LayoutBounds="16, 310,380,80"
             SelectionMode="Single"
-            SelectionChanged="CollectionView_SelectionChanged">
+            SelectionChangedCommand="{Binding SelectIcon}"
+            SelectionChangedCommandParameter="{x:Reference IconList}">
+           
+            <CollectionView.Resources>
+                <ResourceDictionary>
+                    <DataTemplate x:Key="IconTemplate">
+                        <Grid Padding="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+                            <pancake:PancakeView HorizontalOptions="Center" CornerRadius="5">
+                                <pancake:PancakeView.Shadow>
+                                    <pancake:DropShadow BlurRadius="5"/>
+                                </pancake:PancakeView.Shadow>
+                                <Frame
+                                BackgroundColor="White"
+                                HorizontalOptions="Center"
+                                HeightRequest="50"
+                                WidthRequest="50"
+                                Padding="0"
+                                CornerRadius="5">
+                                    <Image Source="{Binding IconImage}" Margin="5"/>
+                                </Frame>
+                            </pancake:PancakeView>
+                        </Grid>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </CollectionView.Resources>
 
         </CollectionView>
-        
 
+        <Grid AbsoluteLayout.LayoutBounds="0, 385, 411, 220" Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Entry 
+                x:Name="tipo"
+                Text="{Binding Tipo}"
+                Grid.Row="0"
+                Placeholder="Tipo do produto" 
+                VerticalOptions="CenterAndExpand"/>
+            <Stepper 
+                x:Name="quantidade"
+                Value="{Binding Quantidade}"
+                Grid.Row="1" 
+                Minimum="1"/>
+
+            <Entry 
+                x:Name="descricao"
+                Text="{Binding Descricao}"
+                Grid.Row="2"
+                Placeholder="Descrição" 
+                VerticalOptions="CenterAndExpand"/>
+            <Label 
+                Margin="0, 3"
+                Grid.Row="3"
+                Text=" Escolha uma cor" 
+                TextColor="#9E9E9E"
+                FontSize="18"/>
+            <Slider 
+                x:Name="cor"
+                Value="{Binding Hue}"
+                Grid.Row="3"
+                VerticalOptions="CenterAndExpand" 
+                MaximumTrackColor="Gray" 
+                MinimumTrackColor="Gray" 
+                ThumbColor="#ECEE72"/>
+        </Grid>
+
+        <Frame
+            AbsoluteLayout.LayoutBounds="0.99, 0.99" 
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            CornerRadius="10" HasShadow="True" Padding="0">
+            <Button 
+                x:Name="criarItem"
+                Text="Criar"
+                BackgroundColor="#ECEE72"
+                TextColor="#827C93"
+                HeightRequest="60"
+                WidthRequest="100"
+                Command="{Binding CreateItem}"/>
+            
+        </Frame>
     </AbsoluteLayout>
 </ContentPage>

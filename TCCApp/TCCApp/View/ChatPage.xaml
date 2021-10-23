@@ -1,13 +1,137 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TCCApp.View.ChatPage">
+             x:Class="TCCApp.View.ChatPage"
+             xmlns:selector="clr-namespace:TCCApp.Helpers">
+
+    <!--ContentPage.Resources>
+        <ResourceDictionary>
+            <selector:MessageSelector 
+                x:Key="SelectMessageTemplate"/>
+        </ResourceDictionary>
+    </ContentPage.Resources-->
     
-    
-    
-    <StackLayout VerticalOptions="Center"
-                 HorizontalOptions="Center">
-        
-        <Label Text="ChatPage"/>
-    </StackLayout>
+    <ScrollView>
+        <ScrollView.Orientation>
+            <OnPlatform x:TypeArguments="ScrollOrientation">
+                <On Platform="Android" Value="Neither"/>
+            </OnPlatform>
+        </ScrollView.Orientation>
+
+        <Grid
+            x:Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android" Value="100"/>
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                </RowDefinition>
+            </Grid.RowDefinitions>
+
+            <CollectionView
+                x:Name="MessageList"
+                ItemsSource="{Binding Messages}"
+                ItemTemplate="{StaticResource SelectMessageTemplate}">
+                <CollectionView.Resources>
+                    <ResourceDictionary>
+
+                        <DataTemplate 
+                            x:Key="simpleText">
+
+                            <Grid Padding="10">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame 
+                                    BackgroundColor="DodgerBlue" 
+                                    HasShadow="False"
+                                    CornerRadius="15"
+                                    Grid.Column="1">
+                                    <StackLayout>
+
+                                        <Label Text="{Binding Author}"
+                                               TextColor="White"
+                                               FontSize="Medium"/>
+
+                                        <Label Text="{Binding Content}"
+                                               TextColor="White"
+                                               FontSize="Medium"
+                                               FontAttributes="Bold"/>
+
+                                    </StackLayout>
+                                </Frame>
+
+                            </Grid>
+                        </DataTemplate>
+
+                        <DataTemplate x:Key="inboundText">
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame 
+                                    BackgroundColor="LightGray" 
+                                    HasShadow="False"
+                                    CornerRadius="15">
+                                    <StackLayout>
+
+                                        <Label Text="{Binding Author}"
+                                               TextColor="DarkSlateGray"
+                                               FontSize="Medium"/>
+
+                                        <Label Text="{Binding Content}"
+                                               TextColor="DarkSlateGray"
+                                               FontSize="Medium"
+                                               FontAttributes="Bold"/>
+
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+
+                        <selector:MessageSelector 
+                            x:Key="SelectMessageTemplate"
+                            SimpleTextSelector="{StaticResource simpleText}"
+                            InboundTextSelector="{StaticResource inboundText}"/>
+
+                    </ResourceDictionary>
+                </CollectionView.Resources>
+            </CollectionView>
+
+            <BoxView 
+                Grid.Row="1" 
+                HeightRequest="1"
+                BackgroundColor="#33000000"/>
+
+            <Grid Grid.Row="2" Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+
+                <Entry 
+                    Text="{Binding Content}"
+                    ReturnCommand="{Binding Send}"
+                    Grid.Column="1"/>
+
+                <Button 
+                    Grid.Column="2"
+                    Text="Send"
+                    TextColor="White"
+                    BackgroundColor="DodgerBlue"
+                    Command="{Binding Send}"/>
+
+            </Grid>
+        </Grid>
+    </ScrollView>
 </ContentPage>
