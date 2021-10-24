@@ -98,16 +98,18 @@ namespace TCCApp.View
             CreateCircleShapeAt(center);
             map.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMeters(5000)), true);
         }
-        private void Map_PinClicked(object sender, PinClickedEventArgs e)
+        private async void Map_PinClicked(object sender, PinClickedEventArgs e)
         {
-            //TODO
             Pin pin = e.Pin;
-            int userId = (int)pin.Tag;
-            //var user = DatabaseService.GetUser(userId);
 
-            //Envio uma mensagem para a TabPage ir para a ChatPage
-            //TODO CHAT PAGE
-            //MessagingCenter.Send<object, int>(user, "click", 3);
+            var userKey = (string)pin.Tag;
+
+            if (userKey != App.user.Key)
+            {
+                //var user = DatabaseService.GetUser(userId);
+                await Navigation.PushAsync(new ClickedUserPage());
+            }
+
         }
         public async void CreatePin(User user, bool isMyPin)
         {
@@ -130,7 +132,7 @@ namespace TCCApp.View
                 Type = PinType.Place,
                 Label = "Olá, vms comprar juntos!",
                 ZIndex = 5,
-                Tag = user.Id
+                Tag = user.Key
             };
 
             try

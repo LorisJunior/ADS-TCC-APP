@@ -2,12 +2,139 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.View.ChatListPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="ChatsTemplate">
+                <Grid Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Frame 
+                        WidthRequest="360"
+                        BackgroundColor="LightGray" 
+                        HasShadow="False"
+                        CornerRadius="15"
+                        Padding="10"
+                        HorizontalOptions="Center">
+
+
+                        <Grid WidthRequest="320">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <AbsoluteLayout
+                                Grid.RowSpan="3">
+                                <ImageButton
+                                    AbsoluteLayout.LayoutBounds="0.1,0.1"
+                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="0"
+                                    BackgroundColor="SkyBlue"
+                                    HeightRequest="60"
+                                    WidthRequest="60"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Start"
+                                    CornerRadius="40"
+                                    IsEnabled="False"/>
+
+                                <ImageButton
+                                    AbsoluteLayout.LayoutBounds="0.9,0.9"
+                                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="0"
+                                    BackgroundColor="DodgerBlue"
+                                    HeightRequest="51"
+                                    WidthRequest="51"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Start"
+                                    CornerRadius="40"
+                                    IsEnabled="False"
+                                    BorderWidth="1"
+                                    BorderColor="White"/>
+                            </AbsoluteLayout>
+
+
+
+                            <Label 
+                                x:Name="name"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding Author}"
+                                TextColor="DarkSlateGray"
+                                FontSize="Medium"/>
+
+                            <Label 
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Text="Envie agora uma mensagem"
+                                TextColor="DarkSlateGray"
+                                FontSize="16"
+                                FontAttributes="Bold"/>
+
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </DataTemplate>
+
+            <Style TargetType="Grid">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                        Value="LightSkyBlue" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <AbsoluteLayout BackgroundColor="White">
+
+        <!--Header-->
+        <!--#region -->
+        <Label 
+            AbsoluteLayout.LayoutBounds="0.12, 0.055"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            Text="Conversas" 
+            TextColor="#9E9E9E"
+            FontAttributes="Bold" 
+            FontSize="30"/>
+
+        <BoxView 
+            AbsoluteLayout.LayoutBounds="0.5, 0.15, 0.9, 0.005"
+            BackgroundColor="#E4E4E4"
+            AbsoluteLayout.LayoutFlags="All"/>
+        
+        <CollectionView 
+            x:Name="ChatList"
+            Margin="10,0"
+            AbsoluteLayout.LayoutBounds="0, 0.9, 1, 0.82"
+            AbsoluteLayout.LayoutFlags="All"
+            ItemsSource="{Binding Chats}"
+            ItemTemplate="{StaticResource ChatsTemplate}"
+            SelectionMode="Single">
+
+        </CollectionView>
+    </AbsoluteLayout>
     
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+
 </ContentPage>

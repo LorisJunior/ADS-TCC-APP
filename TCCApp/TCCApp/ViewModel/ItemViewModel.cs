@@ -37,9 +37,14 @@ namespace TCCApp.ViewModel
         {
             CollectionView collectionView = s as CollectionView;
             var item = collectionView.SelectedItem as Item;
-            Items.Remove(item);
 
-            await DatabaseService.DeleteItemAsync(item.Key);
+            if (item != null)
+            {
+                Items.Remove(item);
+
+                await DatabaseService.DeleteItemAsync(item.Key);
+            }
+            
         });
         public ICommand GoToAddItemPage => new Command(async() =>
         {

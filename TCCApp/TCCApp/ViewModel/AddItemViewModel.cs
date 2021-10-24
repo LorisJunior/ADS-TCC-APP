@@ -74,7 +74,9 @@ namespace TCCApp.ViewModel
         public AddItemViewModel()
         {
             itemViewModel = DependencyService.Get<ItemViewModel>();
-            ItemImage = "shorts.png";
+            ItemImage = ImageSource.FromStream(() => ImageService
+                        .GetImageFromStream("TCCApp.Images.shorts.png", App.assembly));
+            ByteItemImage = ImageService.ConvertToByte("TCCApp.Images.shorts.png", App.assembly);
             ItemMargin = 15;
             Hue = 0;
             Quantidade = 1;

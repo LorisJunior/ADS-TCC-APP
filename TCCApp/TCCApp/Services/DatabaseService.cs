@@ -232,7 +232,6 @@ namespace TCCApp.Services
                 .OnceAsync<User>()).Select(item => new User
                 {
                     Key = item.Object.Key,
-                    Id = item.Object.Id,
                     Email = item.Object.Email,
                     Sobre = item.Object.Sobre,
                     Nome = item.Object.Nome,
