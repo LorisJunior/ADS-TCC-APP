@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TCCApp.View.ChatListPage">
+             x:Class="TCCApp.View.ChatListPage"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -21,7 +22,6 @@
                         CornerRadius="15"
                         Padding="10"
                         HorizontalOptions="Center">
-
 
                         <Grid WidthRequest="320">
                             <Grid.RowDefinitions>
@@ -78,7 +78,8 @@
                             <Label 
                                 Grid.Row="2"
                                 Grid.Column="1"
-                                Text="Envie agora uma mensagem"
+                                Grid.ColumnSpan="2"
+                                Text="Envie uma mensagem agora"
                                 TextColor="DarkSlateGray"
                                 FontSize="16"
                                 FontAttributes="Bold"/>
@@ -107,10 +108,10 @@
     </ContentPage.Resources>
 
 
-    <AbsoluteLayout BackgroundColor="White">
+    <AbsoluteLayout 
+        x:Name="Main"
+        BackgroundColor="White">
 
-        <!--Header-->
-        <!--#region -->
         <Label 
             AbsoluteLayout.LayoutBounds="0.12, 0.055"
             AbsoluteLayout.LayoutFlags="PositionProportional"
@@ -118,6 +119,22 @@
             TextColor="#9E9E9E"
             FontAttributes="Bold" 
             FontSize="30"/>
+
+        <ImageButton
+            x:Name="DeleteButton"
+            Opacity="{Binding DeleteButtonOpacity}"
+            AbsoluteLayout.LayoutBounds="0.92, 0.05"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            WidthRequest="50"
+            HeightRequest="50"
+            CornerRadius="5"
+            Padding="10"
+            Source="delete.png"
+            BackgroundColor="#F2A6A6"
+            Command="{Binding DeleteChat}"
+            CommandParameter="{x:Reference ChatList}"
+            xct:TouchEffect.LongPressCommand="{Binding SelectMultiple}"
+            xct:TouchEffect.LongPressDuration="500"/>
 
         <BoxView 
             AbsoluteLayout.LayoutBounds="0.5, 0.15, 0.9, 0.005"
@@ -131,8 +148,9 @@
             AbsoluteLayout.LayoutFlags="All"
             ItemsSource="{Binding Chats}"
             ItemTemplate="{StaticResource ChatsTemplate}"
-            SelectionMode="Single">
-
+            SelectionMode="{Binding ChatSelectionMode}"
+            SelectionChangedCommand="{Binding GoToChat}"
+            SelectionChangedCommandParameter="{x:Reference ChatList}">
         </CollectionView>
     </AbsoluteLayout>
     
