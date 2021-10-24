@@ -10,10 +10,13 @@ namespace TCCApp.Helpers
     {
         public static void SafeClear<T>(this ObservableCollection<T> observableCollection)
         {
-            Device.BeginInvokeOnMainThread(() =>
+            if (observableCollection != null)
             {
-                observableCollection.Clear();
-            });
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    observableCollection.Clear();
+                });
+            }
         }
 
         public static void TSafeClear<T>(this ICollection<T> Collection)

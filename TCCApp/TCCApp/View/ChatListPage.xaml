@@ -47,7 +47,9 @@
                                     VerticalOptions="Center"
                                     HorizontalOptions="Start"
                                     CornerRadius="40"
-                                    IsEnabled="False"/>
+                                    IsEnabled="False"
+                                    Source="{Binding MyImage}"
+                                    Aspect="AspectFill"/>
 
                                 <ImageButton
                                     AbsoluteLayout.LayoutBounds="0.9,0.9"
@@ -62,7 +64,9 @@
                                     CornerRadius="40"
                                     IsEnabled="False"
                                     BorderWidth="1"
-                                    BorderColor="White"/>
+                                    BorderColor="White"
+                                    Source="{Binding Image}"
+                                    Aspect="AspectFill"/>
                             </AbsoluteLayout>
 
 

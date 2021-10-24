@@ -68,13 +68,13 @@ namespace TCCApp.ViewModel
             set => Set(ref profileImage, value);
         }
 
-        ChatViewModel chatViewModel;
+        //ChatViewModel chatViewModel;
 
         private bool DisplayOption { get; set; }
         public ProfileViewModel()
         {
             Notifications = new ObservableCollection<Notification>();
-            chatViewModel = DependencyService.Get<ChatViewModel>();
+            //chatViewModel = DependencyService.Get<ChatViewModel>();
             InitChatData();
         }
         public void InitChatData()
@@ -184,11 +184,11 @@ namespace TCCApp.ViewModel
 
                 var selected = view.SelectedItem as Notification;
 
-                chatViewModel.Author = App.user.Nome;
+                //chatViewModel.Author = App.user.Nome;
 
-                chatViewModel.GroupKey = selected.GroupKey;
+                //chatViewModel.GroupKey = selected.GroupKey;
 
-                await Application.Current.MainPage.Navigation.PushAsync(new ChatPage());
+                await Application.Current.MainPage.Navigation.PushAsync(new ChatPage(App.user.Nome, selected.GroupKey));
 
                 view.SelectedItem = null;
 

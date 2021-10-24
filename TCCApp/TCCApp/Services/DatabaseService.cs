@@ -39,7 +39,7 @@ namespace TCCApp.Services
             //Esse método cria um documento vazio e retorna uma chave
             var doc = await firebase
                .Child(table)
-               .PostAsync(new Message { Author = "temp" });
+               .PostAsync(1);
             return doc.Key;
         }
         public async static Task<List<OutboundMessage>> GetMessages(string groupKey)
@@ -82,6 +82,98 @@ namespace TCCApp.Services
                     .Child("Notificacao")
                     .Child(key)
                     .PutAsync(notification);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async static void SendNotification(string clickedUserKey, Notification notification)
+        {
+            await firebase
+                  .Child("Notificacao")
+                  .Child(clickedUserKey)
+                  .PostAsync(notification);
+        }
+        public async static void NewChat(string chatKey)
+        {
+            await firebase
+                  .Child("Chat")
+                  .Child(chatKey)
+                  .PostAsync(new OutboundMessage());
+        }
+        public async static Task<ChatList> GetChat(string chatKey)
+        {
+            return await firebase
+                         .Child("Chat")
+                         .Child(chatKey)
+                         .OnceSingleAsync<ChatList>();
+        }
+
+        public async static void AddToChatList(string userKey, ChatList chatList)
+        {
+            try
+            {
+                await firebase
+                  .Child("UserChatList")
+                  .Child(userKey)
+                  .PostAsync(chatList);
+            }
+            catch (Exception)
+            {
+            }
+            
+        }
+
+        public async static Task<List<ChatList>> GetChatList(string key)
+        {
+            try
+            {
+                return (await firebase
+                .Child("UserChatList")
+                .Child(key)
+                .OnceAsync<ChatList>()).Select(item => new ChatList
+                {
+                    Key = item.Key,
+                    Author = item.Object.Author,
+                    MyImage = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer)),
+                    Image = ImageSource.FromStream(() => new MemoryStream(item.Object.ByteImage)),
+                    GroupKey = item.Object.GroupKey
+                }).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async static Task<bool> DeleteChatList(string key)
+        {
+            try
+            {
+                await firebase
+                    .Child("UserChatList")
+                    .Child(App.user.Key)
+                    .Child(key)
+                    .DeleteAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async static Task<bool> DeleteChat(string groupKey)
+        {
+            try
+            {
+                await firebase
+                    .Child("Chat")
+                    .Child(groupKey)
+                    .DeleteAsync();
             }
             catch (Exception)
             {

@@ -2,11 +2,193 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.View.ClickedUserPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="ClickedUserPage"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="ItemTemplate">
+                <Grid
+                    Padding="12">
+                    <Frame
+                    CornerRadius="20"
+                    BackgroundColor="{Binding Cor}"
+                    Padding="0"
+                    WidthRequest="350"
+                    HeightRequest="121">
+
+                        <Grid
+                        Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label 
+                                Grid.ColumnSpan="2"
+                                Margin="22,0"
+                                Text="{Binding Tipo}"
+                                TextColor="Gray"
+                                FontSize="24"
+                                FontAttributes="Bold"/>
+
+                            <Image
+                                VerticalOptions="Center"
+                                HorizontalOptions="Start"
+                                WidthRequest="120"
+                                HeightRequest="120"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Source="{Binding ImageUrl}"/>
+
+                            <Label 
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Text="{Binding Descricao}"
+                                TextColor="Gray"
+                                FontSize="16"
+                                VerticalTextAlignment="Center"/>
+
+                        </Grid>
+                    </Frame>
+                </Grid>
+                
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <AbsoluteLayout>
+        
+        <BoxView 
+                BackgroundColor="#F8FFCD" 
+                AbsoluteLayout.LayoutBounds="0,0,1,0.3"
+                AbsoluteLayout.LayoutFlags="All"/>
+
+        <Frame 
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            AbsoluteLayout.LayoutBounds="0.5, 0.02, 386, 121" 
+            CornerRadius="20"
+            BackgroundColor="White" 
+            HasShadow="True"
+            Padding="12"
+            WidthRequest="380"
+            HeightRequest="100">
+
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+
+                <ImageButton
+                    Source="{Binding UserImage}"
+                    Aspect="AspectFill"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    BackgroundColor="SkyBlue"
+                    HeightRequest="100"
+                    WidthRequest="100"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Start"
+                    CornerRadius="50"
+                    IsEnabled="False"/>
+
+                <Label 
+                    x:Name="name"
+                    Margin="20, 5"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="{Binding Nome}"
+                    FontAttributes="Bold"
+                    TextColor="Gray"
+                    FontSize="19"
+                    HorizontalOptions="Start"/>
+                
+                <ImageButton
+                    Source="chat.png"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    BackgroundColor="PaleGreen"
+                    HeightRequest="60"
+                    WidthRequest="60"
+                    VerticalOptions="Start"
+                    HorizontalOptions="End"
+                    CornerRadius="10"
+                    Padding="8"
+                    Command="{Binding CreateChat}"/>
+            </Grid>
+        </Frame>
+
+        <Frame
+            AbsoluteLayout.LayoutBounds="0.5, 0.33, 386, 192" 
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            CornerRadius="20"
+            BackgroundColor="SkyBlue"
+            Padding="0">
+
+            <Grid
+                Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label 
+                    Text="Sobre"
+                    TextColor="White"
+                    FontSize="24"
+                    FontAttributes="Bold"/>
+
+                <Label 
+                    Grid.Row="1"
+                    Text="{Binding Sobre}"
+                    TextColor="White"
+                    FontSize="16"
+                    />
+
+            </Grid>
+        </Frame>
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0.5,0.58"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            Orientation="Horizontal">
+
+            <Label 
+                HorizontalOptions="Center"
+                AbsoluteLayout.LayoutBounds="0.1,0.58"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                Text="Itens"
+                TextColor="Wheat"
+                FontSize="20"/>
+            
+            <BoxView 
+                HeightRequest="1"
+                WidthRequest="280"
+                BackgroundColor="Wheat"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
         </StackLayout>
-    </ContentPage.Content>
+        
+
+        
+        <CollectionView
+            AbsoluteLayout.LayoutBounds="0.5, 0.95, 411, 240" 
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            ItemsSource="{Binding Items}"
+            ItemTemplate="{StaticResource ItemTemplate}"
+            ItemsLayout="HorizontalList">
+            
+        </CollectionView>
+
+    </AbsoluteLayout>
 </ContentPage>

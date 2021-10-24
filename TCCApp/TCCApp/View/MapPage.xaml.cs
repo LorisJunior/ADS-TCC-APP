@@ -104,11 +104,12 @@ namespace TCCApp.View
 
             var userKey = (string)pin.Tag;
 
-            if (userKey != App.user.Key)
-            {
-                //var user = DatabaseService.GetUser(userId);
-                await Navigation.PushAsync(new ClickedUserPage());
-            }
+            //Todo lembre de descomentar o if quando terminar o teste
+            //if (userKey != App.user.Key)
+            //{
+                var user = await DatabaseService.GetUserAsync(userKey);
+                await Navigation.PushAsync(new ClickedUserPage(user));
+            //}
 
         }
         public async void CreatePin(User user, bool isMyPin)

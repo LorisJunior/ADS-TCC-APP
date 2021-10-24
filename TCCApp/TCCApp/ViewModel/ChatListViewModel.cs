@@ -1,9 +1,14 @@
-﻿using System;
+﻿using Firebase.Database.Query;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Reactive.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Input;
 using TCCApp.Model;
+using TCCApp.Services;
 using TCCApp.View;
 using TCCApp.ViewModel;
 using Xamarin.Forms;
@@ -15,6 +20,9 @@ namespace TCCApp.ViewModel
     {
         public ObservableCollection<ChatList> Chats { get; set; }
 
+        SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
+        public IDisposable Subscription { get; set; }
+
         private double deleteButtonOpacity;
 
         public double DeleteButtonOpacity
@@ -22,6 +30,8 @@ namespace TCCApp.ViewModel
             get { return deleteButtonOpacity; }
             set => Set(ref deleteButtonOpacity, value);
         }
+
+        public bool IsDeleting { get; set; }
 
         private SelectionMode chatSelectionMode;
 
@@ -31,33 +41,43 @@ namespace TCCApp.ViewModel
             set => Set(ref chatSelectionMode, value);
         }
 
-        ChatViewModel chatViewModel;
         public ChatListViewModel()
         {
+            IsDeleting = false;
             ChatSelectionMode = SelectionMode.Single;
             DeleteButtonOpacity = 0.3;
-            chatViewModel = DependencyService.Get<ChatViewModel>();
-            Chats = new ObservableCollection<ChatList>
-            {
-                new ChatList
-                {
-                    Author = "Lucia",
-                    GroupKey = "Conversa1"
-                },
-                new ChatList
-                {
-                    Author = "Junior",
-                    GroupKey = "Conversa2"
-                },
-                new ChatList
-                {
-                    Author = "Ronaldo",
-                    GroupKey = "Conversa3"
-                },
-            };
+            Chats = new ObservableCollection<ChatList>();
         }
+        
+        public async void InitSubscription()
+        {
+            await semaphoreSlim.WaitAsync();
 
-        //Todo comando temporario
+            var observable = DatabaseService
+                .firebase
+                .Child("UserChatList")
+                .Child(App.user.Key).AsObservable<ChatList>();
+
+            Subscription = observable
+            .Where(f => !string.IsNullOrEmpty(f.Key))
+            .Subscribe(f =>
+            {
+                if (!IsDeleting)
+                {
+                    var chat = new ChatList
+                    {
+                        Key = f.Key,
+                        Author = f.Object.Author,
+                        MyImage = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer)),
+                        Image = ImageSource.FromStream(() => new MemoryStream(f.Object.ByteImage)),
+                        GroupKey = f.Object.GroupKey
+                    };
+                    Chats.Add(chat);
+                }
+            });
+
+            semaphoreSlim.Release();
+        }
         public ICommand SelectMultiple => new Command(async() =>
         {
             //Chatlist em modo de delete
@@ -65,10 +85,13 @@ namespace TCCApp.ViewModel
             ChatSelectionMode = SelectionMode.Multiple;
             await Application.Current.MainPage.DisplayAlert("Modo Delete Ativado","Selecione as conversas que deseja deletar","ok");
         });
-
         //Todo - Adicionar ref ao banco
-        public ICommand DeleteChat => new Command((s) =>
+        public ICommand DeleteChat => new Command(async(s) =>
         {
+            await semaphoreSlim.WaitAsync();
+
+            IsDeleting = true;
+
             var collectionView = s as CollectionView;
 
             var chats = collectionView.SelectedItems;
@@ -77,15 +100,21 @@ namespace TCCApp.ViewModel
             {
                 foreach (ChatList chat in chats)
                 {
+                    //Remove da observablecollection
                     Chats.Remove(chat);
+                    //Remove da minha lista de conversas
+                    await DatabaseService.DeleteChatList(chat.Key);
+                    //Remove a conversa da tabela Chat
+                    await DatabaseService.DeleteChat(chat.GroupKey);
                 }
             }
 
             //Volta a chatlist para a configuração padrão
             DeleteButtonOpacity = 0.3;
             ChatSelectionMode = SelectionMode.Single;
+            IsDeleting = false;
+            semaphoreSlim.Release();
         });
-
         public ICommand GoToChat => new Command(async sender =>
         {
             CollectionView view = sender as CollectionView;
@@ -94,11 +123,7 @@ namespace TCCApp.ViewModel
             {
                 var selected = view.SelectedItem as Notification;
 
-                chatViewModel.Author = App.user.Nome;
-
-                chatViewModel.GroupKey = selected.GroupKey;
-
-                await Application.Current.MainPage.Navigation.PushAsync(new ChatPage());
+                await Application.Current.MainPage.Navigation.PushAsync(new ChatPage(App.user.Nome, selected.GroupKey));
 
                 view.SelectedItem = null;
             }

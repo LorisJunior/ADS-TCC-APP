@@ -14,13 +14,15 @@ namespace TCCApp.View
     public partial class ChatPage : ContentPage
     {
         ChatViewModel chatViewModel;
-        public ChatPage()
+        public ChatPage(string author, string groupKey)
         {
             InitializeComponent();
 
             NavigationPage.SetHasNavigationBar(this, false);
 
             chatViewModel = DependencyService.Get<ChatViewModel>();
+            chatViewModel.GroupKey = groupKey;
+            chatViewModel.Author = author;
 
             BindingContext = chatViewModel;
 
