@@ -1,4 +1,5 @@
-﻿using Plugin.Media;
+﻿using Firebase.Database.Query;
+using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -68,61 +69,38 @@ namespace TCCApp.ViewModel
             set => Set(ref profileImage, value);
         }
 
-        //ChatViewModel chatViewModel;
-
         private bool DisplayOption { get; set; }
+
         public ProfileViewModel()
         {
             Notifications = new ObservableCollection<Notification>();
-            //chatViewModel = DependencyService.Get<ChatViewModel>();
-            InitChatData();
         }
-        public void InitChatData()
-        {
-            Notifications = new ObservableCollection<Notification>
-            {
-                new Notification
-                {
-                    Author = "Lucia",
-                    GroupKey = "Conversa1"
-                },
-                new Notification
-                {
-                    Author = "Junior",
-                    GroupKey = "Conversa2"
-                },
-                new Notification
-                {
-                    Author = "Ronaldo",
-                    GroupKey = "Conversa3"
-                },
-            };
-        }
-        //Todo - Descomentar quando o banco estiver organizado
-        /*public async void InitSubscription()
+      
+        public async void InitSubscription()
         {
             await semaphoreSlim.WaitAsync();
 
             var observable = DatabaseService
-                .firebase.Child("Notificacao")
+                .firebase
+                .Child("Notificacao")
+                .Child(App.user.Key)
                 .AsObservable<Notification>();
 
             Subscription = observable
-            .Where(f => !string.IsNullOrEmpty(f.Key)
-            //&& f.Object?.Author != Author
-            && !string.IsNullOrEmpty(f.Object.Author))
+            .Where(f => !string.IsNullOrEmpty(f.Key))
             .Subscribe(f =>
             {
                 var talk = new Notification
                 {
                     Author = f.Object.Author,
                     GroupKey = f.Object.GroupKey,
+                    Image = ImageSource.FromStream(()=> new MemoryStream(f.Object.ByteImage))
                 };
                 Notifications.Add(talk);
             });
 
             semaphoreSlim.Release();
-        }*/
+        }
         public async void SetProfile()
         {
             App.user = await DatabaseService.GetUserAsync(App.user.Key);
@@ -183,10 +161,6 @@ namespace TCCApp.ViewModel
                 await semaphoreSlim.WaitAsync();
 
                 var selected = view.SelectedItem as Notification;
-
-                //chatViewModel.Author = App.user.Nome;
-
-                //chatViewModel.GroupKey = selected.GroupKey;
 
                 await Application.Current.MainPage.Navigation.PushAsync(new ChatPage(App.user.Nome, selected.GroupKey));
 

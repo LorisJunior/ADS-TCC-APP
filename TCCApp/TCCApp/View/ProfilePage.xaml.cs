@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TCCApp.Helpers;
 using TCCApp.Services;
 using TCCApp.ViewModel;
 using Xamarin.Essentials;
@@ -29,6 +30,18 @@ namespace TCCApp.View
         {
             App.user.Sobre = sobre.Text;
             await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            profileViewModel.InitSubscription();
+        }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            profileViewModel.Notifications.SafeClear();
+            profileViewModel.Subscription.Dispose();
         }
     }
 }

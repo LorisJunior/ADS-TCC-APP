@@ -43,7 +43,9 @@
                                 VerticalOptions="Center"
                                 HorizontalOptions="Start"
                                 CornerRadius="40"
-                                IsEnabled="False"/>
+                                IsEnabled="False"
+                                Aspect="AspectFill"
+                                Source="{Binding Image}"/>
 
                             <Label 
                                 x:Name="name"
