@@ -183,47 +183,21 @@ namespace TCCApp.Services
         }
 
 
-        public static async Task<bool> AddItem(Item item)
-        {
-            try
-            {
-                item.Key = await GetItemKey();
-                await UpdateItem(item);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            return true;
-        }
-        private static async Task<string> GetItemKey()
-        {
-            //Esse método cria um documento vazio e retorna uma chave
-            var doc = await firebase
-               .Child("Item")
-               .Child(App.user.Key)
-                  .PostAsync(1);
-            return doc.Key;
-        }
-
-        private async static Task<bool> UpdateItem(Item item)
+        public static async void AddItem(Item item)
         {
             try
             {
                 await firebase
-                    .Child("Item")
-                    .Child(App.user.Key)
-                    .Child(item.Key)
-                    .PutAsync(item);
+                      .Child("Item")
+                      .Child(App.user.Key)
+                      .PostAsync(item);
             }
             catch (Exception)
             {
-                return false;
             }
-            return true;
         }
 
-        public async static Task<bool> DeleteItemAsync(string key)
+        public async static Task<bool> DeleteItem(string key)
         {
             try
             {
@@ -248,7 +222,7 @@ namespace TCCApp.Services
                 .Child(App.user.Key)
                 .OnceAsync<Item>()).Select(item => new Item
                 {
-                    Key = item.Object.Key,
+                    Key = item.Key,
                     Tipo = item.Object.Tipo,
                     Quantidade = item.Object.Quantidade,
                     Descricao = item.Object.Descricao,
@@ -261,6 +235,35 @@ namespace TCCApp.Services
                 return null;
             }
         }
+        /*private static async Task<string> GetItemKey()
+        {
+            //Esse método cria um documento vazio e retorna uma chave
+            var doc = await firebase
+               .Child("Item")
+               .Child(App.user.Key)
+                  .PostAsync(1);
+            return doc.Key;
+        }*/
+
+        /*private async static Task<bool> UpdateItem(Item item)
+        {
+            try
+            {
+                await firebase
+                    .Child("Item")
+                    .Child(App.user.Key)
+                    .Child(item.Key)
+                    .PutAsync(item);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }*/
+
+
+
 
 
         public async static Task<bool> AddUserAsync(User user)

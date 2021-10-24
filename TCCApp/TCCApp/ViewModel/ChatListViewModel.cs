@@ -80,10 +80,17 @@ namespace TCCApp.ViewModel
         }
         public ICommand SelectMultiple => new Command(async() =>
         {
-            //Chatlist em modo de delete
-            DeleteButtonOpacity = 1;
-            ChatSelectionMode = SelectionMode.Multiple;
-            await Application.Current.MainPage.DisplayAlert("Modo Delete Ativado","Selecione as conversas que deseja deletar","ok");
+            if (Chats.Count > 0)
+            {
+                //Chatlist em modo de delete
+                DeleteButtonOpacity = 1;
+                ChatSelectionMode = SelectionMode.Multiple;
+                await Application.Current.MainPage.DisplayAlert("Modo delete ativado", "Selecione as conversas que deseja deletar", "ok");
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Você não tem conversas", "Você não tem conversas para deletar", "ok");
+            }
         });
         //Todo - Adicionar ref ao banco
         public ICommand DeleteChat => new Command(async(s) =>

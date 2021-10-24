@@ -1,9 +1,12 @@
-﻿using Plugin.Media;
+﻿using Firebase.Database.Query;
+using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reactive.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Input;
 using TCCApp.Model;
 using TCCApp.Services;
@@ -70,10 +73,9 @@ namespace TCCApp.ViewModel
 
         public byte[] ByteItemImage { get; set; }
 
-        ItemViewModel itemViewModel;
+
         public AddItemViewModel()
         {
-            itemViewModel = DependencyService.Get<ItemViewModel>();
             ItemImage = ImageSource.FromStream(() => ImageService
                         .GetImageFromStream("TCCApp.Images.shorts.png", App.assembly));
             ByteItemImage = ImageService.ConvertToByte("TCCApp.Images.shorts.png", App.assembly);
@@ -81,6 +83,7 @@ namespace TCCApp.ViewModel
             Hue = 0;
             Quantidade = 1;
         }
+
         public ICommand CreateItem => new Command(async() =>
         {
             Item item = new Item
@@ -93,13 +96,10 @@ namespace TCCApp.ViewModel
                 ByteImage = ByteItemImage
             };
 
-            await DatabaseService.AddItem(item);
+            DatabaseService.AddItem(item);
 
             //Deve inserir no banco de dados antes de setar imageUrl o firebase nao aceita imageurl
             item.ImageUrl = ImageSource.FromStream(() => new MemoryStream(ByteItemImage));
-            itemViewModel.Items.Add(item);
-
-            await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
 
             await Application.Current.MainPage.DisplayAlert("Sucesso!", "O item foi criado com sucesso", "ok");
 
