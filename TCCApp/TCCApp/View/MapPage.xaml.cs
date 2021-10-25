@@ -231,41 +231,58 @@ namespace TCCApp.View
 
             var myItems = await DatabaseService.GetItems(App.user.Key);
 
-            List<string> usersKeys = new List<string>();
+            //List<string> usersKeys = new List<string>();
 
-            if (myItems.Count > 0)
+            //Verifica se eu tenho algum item na minha lista
+            if (myItems.Count > 0 && nearUsers.Count > 0)
             {
-                foreach (var user in nearUsers)
+                int count = 0;
+                //foreach (var user in nearUsers)
+                while (count < nearUsers.Count )
                 {
-                    var items = await DatabaseService.GetItems(user.Key);
+                    var items = await DatabaseService.GetItems(nearUsers[count].Key);
 
+                    //Verifica se os outros usuários tem itens
                     if (items.Count > 0)
                     {
+                        //Compara as listas de itens
                         var result = from m in myItems
                                      join i in items
                                      on m.Tipo equals i.Tipo
                                      select m.Key;
-                        if (result != null)
+
+                        //Se não tem item em comum é excluído da lista
+                        if (result == null)
                         {
-                            usersKeys.Add(user.Key);
+                            nearUsers.RemoveAt(count);
+                            count--;
                         }
+                    }
+                    else
+                    {
+                        nearUsers.RemoveAt(count);
+                        count--;
+                    }
+
+                    count++;
+                }
+
+                if (nearUsers.Count > 0)
+                {
+                    foreach (var user in nearUsers)
+                    {
+                        CreatePin(user, false);
                     }
                 }
             }
 
-            List<User> users = new List<User>();
-            foreach (var key in usersKeys)
-            {
-                users.Add(await DatabaseService.GetUserAsync(key));
-            }
+            //List<User> users = new List<User>();
+            //foreach (var key in usersKeys)
+            //{
+                //users.Add(await DatabaseService.GetUserAsync(key));
+            //}
 
-            if (users.Count > 0)
-            {
-                foreach (var user in users)
-                {
-                    CreatePin(user, false);
-                }
-            }
+            
 
             semaphoreSlim.Release();
         }
