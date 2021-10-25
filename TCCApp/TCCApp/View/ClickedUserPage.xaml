@@ -187,6 +187,18 @@
             ItemsSource="{Binding Items}"
             ItemTemplate="{StaticResource ItemTemplate}"
             ItemsLayout="HorizontalList">
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <StackLayout 
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center">
+                        <Label 
+                            Text="Lista Vazia"
+                            FontSize="24"
+                            HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                </ContentView>
+            </CollectionView.EmptyView>
             
         </CollectionView>
 

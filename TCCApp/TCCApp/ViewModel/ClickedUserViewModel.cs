@@ -45,42 +45,20 @@ namespace TCCApp.ViewModel
         string temp;
         public ClickedUserViewModel()
         {
-            temp = "but also the leap into electronic typesen the 1960s containing Lorem Ipsum passages, and more recently with desktop";
-            Items = new ObservableCollection<Item>
-            {
-                new Item
-                {
-                    Tipo = "Shorts",
-                    ImageUrl = ImageSource.FromStream(()=>ImageService
-                    .GetImageFromStream("TCCApp.Images.shorts.png",App.assembly)),
-                    Descricao = temp,
-                    Cor = Color.FromHsla(0.2,0.75,0.85,1)
-                },
-                new Item
-                {
-                    Tipo = "Camisa",
-                    ImageUrl = ImageSource.FromStream(()=>ImageService
-                    .GetImageFromStream("TCCApp.Images.camisaIcon.png",App.assembly)),
-                    Descricao = temp,
-                    Cor = Color.FromHsla(0.5,0.75,0.85,1)
-                },
-                new Item
-                {
-                    Tipo = "Bebida",
-                    ImageUrl = ImageSource.FromStream(()=>ImageService
-                    .GetImageFromStream("TCCApp.Images.garrafaIcon.png",App.assembly)),
-                    Descricao = temp,
-                    Cor = Color.FromHsla(0.354,0.75,0.85,1)
-                },
-            };
+            Items = new ObservableCollection<Item>();
         }
-        public void InitClickedView()
+        public async void InitClickedView()
         {
             UserImage = ImageSource.FromStream(() => new MemoryStream(ClickedUser.Buffer));
             Nome = ClickedUser.Nome;
             Sobre = ClickedUser.Sobre;
-        }
+            var items = await DatabaseService.GetItems(ClickedUser.Key);
 
+            foreach (Item item in items)
+            {
+                Items.Add(item);
+            }
+        }
         public ICommand CreateChat => new Command(async() =>
         {
             //Todo Tente trocar as chaves de posicao dps

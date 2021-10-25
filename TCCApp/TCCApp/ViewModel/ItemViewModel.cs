@@ -75,17 +75,7 @@ namespace TCCApp.ViewModel
 
             semaphoreSlim.Release();
         }
-        /*public async void InitItems()
-        {
-            var items = await DatabaseService.GetItems();
-            if (items != null)
-            {
-                foreach (var item in items)
-                {
-                    Items.Add(item);
-                }
-            }
-        }*/
+       
         public ICommand DeleteItem => new Command(async s =>
         {
             await semaphoreSlim.WaitAsync();

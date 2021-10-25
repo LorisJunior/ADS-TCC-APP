@@ -267,8 +267,20 @@
                         SelectionMode="{Binding NotificationSelectionMode}"
                         SelectionChangedCommand="{Binding GoToChat}"
                         SelectionChangedCommandParameter="{x:Reference NotificationList}">
+                        <CollectionView.EmptyView>
+                            <ContentView>
+                                <StackLayout 
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center">
+                                    <Label 
+                                        Text="Sem notificações"
+                                        FontSize="24"
+                                        HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </ContentView>
+                        </CollectionView.EmptyView>
 
-                        
+
                     </CollectionView>
                     
                 </AbsoluteLayout>

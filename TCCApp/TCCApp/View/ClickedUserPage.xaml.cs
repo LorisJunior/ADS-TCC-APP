@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TCCApp.Helpers;
 using TCCApp.Model;
 using TCCApp.ViewModel;
 using Xamarin.Forms;
@@ -27,6 +28,12 @@ namespace TCCApp.View
         {
             base.OnAppearing();
             clickedUserViewModel.InitClickedView();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            clickedUserViewModel.Items.SafeClear();
         }
     }
 }

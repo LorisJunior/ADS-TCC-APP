@@ -17,7 +17,7 @@ namespace TCCApp.Services
     public class DatabaseService
     {
         public static FirebaseClient firebase = new FirebaseClient("https://dbteste-cbb09-default-rtdb.firebaseio.com/");
-
+        
         public async static Task<bool> AddMessage(OutboundMessage message, string groupKey)
         {
             try
@@ -89,7 +89,6 @@ namespace TCCApp.Services
             }
             return true;
         }
-
         public async static void SendNotification(string clickedUserKey, Notification notification)
         {
             await firebase
@@ -97,7 +96,6 @@ namespace TCCApp.Services
                   .Child(clickedUserKey)
                   .PostAsync(notification);
         }
-
         public async static Task<bool> DeleteNotification(string key)
         {
             try
@@ -136,7 +134,6 @@ namespace TCCApp.Services
             }
             
         }
-
         public async static void AddToChatList(string userKey, ChatList chatList)
         {
             try
@@ -151,7 +148,6 @@ namespace TCCApp.Services
             }
             
         }
-
         public async static Task<List<ChatList>> GetChatList(string key)
         {
             try
@@ -173,7 +169,6 @@ namespace TCCApp.Services
                 return null;
             }
         }
-
         public async static Task<bool> DeleteChatList(string key)
         {
             try
@@ -190,7 +185,6 @@ namespace TCCApp.Services
             }
             return true;
         }
-
         public async static Task<bool> DeleteChat(string groupKey)
         {
             try
@@ -206,8 +200,6 @@ namespace TCCApp.Services
             }
             return true;
         }
-
-
         public static async void AddItem(Item item)
         {
             try
@@ -221,7 +213,6 @@ namespace TCCApp.Services
             {
             }
         }
-
         public async static Task<bool> DeleteItem(string key)
         {
             try
@@ -238,13 +229,13 @@ namespace TCCApp.Services
             }
             return true;
         }
-        public static async Task<List<Item>> GetItems()
+        public static async Task<List<Item>> GetItems(string userKey)
         {
             try
             {
                 return (await firebase
                 .Child("Item")
-                .Child(App.user.Key)
+                .Child(userKey)
                 .OnceAsync<Item>()).Select(item => new Item
                 {
                     Key = item.Key,
@@ -260,37 +251,6 @@ namespace TCCApp.Services
                 return null;
             }
         }
-        /*private static async Task<string> GetItemKey()
-        {
-            //Esse método cria um documento vazio e retorna uma chave
-            var doc = await firebase
-               .Child("Item")
-               .Child(App.user.Key)
-                  .PostAsync(1);
-            return doc.Key;
-        }*/
-
-        /*private async static Task<bool> UpdateItem(Item item)
-        {
-            try
-            {
-                await firebase
-                    .Child("Item")
-                    .Child(App.user.Key)
-                    .Child(item.Key)
-                    .PutAsync(item);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            return true;
-        }*/
-
-
-
-
-
         public async static Task<bool> AddUserAsync(User user)
         {
             try
@@ -367,19 +327,23 @@ namespace TCCApp.Services
                 return null;
             }
         }
-        public static async Task<List<User>> GetNearUsers()
+
+        public static async Task<List<User>> GetNearUsers(double raio)
         {
             try
             {
                 return (await firebase
                 .Child("Users")
-                .OnceAsync<User>()).Select(item => new User
+                .OnceAsync<User>())
+                .Where(u => u.Key != App.user.Key &&
+                    DistanceService.CompareDistance
+                    (App.user.Latitude, App.user.Longitude, 
+                    u.Object.Latitude, u.Object.Longitude) <= (raio / 1000) && 
+                    u.Object.DisplayUserInMap)
+                .Select(item => new User
                 {
-                    Key = item.Object.Key,
-                    Sobre = item.Object.Sobre,
-                    Nome = item.Object.Nome,
+                    Key = item.Key,
                     Buffer = item.Object.Buffer,
-                    DisplayUserInMap = item.Object.DisplayUserInMap,
                     Latitude = item.Object.Latitude,
                     Longitude = item.Object.Longitude
                 }).ToList();
@@ -389,8 +353,8 @@ namespace TCCApp.Services
                 return null;
             }
         }
-        
-        
+
+
 
         /*public static async Task AddUser(User user)
         {

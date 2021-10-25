@@ -227,15 +227,44 @@ namespace TCCApp.View
             //Isso evita a exceção Unmanaged Descriptor
             await semaphoreSlim.WaitAsync();
 
-            var allUsers = await DatabaseService.GetNearUsers();
-            var nearUsers = allUsers.Where(u => u.Key != App.user.Key &&
-                    DistanceService
-                    .CompareDistance(App.user.Latitude, App.user.Longitude, u.Latitude, u.Longitude) <= (raio / 1000)
-                    && u.DisplayUserInMap);
+            var nearUsers = await DatabaseService.GetNearUsers(raio);
 
-            foreach (var user in nearUsers)
+            var myItems = await DatabaseService.GetItems(App.user.Key);
+
+            List<string> usersKeys = new List<string>();
+
+            if (myItems.Count > 0)
             {
-                CreatePin(user, false);
+                foreach (var user in nearUsers)
+                {
+                    var items = await DatabaseService.GetItems(user.Key);
+
+                    if (items.Count > 0)
+                    {
+                        var result = from m in myItems
+                                     join i in items
+                                     on m.Tipo equals i.Tipo
+                                     select m.Key;
+                        if (result != null)
+                        {
+                            usersKeys.Add(user.Key);
+                        }
+                    }
+                }
+            }
+
+            List<User> users = new List<User>();
+            foreach (var key in usersKeys)
+            {
+                users.Add(await DatabaseService.GetUserAsync(key));
+            }
+
+            if (users.Count > 0)
+            {
+                foreach (var user in users)
+                {
+                    CreatePin(user, false);
+                }
             }
 
             semaphoreSlim.Release();

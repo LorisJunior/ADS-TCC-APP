@@ -155,6 +155,18 @@
             SelectionMode="{Binding ChatSelectionMode}"
             SelectionChangedCommand="{Binding GoToChat}"
             SelectionChangedCommandParameter="{x:Reference ChatList}">
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <StackLayout 
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center">
+                        <Label 
+                            Text="Lista de conversas vazia"
+                            FontSize="24"
+                            HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                </ContentView>
+            </CollectionView.EmptyView>
         </CollectionView>
     </AbsoluteLayout>
     
