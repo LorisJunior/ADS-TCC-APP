@@ -19,7 +19,7 @@ namespace TCCApp
         {
             //TODO
             //Chave temporária
-            user.Key = "-MlpR9BPC56NKGZgWI1m";
+            //user.Key = "-MlpToSLno7tg7r5w8KA";
 
             assembly = GetType().GetTypeInfo().Assembly;
 

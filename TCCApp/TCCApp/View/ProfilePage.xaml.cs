@@ -42,6 +42,9 @@ namespace TCCApp.View
             base.OnDisappearing();
             profileViewModel.Notifications.SafeClear();
             profileViewModel.Subscription.Dispose();
+            profileViewModel.NotificationSelectionMode = SelectionMode.Single;
+            profileViewModel.DeleteButtonOpacity = 0.3;
+            profileViewModel.IsDeleting = false;
         }
     }
 }

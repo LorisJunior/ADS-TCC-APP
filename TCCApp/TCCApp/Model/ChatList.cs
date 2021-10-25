@@ -8,6 +8,6 @@ namespace TCCApp.Model
     public class ChatList : Notification
     {
         public ImageSource MyImage { get; set; }
-        public string Key { get; set; }
+        public string chatListKey { get; set; }
     }
 }

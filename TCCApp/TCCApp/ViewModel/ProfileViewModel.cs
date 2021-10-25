@@ -23,6 +23,8 @@ namespace TCCApp.ViewModel
     {
         public ObservableCollection<Notification> Notifications { get; private set; }
         public IDisposable Subscription { get; set; }
+        //Serve para evitar que quando eu delete algo, o subscription perceba a alteração e carregue a ui de novo
+        public bool IsDeleting { get; set; }
 
         SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
@@ -71,11 +73,30 @@ namespace TCCApp.ViewModel
 
         private bool DisplayOption { get; set; }
 
+        private double deleteButtonOpacity;
+
+        public double DeleteButtonOpacity
+        {
+            get { return deleteButtonOpacity; }
+            set => Set(ref deleteButtonOpacity, value);
+        }
+
+        private SelectionMode notificationSelectionMode;
+        public SelectionMode NotificationSelectionMode
+        {
+            get { return notificationSelectionMode; }
+            set => Set(ref notificationSelectionMode, value);
+        }
+
         public ProfileViewModel()
         {
+            NotificationSelectionMode = SelectionMode.Single;
+            DeleteButtonOpacity = 0.3;
+            IsDeleting = false;
             Notifications = new ObservableCollection<Notification>();
         }
-      
+
+        
         public async void InitSubscription()
         {
             await semaphoreSlim.WaitAsync();
@@ -90,13 +111,18 @@ namespace TCCApp.ViewModel
             .Where(f => !string.IsNullOrEmpty(f.Key))
             .Subscribe(f =>
             {
-                var talk = new Notification
+                if (!IsDeleting)
                 {
-                    Author = f.Object.Author,
-                    GroupKey = f.Object.GroupKey,
-                    Image = ImageSource.FromStream(()=> new MemoryStream(f.Object.ByteImage))
-                };
-                Notifications.Add(talk);
+                    var talk = new Notification
+                    {
+                        Key = f.Key,
+                        Author = f.Object.Author,
+                        GroupKey = f.Object.GroupKey,
+                        ByteImage = f.Object.ByteImage,
+                    };
+                    talk.Image = ImageSource.FromStream(() => new MemoryStream(talk.ByteImage));
+                    Notifications.Add(talk);
+                }
             });
 
             semaphoreSlim.Release();
@@ -160,12 +186,43 @@ namespace TCCApp.ViewModel
             {
                 await semaphoreSlim.WaitAsync();
 
+                IsDeleting = true;
+
                 var selected = view.SelectedItem as Notification;
 
-                await Application.Current.MainPage.Navigation.PushAsync(new ChatPage(App.user.Nome, selected.GroupKey));
+                var chat = await DatabaseService.GetChat(selected.GroupKey);
 
-                view.SelectedItem = null;
+                if (chat != null)
+                {
+                    //Se existir a conversa adicione ela na lista de conversa
+                    var chatList = new ChatList
+                    {
+                        Author = selected.Author,
+                        ByteImage = selected.ByteImage,
+                        GroupKey = selected.GroupKey
+                    };
+                    DatabaseService.AddToChatList(App.user.Key, chatList);
 
+                    //Delete essa notificacao
+                    await DatabaseService.DeleteNotification(selected.Key);
+
+                    //Vou para o chat
+                    await Application.Current.MainPage.Navigation.PushAsync(new ChatPage(App.user.Nome, selected.GroupKey));
+
+                    Notifications.Remove(selected);
+
+                    //Limpo a seleção
+                    view.SelectedItem = null;
+
+                }
+                else
+                {
+                    //Se a conversa não existir, delete a notificação
+                    await Application.Current.MainPage.DisplayAlert("Desculpe", "Parece que a pessoa que te mandou essa notificação mudou de ideia", "ok");
+                    await DatabaseService.DeleteNotification(selected.Key);
+                    Notifications.Remove(selected);
+                }
+                IsDeleting = false;
                 semaphoreSlim.Release();
             }
         });
@@ -239,6 +296,41 @@ namespace TCCApp.ViewModel
             catch (Exception)
             {
             }
+        });
+        public ICommand SelectMultiple => new Command(async () =>
+        {
+            if (Notifications.Count > 0)
+            {
+                //Chatlist em modo de delete
+                IsDeleting = true;
+                DeleteButtonOpacity = 1;
+                NotificationSelectionMode = SelectionMode.Multiple;
+                await Application.Current.MainPage.DisplayAlert("Modo delete ativado", "Selecione as notificações que deseja deletar", "ok");
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Você não itens", "Você não tem notificações para deletar", "ok");
+            }
+        });
+        public ICommand DeleteNotification => new Command(async s =>
+        {
+            await semaphoreSlim.WaitAsync();
+
+            CollectionView collectionView = s as CollectionView;
+            var notifications = collectionView.SelectedItems;
+
+            if (notifications != null)
+            {
+                foreach (Notification notification in notifications)
+                {
+                    Notifications.Remove(notification);
+                    await DatabaseService.DeleteNotification(notification.Key);
+                }
+            }
+            DeleteButtonOpacity = 0.3;
+            NotificationSelectionMode = SelectionMode.Single;
+            IsDeleting = false;
+            semaphoreSlim.Release();
         });
     }
 }

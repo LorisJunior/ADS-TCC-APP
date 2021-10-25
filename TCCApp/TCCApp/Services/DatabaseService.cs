@@ -97,6 +97,23 @@ namespace TCCApp.Services
                   .Child(clickedUserKey)
                   .PostAsync(notification);
         }
+
+        public async static Task<bool> DeleteNotification(string key)
+        {
+            try
+            {
+                await firebase
+                    .Child("Notificacao")
+                    .Child(App.user.Key)
+                    .Child(key)
+                    .DeleteAsync();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
         public async static void NewChat(string chatKey)
         {
             await firebase
@@ -106,10 +123,18 @@ namespace TCCApp.Services
         }
         public async static Task<ChatList> GetChat(string chatKey)
         {
-            return await firebase
-                         .Child("Chat")
-                         .Child(chatKey)
-                         .OnceSingleAsync<ChatList>();
+            try
+            {
+                return await firebase
+                    .Child("Chat")
+                    .Child(chatKey)
+                    .OnceSingleAsync<ChatList>();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            
         }
 
         public async static void AddToChatList(string userKey, ChatList chatList)
@@ -136,7 +161,7 @@ namespace TCCApp.Services
                 .Child(key)
                 .OnceAsync<ChatList>()).Select(item => new ChatList
                 {
-                    Key = item.Key,
+                    chatListKey = item.Key,
                     Author = item.Object.Author,
                     MyImage = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer)),
                     Image = ImageSource.FromStream(() => new MemoryStream(item.Object.ByteImage)),

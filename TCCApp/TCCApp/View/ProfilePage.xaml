@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.View.ProfilePage"
-             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -238,14 +239,19 @@
                         FontSize="24"/>
 
                     <ImageButton
-                            AbsoluteLayout.LayoutBounds="1, 0"
-                            AbsoluteLayout.LayoutFlags="PositionProportional"
-                            WidthRequest="60"
-                            HeightRequest="60"
-                            CornerRadius="15"
-                            Padding="12"
-                            Source="deleteyellow.png"
-                            BackgroundColor="#F5BDEF"/>
+                        AbsoluteLayout.LayoutBounds="1, 0"
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        WidthRequest="60"
+                        HeightRequest="60"
+                        CornerRadius="15"
+                        Padding="12"
+                        Source="delete.png"
+                        BackgroundColor="#F2A6A6"
+                        Opacity="{Binding DeleteButtonOpacity}"
+                        Command="{Binding DeleteNotification}"
+                        CommandParameter="{x:Reference NotificationList}"
+                        xct:TouchEffect.LongPressCommand="{Binding SelectMultiple}"
+                        xct:TouchEffect.LongPressDuration="250"/>
 
                     <BoxView 
                         AbsoluteLayout.LayoutBounds="0.5, 0.17, 1, 0.002"
@@ -258,7 +264,7 @@
                         AbsoluteLayout.LayoutFlags="All"
                         ItemsSource="{Binding Notifications}"
                         ItemTemplate="{StaticResource NotificationTemplate}"
-                        SelectionMode="Single"
+                        SelectionMode="{Binding NotificationSelectionMode}"
                         SelectionChangedCommand="{Binding GoToChat}"
                         SelectionChangedCommandParameter="{x:Reference NotificationList}">
 

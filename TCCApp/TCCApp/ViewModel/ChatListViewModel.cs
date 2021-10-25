@@ -66,7 +66,7 @@ namespace TCCApp.ViewModel
                 {
                     var chat = new ChatList
                     {
-                        Key = f.Key,
+                        chatListKey = f.Key,
                         Author = f.Object.Author,
                         MyImage = ImageSource.FromStream(() => new MemoryStream(App.user.Buffer)),
                         Image = ImageSource.FromStream(() => new MemoryStream(f.Object.ByteImage)),
@@ -110,7 +110,7 @@ namespace TCCApp.ViewModel
                     //Remove da observablecollection
                     Chats.Remove(chat);
                     //Remove da minha lista de conversas
-                    await DatabaseService.DeleteChatList(chat.Key);
+                    await DatabaseService.DeleteChatList(chat.chatListKey);
                     //Remove a conversa da tabela Chat
                     await DatabaseService.DeleteChat(chat.GroupKey);
                 }
