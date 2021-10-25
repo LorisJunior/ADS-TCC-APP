@@ -39,10 +39,6 @@ namespace TCCApp.ViewModel
             set => Set(ref nome, value);
         }
 
-
-
-
-        string temp;
         public ClickedUserViewModel()
         {
             Items = new ObservableCollection<Item>();
