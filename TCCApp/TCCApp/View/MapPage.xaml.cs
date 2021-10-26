@@ -230,7 +230,7 @@ namespace TCCApp.View
             var nearUsers = await DatabaseService.GetNearUsers(raio);
 
             var myItems = await DatabaseService.GetItems(App.user.Key);
-
+            
             //List<string> usersKeys = new List<string>();
 
             //Verifica se eu tenho algum item na minha lista
@@ -241,14 +241,14 @@ namespace TCCApp.View
                 while (count < nearUsers.Count )
                 {
                     var items = await DatabaseService.GetItems(nearUsers[count].Key);
-
+                    
                     //Verifica se os outros usuários tem itens
                     if (items.Count > 0)
                     {
                         //Compara as listas de itens
                         var result = from m in myItems
                                      join i in items
-                                     on m.Tipo equals i.Tipo
+                                     on m.Tipo.ToLowerInvariant() equals i.Tipo.ToLowerInvariant()
                                      select m.Key;
 
                         //Se não tem item em comum é excluído da lista
