@@ -68,6 +68,22 @@
                     </Frame>
                 </Grid>
             </DataTemplate>
+
+            <Style TargetType="Grid">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                        Value="LightSkyBlue" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -83,9 +99,9 @@
 
             <!--Perfil-->
             <pancake:PancakeView 
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                AbsoluteLayout.LayoutBounds="0.5, 0.02, 386, 121" 
-                CornerRadius="20">
+                AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds="0.5, 0.02, 0.95, 0.14" 
+                CornerRadius="12">
 
                 <pancake:PancakeView.Shadow>
                     <pancake:DropShadow BlurRadius="2"/>
@@ -98,8 +114,10 @@
                     <ImageButton
                         x:Name="profileImage"
                         Source="{Binding ProfileImage, Mode=TwoWay}"
-                        AbsoluteLayout.LayoutBounds="0.05, 0.5, 100, 100"
+                        AbsoluteLayout.LayoutBounds="0.05, 0.5"
                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                        HeightRequest="100"
+                        WidthRequest="100"
                         Aspect="AspectFill"
                         CornerRadius="50"
                         BackgroundColor="White"
@@ -137,10 +155,10 @@
                     <ImageButton
                         AbsoluteLayout.LayoutBounds="0.95, 0.25"
                         AbsoluteLayout.LayoutFlags="PositionProportional"
-                        WidthRequest="60"
-                        HeightRequest="60"
-                        CornerRadius="15"
-                        Padding="15"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        CornerRadius="5"
+                        Padding="12"
                         Source="{Binding DisplayIcon}"
                         BackgroundColor="{Binding DisplayButtonColor}"
                         Command="{Binding DisplayUser}"/>
@@ -164,9 +182,9 @@
 
             <!--Sobre-->
             <pancake:PancakeView 
-                AbsoluteLayout.LayoutBounds="0.5, 0.225, 386, 192" 
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                CornerRadius="20">
+                AbsoluteLayout.LayoutBounds="0.5, 0.225, 0.95, 0.225" 
+                AbsoluteLayout.LayoutFlags="All"
+                CornerRadius="12">
 
                 <pancake:PancakeView.Shadow>
                     <pancake:DropShadow BlurRadius="2"/>
@@ -179,9 +197,9 @@
                         x:Name="deleteSobre"
                         AbsoluteLayout.LayoutBounds="1, 0"
                         AbsoluteLayout.LayoutFlags="PositionProportional"
-                        WidthRequest="60"
-                        HeightRequest="60"
-                        CornerRadius="15"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        CornerRadius="5"
                         Padding="10"
                         Source="clear.png"
                         BackgroundColor="#F5BDEF"
@@ -198,7 +216,8 @@
 
                     <Editor
                         x:Name="sobre"
-                        AbsoluteLayout.LayoutBounds="15, 68, 325,95"
+                        AbsoluteLayout.LayoutBounds="15, 68, 0.9, 0.6"
+                        AbsoluteLayout.LayoutFlags="SizeProportional"
                         HeightRequest="95"
                         WidthRequest="325"
                         Placeholder="Escreva algo sobre você."
@@ -218,9 +237,9 @@
             <!--Notificações-->
             <pancake:PancakeView 
                 BackgroundColor="White"
-                AbsoluteLayout.LayoutBounds="0.5, 0.97, 386, 485" 
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                CornerRadius="20">
+                AbsoluteLayout.LayoutBounds="0.5, 0.97, 0.95, 0.568" 
+                AbsoluteLayout.LayoutFlags="All"
+                CornerRadius="12">
 
                 <pancake:PancakeView.Border>
                     <pancake:Border Thickness="1" Color="LightGray"/>
@@ -241,10 +260,10 @@
                     <ImageButton
                         AbsoluteLayout.LayoutBounds="1, 0"
                         AbsoluteLayout.LayoutFlags="PositionProportional"
-                        WidthRequest="60"
-                        HeightRequest="60"
-                        CornerRadius="15"
-                        Padding="12"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        CornerRadius="5"
+                        Padding="10"
                         Source="delete.png"
                         BackgroundColor="#F2A6A6"
                         Opacity="{Binding DeleteButtonOpacity}"
