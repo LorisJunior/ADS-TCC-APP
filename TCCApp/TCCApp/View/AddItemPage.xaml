@@ -44,7 +44,7 @@
 
         <!--Produto-->
         <Frame 
-            AbsoluteLayout.LayoutBounds="0.5, 0.03, 0.50, 0.38"
+            AbsoluteLayout.LayoutBounds="0.5, 0.03, 0.44, 0.38"
             AbsoluteLayout.LayoutFlags="All"
             CornerRadius="20" 
             Padding="0" 
@@ -54,7 +54,7 @@
                 x:Name="produtoCor" 
                 BackgroundColor="{Binding IconColor}">
 
-                <Frame AbsoluteLayout.LayoutBounds="0, 0,180, 125"
+                <Frame AbsoluteLayout.LayoutBounds="0.5, 0,180, 125"
                        AbsoluteLayout.LayoutFlags="PositionProportional"
                        BackgroundColor="Transparent"
                        Padding="0">
@@ -70,7 +70,8 @@
                 <!--Botão AddPhoto-->
 
                 <ImageButton 
-                    AbsoluteLayout.LayoutBounds="105,5,70,70"
+                    AbsoluteLayout.LayoutBounds="0.95,0.03,70,70"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
                     Padding="15"
                     Source="plus.png"
                     BackgroundColor="#ECEE72"
@@ -79,7 +80,8 @@
 
 
                 <StackLayout
-                    AbsoluteLayout.LayoutBounds="0, 120, 180, 115"
+                    AbsoluteLayout.LayoutBounds="0.5, 0.95, 180, 115"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
                     Padding="20">
                     <Grid VerticalOptions="Fill" HorizontalOptions="Fill">
                         <Grid.RowDefinitions>
