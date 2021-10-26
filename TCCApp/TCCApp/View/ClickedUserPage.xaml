@@ -12,7 +12,7 @@
                     CornerRadius="20"
                     BackgroundColor="{Binding Cor}"
                     Padding="0"
-                    WidthRequest="350"
+                    WidthRequest="300"
                     HeightRequest="121">
 
                         <Grid
