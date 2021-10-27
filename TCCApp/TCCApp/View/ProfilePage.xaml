@@ -17,8 +17,8 @@
                     </Grid.ColumnDefinitions>
 
                     <Frame 
-                        BackgroundColor="White" 
-                        HasShadow="True"
+                        BackgroundColor="#ECEE72" 
+                        HasShadow="False"
                         BorderColor="LightGray"
                         CornerRadius="15"
                         Padding="10"
@@ -27,9 +27,8 @@
 
                         <Grid WidthRequest="320">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
@@ -37,10 +36,12 @@
                             </Grid.ColumnDefinitions>
 
                             <ImageButton
-                                Grid.RowSpan="3"
+                                Grid.RowSpan="2"
                                 Grid.Column="0"
-                                HeightRequest="60"
-                                WidthRequest="60"
+                                BorderWidth="1"
+                                BorderColor="White"
+                                HeightRequest="45"
+                                WidthRequest="45"
                                 VerticalOptions="Center"
                                 HorizontalOptions="Start"
                                 CornerRadius="30"
@@ -54,14 +55,14 @@
                                 Grid.Column="1"
                                 Text="{Binding Author}"
                                 TextColor="DarkSlateGray"
-                                FontSize="Medium"/>
+                                FontSize="Small"/>
 
                             <Label 
-                                Grid.Row="2"
+                                Grid.Row="1"
                                 Grid.Column="1"
                                 Text="Te convidou para conversar"
                                 TextColor="DarkSlateGray"
-                                FontSize="16"
+                                FontSize="Small"
                                 FontAttributes="Bold"/>
 
                         </Grid>
