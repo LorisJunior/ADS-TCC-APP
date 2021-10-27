@@ -24339,35 +24339,38 @@ namespace TCCApp.Droid
 			// aapt resource value: 0x7F0700D0
 			public const int plus = 2131165392;
 			
-			// aapt resource value: 0x7F0700D1
-			public const int plusyellow = 2131165393;
-			
 			// aapt resource value: 0x7F0700D2
-			public const int preference_list_divider_material = 2131165394;
+			public const int plusyellow = 2131165394;
+			
+			// aapt resource value: 0x7F0700D1
+			public const int plus_dark = 2131165393;
 			
 			// aapt resource value: 0x7F0700D3
-			public const int settings = 2131165395;
+			public const int preference_list_divider_material = 2131165395;
 			
 			// aapt resource value: 0x7F0700D4
-			public const int shorts = 2131165396;
+			public const int settings = 2131165396;
 			
 			// aapt resource value: 0x7F0700D5
-			public const int test_custom_background = 2131165397;
+			public const int shorts = 2131165397;
 			
 			// aapt resource value: 0x7F0700D6
-			public const int tooltip_frame_dark = 2131165398;
+			public const int test_custom_background = 2131165398;
 			
 			// aapt resource value: 0x7F0700D7
-			public const int tooltip_frame_light = 2131165399;
+			public const int tooltip_frame_dark = 2131165399;
 			
 			// aapt resource value: 0x7F0700D8
-			public const int user = 2131165400;
+			public const int tooltip_frame_light = 2131165400;
 			
 			// aapt resource value: 0x7F0700D9
-			public const int visibility_off = 2131165401;
+			public const int user = 2131165401;
 			
 			// aapt resource value: 0x7F0700DA
-			public const int visibility_on = 2131165402;
+			public const int visibility_off = 2131165402;
+			
+			// aapt resource value: 0x7F0700DB
+			public const int visibility_on = 2131165403;
 			
 			static Drawable()
 			{

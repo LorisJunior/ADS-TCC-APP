@@ -16,12 +16,13 @@
                     </Grid.ColumnDefinitions>
 
                     <Frame 
+                        HasShadow="True"
                         WidthRequest="360"
-                        BackgroundColor="LightGray" 
-                        HasShadow="False"
+                        BackgroundColor="White" 
                         CornerRadius="15"
                         Padding="10"
-                        HorizontalOptions="Center">
+                        HorizontalOptions="Center"
+                        BorderColor="LightGray">
 
                         <Grid WidthRequest="320">
                             <Grid.RowDefinitions>
@@ -83,7 +84,7 @@
                                 Grid.Row="2"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="2"
-                                Text="Envie uma mensagem agora"
+                                Text="Envie uma mensagem"
                                 TextColor="DarkSlateGray"
                                 FontSize="16"
                                 FontAttributes="Bold"/>

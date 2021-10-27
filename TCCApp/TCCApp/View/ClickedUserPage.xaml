@@ -131,7 +131,7 @@
             AbsoluteLayout.LayoutBounds="0.5, 0.33, 0.95, 0.3" 
             AbsoluteLayout.LayoutFlags="All"
             CornerRadius="20"
-            BackgroundColor="SkyBlue"
+            BackgroundColor="#ECEE72"
             Padding="0">
 
             <Grid
@@ -146,7 +146,7 @@
 
                 <Label 
                     Text="Sobre"
-                    TextColor="White"
+                    TextColor="#827C93"
                     FontSize="24"
                     FontAttributes="Bold"/>
 

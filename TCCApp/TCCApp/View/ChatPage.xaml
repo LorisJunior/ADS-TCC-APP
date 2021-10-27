@@ -50,18 +50,18 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Frame 
-                                    BackgroundColor="DodgerBlue" 
+                                    BackgroundColor="#ECEE72" 
                                     HasShadow="False"
                                     CornerRadius="15"
                                     Grid.Column="1">
                                     <StackLayout>
 
                                         <Label Text="{Binding Author}"
-                                               TextColor="White"
+                                               TextColor="#827C93"
                                                FontSize="Medium"/>
 
                                         <Label Text="{Binding Content}"
-                                               TextColor="White"
+                                               TextColor="#827C93"
                                                FontSize="Medium"
                                                FontAttributes="Bold"/>
 
@@ -127,8 +127,8 @@
                 <Button 
                     Grid.Column="2"
                     Text="Send"
-                    TextColor="White"
-                    BackgroundColor="DodgerBlue"
+                    TextColor="#827C93"
+                    BackgroundColor="#ECEE72"
                     Command="{Binding Send}"/>
 
             </Grid>

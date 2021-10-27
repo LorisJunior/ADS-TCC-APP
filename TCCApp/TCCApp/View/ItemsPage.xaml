@@ -128,8 +128,8 @@
                 Margin="5, 0"
                 CornerRadius="5"
                 Padding="12"
-                Source="plusyellow.png"
-                BackgroundColor="#F5BDEF"
+                Source="plus_dark.png"
+                BackgroundColor="#ECEE72"
                 Command="{Binding GoToAddItemPage}"/>
 
             <ImageButton

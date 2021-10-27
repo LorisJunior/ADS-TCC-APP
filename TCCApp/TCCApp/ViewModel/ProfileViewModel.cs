@@ -160,7 +160,7 @@ namespace TCCApp.ViewModel
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        DisplayButtonColor = Color.FromHex("#F5BDEF");
+                        DisplayButtonColor = Color.FromHex("#ECEE72");
                         DisplayIcon = "visibility_on.png";
                     });
                 }
@@ -253,7 +253,7 @@ namespace TCCApp.ViewModel
                     DisplayOption = App.user.DisplayUserInMap = true;
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        DisplayButtonColor = Color.FromHex("#F5BDEF");
+                        DisplayButtonColor = Color.FromHex("#ECEE72");
                         DisplayIcon = "visibility_on.png";
                     });
                     await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
