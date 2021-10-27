@@ -71,7 +71,7 @@ namespace TCCApp.ViewModel
                     if (Usuario.Email == user.Email && Criptografia.HashValue(Usuario.Senha) == user.Senha)
                     {
                         //Pega a key do usuário  
-                        //App.user.Key = user.Key;
+                        App.user.Key = user.Key;
                         //Abre a tela de HistoryPage após o sucesso do Login  
                         await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
                         //App.Current.MainPage = new HistoryPage();
