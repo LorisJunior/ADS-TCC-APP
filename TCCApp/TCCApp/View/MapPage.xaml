@@ -2,15 +2,31 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.View.MapPage"
-             xmlns:map="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
+             xmlns:vmap="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="PinTemplate">
+                <vmap:Pin
+                    Icon="{Binding Icon}"
+                    Type="SearchResult"
+                    Label="Olá vms comprar juntos!"
+                    ZIndex="5"
+                    Address="{Binding Address}"
+                    Position="{Binding Position}"/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <AbsoluteLayout>
         
-        <map:Map 
+        <vmap:Map 
             x:Name="map" 
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
-            MyLocationEnabled="True"/>
+            MyLocationEnabled="True"
+            ItemsSource="{Binding PinCollection}"
+            ItemTemplate="{StaticResource PinTemplate}"/>
         
         <Frame AbsoluteLayout.LayoutBounds="0.07, 0.965, 0.54, 0.112"
                AbsoluteLayout.LayoutFlags="All" CornerRadius="5"
@@ -18,7 +34,7 @@
                Opacity="0.8" >
 
             <Slider 
-                Value="{Binding Raio}"
+                Value="{Binding Radius}"
                 Maximum="5000"
                 Minimum="1000"
                 MinimumTrackColor="Gray" 
@@ -35,10 +51,11 @@
             CornerRadius="6">
 
             <Button 
-            x:Name="Search"
-            Text="Procurar"
-            BackgroundColor="White"
-            Clicked="Search_Clicked"/>
+                x:Name="Search"
+                Text="Procurar"
+                BackgroundColor="White"
+                Command="{Binding GetNearUsers}"
+                CommandParameter="{x:Reference Search}"/>
 
         </Frame>
         

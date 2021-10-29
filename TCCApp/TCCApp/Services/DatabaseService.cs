@@ -354,58 +354,6 @@ namespace TCCApp.Services
             }
         }
 
-
-
-        /*public static async Task AddUser(User user)
-        {
-            //Firebase
-            await firebase
-               .Child("Users")
-                  .PostAsync(user);
-
-            //SQLite
-            using (var db = new SQLiteConnection(App.DatabasePath))
-            {
-                db.CreateTable<User>();
-                db.Insert(GetUser(user));
-            }
-
-        }*/
-        /*public static async Task<User> GetUser(int Id)
-        {
-            var allUsers = await GetUsers();
-            await firebase
-              .Child("Users")
-              .OnceAsync<User>();
-            return allUsers.Where(u => u.Id == Id).FirstOrDefault();
-        }*/
-        /*public static async Task<User> GetUser(User user)
-        {
-            var allUsers = await GetUsers();
-            await firebase
-              .Child("Users")
-              .OnceAsync<User>();
-            return allUsers.Where(u => u.Id == user.Id).FirstOrDefault();
-        }*/
-        /*public static async Task UpdateUser(User user)
-        {
-            //Firebase
-            var toUpdateUser = (await firebase
-              .Child("Users")
-                .OnceAsync<User>())
-                   .Where(u => u.Object.Id == user.Id).FirstOrDefault();
-            await firebase
-              .Child("Users")
-                .Child(toUpdateUser.Key)
-                  .PutAsync(user);
-            //SQLite
-            using (var db = new SQLiteConnection(App.DatabasePath))
-            {
-                db.CreateTable<User>();
-                db.Update(user);
-            }
-        }*/
-
         public static async Task<User> GetUser(string email)
         {
             var allUsers = await GetUsers();
