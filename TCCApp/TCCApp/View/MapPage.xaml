@@ -2,31 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TCCApp.View.MapPage"
-             xmlns:vmap="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <DataTemplate x:Key="PinTemplate">
-                <vmap:Pin
-                    Icon="{Binding Icon}"
-                    Type="SearchResult"
-                    Label="Olá vms comprar juntos!"
-                    ZIndex="5"
-                    Address="{Binding Address}"
-                    Position="{Binding Position}"/>
-            </DataTemplate>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+             xmlns:map="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
     
     <AbsoluteLayout>
         
-        <vmap:Map 
+        <map:Map 
             x:Name="map" 
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
-            MyLocationEnabled="True"
-            ItemsSource="{Binding PinCollection}"
-            ItemTemplate="{StaticResource PinTemplate}"/>
+            MyLocationEnabled="True"/>
         
         <Frame AbsoluteLayout.LayoutBounds="0.07, 0.965, 0.54, 0.112"
                AbsoluteLayout.LayoutFlags="All" CornerRadius="5"
@@ -54,8 +38,7 @@
                 x:Name="Search"
                 Text="Procurar"
                 BackgroundColor="White"
-                Command="{Binding GetNearUsers}"
-                CommandParameter="{x:Reference Search}"/>
+                Clicked="Search_Clicked"/>
 
         </Frame>
         
