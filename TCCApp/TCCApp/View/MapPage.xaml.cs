@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using TCCApp.Helpers;
 using TCCApp.Model;
 using TCCApp.Services;
@@ -43,7 +44,7 @@ namespace TCCApp.View
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            
+
             mapViewModel.LocatorStartListening();
 
             map.MoveToRegion(MapSpan.FromCenterAndRadius(mapViewModel.CurrentPosition, Distance.FromMeters(5000)), false);
@@ -51,23 +52,19 @@ namespace TCCApp.View
             map.Circles.Add(mapViewModel.UserCircle);
 
             mapViewModel.UpdatePosition();
-           
+
             mapViewModel.SetPins(App.user, true);
 
             mapViewModel.locator.PositionChanged += Locator_PositionChanged;
-
         }
         protected async override void OnDisappearing()
         {
             base.OnDisappearing();
-
+            //Este delay evita unmanaged descriptor
+            await Task.Delay(TimeSpan.FromMilliseconds(800));
             try
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    mapViewModel.Pins.Clear();
-                });
-
+                mapViewModel.Pins.Clear();
                 map.Circles.Clear();
             }
             catch (Exception)

@@ -63,10 +63,14 @@ namespace TCCApp.ViewModel
             SetPins(App.user, true);
                
             var users = await FindNearUsers(radius);
-            foreach (var user in users)
+            if (users != null)
             {
-                SetPins(user, false);
+                foreach (var user in users)
+                {
+                    SetPins(user, false);
+                }
             }
+            
             await Task.Delay(TimeSpan.FromMilliseconds(800));
             btn.IsEnabled = true;
         });
@@ -96,15 +100,14 @@ namespace TCCApp.ViewModel
             userPin.Position = CurrentPosition;
             UserCircle.Center = CurrentPosition;
         }
-        public async void SetPins(User user, bool isMyPin)
+        public void SetPins(User user, bool isMyPin)
         {
-            await semaphoreSlim.WaitAsync();
-
             BitmapDescriptor icon = BitmapDescriptorFactory.DefaultMarker(Color.Red);
+            var t = ImageService.GetIcon(user);
 
             if (user.Buffer != null)
             {
-                icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user));
+                icon = BitmapDescriptorFactory.FromView(t);
             }
 
             Pin pin = new Pin()
@@ -123,8 +126,6 @@ namespace TCCApp.ViewModel
             {
                 Pins.Add(pin);
             }
-
-            semaphoreSlim.Release();
         }
         public async Task<IList<User>> FindNearUsers(double radius)
         {
