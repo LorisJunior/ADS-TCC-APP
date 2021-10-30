@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TCCApp.View.CadastroPage">
+             x:Class="TCCApp.View.CadastroPage"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
 
-    <StackLayout BackgroundColor="#FFF8EA">
+    <StackLayout BackgroundColor="White">
 
         <Frame BackgroundColor="#ECEE72">
             <Label 
@@ -32,12 +33,18 @@
             Text="{Binding ConfirmarSenha}"
             IsPassword="True"/>
 
-            <Button 
+            <pancake:PancakeView CornerRadius="5" Margin="0, 60, 0, 0">
+                <pancake:PancakeView.Shadow>
+                    <pancake:DropShadow BlurRadius="2"/>
+                </pancake:PancakeView.Shadow>
+
+                <Button 
                 Text="Criar nova conta"
-                Margin="0, 60, 0, 0"
                 TextColor="#827C93"
                 BackgroundColor="#ECEE72"
                 Command="{Binding CadastrarCommand}"/>
+            </pancake:PancakeView>
+            
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
 

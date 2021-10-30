@@ -4,7 +4,7 @@
              x:Class="TCCApp.MainPage"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
 
-    <StackLayout Background="#FFF8EA">
+    <StackLayout BackgroundColor="White">
         
         <StackLayout VerticalOptions="CenterAndExpand" Margin="30">
 

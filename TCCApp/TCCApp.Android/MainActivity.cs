@@ -87,7 +87,7 @@ namespace TCCApp.Droid
         [Obsolete]
         public void SetStatusBarColor(System.Drawing.Color color, bool darkTheme)
         {
-            if (Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.Lollipop)
+            if (Build.VERSION.SdkInt < BuildVersionCodes.Lollipop)
                 return;
 
             var activity = Platform.CurrentActivity;
@@ -96,7 +96,7 @@ namespace TCCApp.Droid
             window.ClearFlags(Android.Views.WindowManagerFlags.TranslucentStatus);
             window.SetStatusBarColor(color.ToPlatformColor());
 
-            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
                 var flag = (Android.Views.StatusBarVisibility)Android.Views.SystemUiFlags.LightStatusBar;
                 window.DecorView.SystemUiVisibility = darkTheme ? 0 : flag;
