@@ -58,27 +58,17 @@ namespace TCCApp.ViewModel
         public ICommand GetNearUsers => new Command(async(s) =>
         {
             var btn = s as Button;
-
             btn.IsEnabled = false;
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                if (Pins.Count > 0)
-                {
-                    Pins.Clear();
-                }
-                SetPins(App.user, true);
-            });
+            Pins.Clear();
+            SetPins(App.user, true);
+               
             var users = await FindNearUsers(radius);
-            Device.BeginInvokeOnMainThread(() =>
+            foreach (var user in users)
             {
-                foreach (var user in users)
-                {
-                    SetPins(user, false);
-                }
-            });
-            await Task.Delay(TimeSpan.FromSeconds(1.5));
+                SetPins(user, false);
+            }
+            await Task.Delay(TimeSpan.FromMilliseconds(800));
             btn.IsEnabled = true;
-
         });
         public void InitUser()
         {
@@ -98,7 +88,6 @@ namespace TCCApp.ViewModel
             {
             }
         }
-
         public async void UpdatePosition()
         {
             App.user.Latitude = CurrentPosition.Latitude;
@@ -111,36 +100,19 @@ namespace TCCApp.ViewModel
         {
             await semaphoreSlim.WaitAsync();
 
-            BitmapDescriptor icon = null;
+            BitmapDescriptor icon = BitmapDescriptorFactory.DefaultMarker(Color.Red);
 
             if (user.Buffer != null)
             {
                 icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user));
             }
-            else
-            {
-                icon = BitmapDescriptorFactory.DefaultMarker(Color.Red);
-            }
 
             Pin pin = new Pin()
             {
                 Icon = icon,
-                Type = PinType.Place,
-                Label = "Olá, vms comprar juntos!",
-                ZIndex = 5,
-                Address = user.Key
+                Address = user.Key,
+                Position = new Position(user.Latitude, user.Longitude),
             };
-
-            try
-            {
-                if (user.Latitude != 0 || user.Longitude != 0)
-                {
-                    pin.Position = new Position(user.Latitude, user.Longitude);
-                }
-            }
-            catch (Exception)
-            {
-            }
 
             if (isMyPin == true)
             {

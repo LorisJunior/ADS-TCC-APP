@@ -43,7 +43,6 @@ namespace TCCApp.View
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
             
             mapViewModel.LocatorStartListening();
 

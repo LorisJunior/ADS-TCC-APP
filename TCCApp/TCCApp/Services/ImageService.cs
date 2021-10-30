@@ -11,6 +11,13 @@ namespace TCCApp.Services
 {
     public class ImageService
     {
+        const double TAM = 75;
+        
+        public static ImageButton placeholder = new ImageButton
+        {
+            Source = "user.png",
+            CornerRadius = 38,
+        };
         public static byte[] ConvertToByte(string path, Assembly assembly)
         {
             var stream = GetImageFromStream(path, assembly);
@@ -35,29 +42,19 @@ namespace TCCApp.Services
         }
         public static Xamarin.Forms.View GetIcon(User user)
         {
-            const double TAM = 75;
-            var stream = new MemoryStream(user.Buffer);
-            Xamarin.Forms.ImageSource temp = Xamarin.Forms.ImageSource.FromStream(() => stream);
-
-
             var img = new ImageButton
             {
-                Source = temp,
+                Source = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(user.Buffer)),
                 Aspect = Aspect.AspectFill,
                 CornerRadius = 38,
                 BackgroundColor = Color.Transparent
-            };
-
-            var placeholder = new ImageButton
-            {
-                Source = "user.png",
-                CornerRadius = 38,
             };
 
             AbsoluteLayout.SetLayoutBounds(img, new Rectangle(x: 0, y: 0, width: TAM, height: TAM));
             AbsoluteLayout.SetLayoutFlags(img, AbsoluteLayoutFlags.None);
             AbsoluteLayout.SetLayoutBounds(placeholder, new Rectangle(x: 0, y: 0, width: TAM, height: TAM));
             AbsoluteLayout.SetLayoutFlags(placeholder, AbsoluteLayoutFlags.None);
+
             return new AbsoluteLayout
             {
                 WidthRequest = TAM,
