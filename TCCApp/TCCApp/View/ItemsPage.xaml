@@ -26,7 +26,7 @@
                         Grid.Column="1"
                         VerticalOptions="Start"
                         CornerRadius="20"
-                        HeightRequest="180"
+                        HeightRequest="215"
                         WidthRequest="150"
                         HorizontalOptions="CenterAndExpand">
 
@@ -52,8 +52,8 @@
                                 Padding="5">       
                                 <Grid VerticalOptions="Fill" HorizontalOptions="Fill">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="22"/>
-                                        <RowDefinition Height="22"/>
+                                        <RowDefinition Height="44"/>
+                                        <RowDefinition Height="44"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
