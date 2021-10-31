@@ -134,6 +134,8 @@ namespace TCCApp.View
             }
             catch (Exception)
             {
+                await DisplayAlert("Erro", "A localização não pode ser alcançada, por favor verifique a conexão com a internet e as permissões do aplicativo", "ok");
+                await Navigation.PopAsync();
             }
         }
         public void UpdatePosition()
