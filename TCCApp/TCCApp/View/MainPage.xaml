@@ -65,7 +65,7 @@
                          BindableLayout.ItemsSource="{Binding AuthenticationNetworks}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <Button Text="{Binding Name, StringFormat='Login com {0}'}"
+                        <Button Text="{Binding Name, StringFormat='Entrar com o {0}'}"
                             ImageSource="{Binding Icon}"
                             Command="{Binding Path=BindingContext.OnLoginCommand, Source={x:Reference mainLayout}}"
                             CommandParameter="{Binding .}"     
@@ -73,8 +73,8 @@
                             TextColor="{Binding Foreground}"
                             BackgroundColor="{Binding Background}"
                             BorderColor="DarkGray"
-                                BorderWidth="1"
-                            WidthRequest="220"
+                            BorderWidth="1"
+                            WidthRequest="280"
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="FillAndExpand"/>
                     </DataTemplate>
