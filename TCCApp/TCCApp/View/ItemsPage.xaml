@@ -37,7 +37,8 @@
                         <AbsoluteLayout BackgroundColor="{Binding Cor}">
 
                             <Frame
-                                AbsoluteLayout.LayoutBounds="0,0,150,108"
+                                AbsoluteLayout.LayoutBounds="0.5, 0, 0.7, 0.6"
+                                AbsoluteLayout.LayoutFlags="All"
                                 BackgroundColor="Transparent"
                                 Padding="10">
 
@@ -46,7 +47,8 @@
                             </Frame>
 
                             <StackLayout
-                                AbsoluteLayout.LayoutBounds="0, 105, 150, 78"
+                                AbsoluteLayout.LayoutBounds="0.5, 1, 1, 0.43"
+                                AbsoluteLayout.LayoutFlags="All"
                                 Padding="5">       
                                 <Grid VerticalOptions="Fill" HorizontalOptions="Fill">
                                     <Grid.RowDefinitions>
@@ -60,10 +62,10 @@
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.RowSpan="1" Grid.Column="1"
                                         Text="{Binding Tipo}" 
-                                        FontSize="20"/>         
+                                        FontSize="Medium"/>         
                                     <Label Grid.Row="1" Grid.Column="1" HorizontalOptions="End"
                                          Text="{Binding Quantidade, StringFormat='x{0}'}" 
-                                         FontSize="20"/>
+                                         FontSize="Medium"/>
                                 </Grid >
                                 
                             </StackLayout>
@@ -134,8 +136,8 @@
 
             <ImageButton
                 Grid.Column="2"
-                AbsoluteLayout.LayoutBounds="0.92, 0.05"
-                AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0.92, 0.05, 0.1, 0.1"
+                AbsoluteLayout.LayoutFlags="All"
                 HorizontalOptions="End"
                 VerticalOptions="Center"
                 WidthRequest="50"

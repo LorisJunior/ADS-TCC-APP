@@ -1,28 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.tccapp" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
-	<application android:label="TCCApp.Android" android:theme="@style/MainTheme">
-		
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="br.com.lourival.bruno.tccapp" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="24" android:targetSdkVersion="30" />
+	<application android:label="TCCApp.Android" android:theme="@style/MainTheme" android:icon="@drawable/appIcon">
 		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyC0II2KfnCIkWN7gFl_q9FT4-AaRt3SzpA" />
 		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 		<uses-library android:name="org.apache.http.legacy" android:required="false" />
 		<meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb4354693264614401" />
 		<activity android:name="com.facebook.FacebookActivity" android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="TCCApp" />
 		<activity android:name="com.facebook.CustomTabActivity" android:exported="true">
-		  <intent-filter>
-			<action android:name="android.intent.action.VIEW" />
-			<category android:name="android.intent.category.DEFAULT" />
-			<category android:name="android.intent.category.BROWSABLE" />
-			<data android:scheme="fb4354693264614401" />
-		  </intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="fb4354693264614401" />
+			</intent-filter>
 		</activity>
-		<provider android:name="androidx.core.content.FileProvider" 
-          android:authorities="${applicationId}.fileprovider" 
-          android:exported="false" 
-          android:grantUriPermissions="true">
-          
-		<meta-data android:name="android.support.FILE_PROVIDER_PATHS" 
-                     android:resource="@xml/file_paths"></meta-data>
+		<provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.fileprovider" android:exported="false" android:grantUriPermissions="true">
+			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
 		</provider>
 	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
