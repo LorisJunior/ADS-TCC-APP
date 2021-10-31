@@ -51,31 +51,26 @@ namespace TCCApp.View
             map.PinClicked += Map_PinClicked;
 
             LocatorStartListening();
-
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(CurrentPosition, Distance.FromMeters(5000)), false);
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            MainThread.BeginInvokeOnMainThread(() =>
+            if (!locator.IsListening)
             {
-                if (!locator.IsListening)
-                {
-                    LocatorStartListening();
-                }
+                LocatorStartListening();
+            }
 
-                SetPins(App.user, true);
+            SetPins(App.user, true);
 
-                SetCircle(CurrentPosition);
+            SetCircle(CurrentPosition);
 
-                map.Circles.Add(userCircle);
+            map.Circles.Add(userCircle);
 
-                UpdatePosition();
+            UpdatePosition();
 
-                locator.PositionChanged += Locator_PositionChanged;
-            });
+            locator.PositionChanged += Locator_PositionChanged;
         }
         protected async override void OnDisappearing()
         {
@@ -108,21 +103,22 @@ namespace TCCApp.View
                 var user = await DatabaseService.GetUserAsync(userKey);
                 await Navigation.PushAsync(new ClickedUserPage(user));
             }
-
         }
         private async void Search_Clicked(object sender, EventArgs e)
         {
             var btn = sender as Button;
             btn.IsEnabled = false;
+
             await semaphoreSlim.WaitAsync();
 
             CleanMap(map.Pins);
             SetPins(App.user, true);
             FindNearUsers();
 
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            btn.IsEnabled = true;
             semaphoreSlim.Release();
+
+            await Task.Delay(TimeSpan.FromMilliseconds(1500));
+            btn.IsEnabled = true;
         }
         public async void LocatorStartListening()
         {
@@ -132,16 +128,16 @@ namespace TCCApp.View
                 await locator.StartListeningAsync(new TimeSpan(0, 0, 0), 100);
                 var position = await locator.GetPositionAsync();
                 CurrentPosition = new Position(position.Latitude, position.Longitude);
+                App.user.Latitude = CurrentPosition.Latitude;
+                App.user.Longitude = CurrentPosition.Longitude;
+                await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
             }
             catch (Exception)
             {
             }
         }
-        public async void UpdatePosition()
+        public void UpdatePosition()
         {
-            App.user.Latitude = CurrentPosition.Latitude;
-            App.user.Longitude = CurrentPosition.Longitude;
-            await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
             userPin.Position = CurrentPosition;
             userCircle.Center = CurrentPosition;
             map.MoveToRegion(MapSpan.FromCenterAndRadius(CurrentPosition, Distance.FromMeters(5000)), true);
