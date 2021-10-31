@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TCCApp.Model
+﻿namespace TCCApp.Model
 {
     public class AuthNetwork
     {

@@ -1,13 +1,11 @@
 ﻿using Firebase.Database;
 using Firebase.Database.Query;
-using SQLite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using TCCApp.Model;
 using Xamarin.Forms;

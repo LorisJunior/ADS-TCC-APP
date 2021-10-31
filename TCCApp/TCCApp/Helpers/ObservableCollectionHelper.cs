@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
 namespace TCCApp.Helpers
@@ -17,14 +14,6 @@ namespace TCCApp.Helpers
                     observableCollection.Clear();
                 });
             }
-        }
-
-        public static void TSafeClear<T>(this ICollection<T> Collection)
-        {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                Collection.Clear();
-            });
         }
     }
 }

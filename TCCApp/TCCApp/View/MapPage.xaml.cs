@@ -1,14 +1,11 @@
 ﻿using Plugin.Geolocator;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using TCCApp.Helpers;
 using TCCApp.Model;
 using TCCApp.Services;
-using TCCApp.ViewModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;

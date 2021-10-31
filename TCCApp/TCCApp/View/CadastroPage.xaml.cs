@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TCCApp.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

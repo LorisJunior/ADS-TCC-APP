@@ -1,5 +1,4 @@
-﻿using FFImageLoading.Work;
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Http;
 using System.Reflection;

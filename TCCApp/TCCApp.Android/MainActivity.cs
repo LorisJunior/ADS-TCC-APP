@@ -14,7 +14,6 @@ using Xamarin.Facebook;
 using Android;
 using System.IO;
 using FFImageLoading.Forms.Platform;
-using ImageCircle.Forms.Plugin.Droid;
 
 [assembly: Dependency(typeof(TCCApp.Droid.SetStatusBar))]
 namespace TCCApp.Droid
@@ -41,7 +40,6 @@ namespace TCCApp.Droid
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             CachedImageRenderer.Init(enableFastRenderer: true);
             CachedImageRenderer.InitImageViewHandler();
-            ImageCircleRenderer.Init();
 
             var databasePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "MyData.db");
             LoadApplication(new App(new OAuth2Service(), databasePath));
