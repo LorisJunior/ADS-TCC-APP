@@ -124,6 +124,8 @@ namespace TCCApp.View
         {
             try
             {
+                await semaphoreSlim.WaitAsync();
+
                 locator = CrossGeolocator.Current;
                 await locator.StartListeningAsync(new TimeSpan(0, 0, 0), 100);
                 var position = await locator.GetPositionAsync();
@@ -131,6 +133,8 @@ namespace TCCApp.View
                 App.user.Latitude = CurrentPosition.Latitude;
                 App.user.Longitude = CurrentPosition.Longitude;
                 await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
+
+                semaphoreSlim.Release();
             }
             catch (Exception)
             {
