@@ -124,13 +124,15 @@ namespace TCCApp.View
         {
             try
             {
+
                 locator = CrossGeolocator.Current;
                 await locator.StartListeningAsync(new TimeSpan(0, 0, 0), 100);
-                var position = await locator.GetPositionAsync();
+                Plugin.Geolocator.Abstractions.Position position = await locator.GetPositionAsync();
                 CurrentPosition = new Position(position.Latitude, position.Longitude);
                 App.user.Latitude = CurrentPosition.Latitude;
                 App.user.Longitude = CurrentPosition.Longitude;
                 await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
+                
             }
             catch (Exception)
             {
