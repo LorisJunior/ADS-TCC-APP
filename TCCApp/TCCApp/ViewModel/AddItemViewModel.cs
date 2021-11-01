@@ -1,12 +1,16 @@
 ﻿using Firebase.Database.Query;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TCCApp.Model;
 using TCCApp.Services;
@@ -96,14 +100,23 @@ namespace TCCApp.ViewModel
                 ByteImage = ByteItemImage
             };
 
-            DatabaseService.AddItem(item);
+            var stream = new MemoryStream(ByteItemImage);
 
-            //Deve inserir no banco de dados antes de setar imageUrl o firebase nao aceita imageurl
-            item.ImageUrl = ImageSource.FromStream(() => new MemoryStream(ByteItemImage));
+            if (await IsAdultContent(stream))
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", "Imagem imprópria detectada", "ok");
+            }
+            else
+            {
+                DatabaseService.AddItem(item);
 
-            await Application.Current.MainPage.DisplayAlert("Sucesso!", "O item foi criado com sucesso", "ok");
+                //Deve inserir no banco de dados antes de setar imageUrl o firebase nao aceita imageurl
+                //item.ImageUrl = ImageSource.FromStream(() => new MemoryStream(ByteItemImage));
 
-            await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.DisplayAlert("Sucesso!", "O item foi criado com sucesso", "ok");
+
+                await Application.Current.MainPage.Navigation.PopAsync();
+            }
 
             //Voltando os valores para default
             Tipo = string.Empty;
@@ -148,6 +161,24 @@ namespace TCCApp.ViewModel
             {
             }
         });
+        public static async Task<bool> IsAdultContent(Stream stream)
+        {
+            var computerVision = new ComputerVisionClient
+            (new ApiKeyServiceClientCredentials(App.computerVisionKey), new DelegatingHandler[] { });
+
+            computerVision.Endpoint = App.computerVisionEndPoint;
+
+            var features = new List<VisualFeatureTypes>() { VisualFeatureTypes.Adult };
+
+            var result = await computerVision.AnalyzeImageInStreamAsync(stream, features);
+
+            if (result.Adult.IsAdultContent)
+            {
+                return true;
+            }
+
+            return false;
+        }
         public void UpdateColor()
         {
             IconColor = Color.FromHsla(hue, 0.73, 0.85, 1);
