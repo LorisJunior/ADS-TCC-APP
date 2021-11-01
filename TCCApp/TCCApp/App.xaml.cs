@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using TCCApp.Helpers;
 using TCCApp.Model;
 using TCCApp.Services;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace TCCApp
 {

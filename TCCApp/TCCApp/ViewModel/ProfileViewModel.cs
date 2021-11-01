@@ -2,18 +2,15 @@
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Input;
 using TCCApp.Model;
 using TCCApp.Services;
 using TCCApp.View;
 using TCCApp.ViewModel;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 [assembly:Dependency(typeof(ProfileViewModel))]
