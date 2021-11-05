@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using TCCApp.Helpers;
 using TCCApp.Model;
 using TCCApp.Services;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace TCCApp
 {
@@ -14,6 +11,8 @@ namespace TCCApp
         public static Assembly assembly = null;
         public static User user = new User();
         public static string DatabasePath = string.Empty;
+        public static string computerVisionKey = "c2f8943ffdb442958bff7ac826cdec3f";
+        public static string computerVisionEndPoint = "https://adultcheck.cognitiveservices.azure.com/";
 
         public App(IOAuth2Service oAuth2Service, string databasePath)
         {

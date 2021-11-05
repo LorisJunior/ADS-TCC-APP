@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using TCCApp.Model;
 using TCCApp.Services;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.Xaml;

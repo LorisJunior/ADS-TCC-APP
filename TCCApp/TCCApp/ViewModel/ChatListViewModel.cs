@@ -1,10 +1,8 @@
 ﻿using Firebase.Database.Query;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Input;
 using TCCApp.Model;
