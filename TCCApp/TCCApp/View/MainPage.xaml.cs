@@ -31,5 +31,10 @@ namespace TCCApp
             await Navigation.PushAsync(new CadastroPage());
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            App.user = new Model.User();
+        }
     }
 }

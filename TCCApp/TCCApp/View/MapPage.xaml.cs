@@ -127,6 +127,8 @@ namespace TCCApp.View
                 await semaphoreSlim.WaitAsync();
 
                 locator = CrossGeolocator.Current;
+                if (locator.IsListening)
+                    await locator.StopListeningAsync();
                 await locator.StartListeningAsync(new TimeSpan(0, 0, 0), 100);
                 var position = await locator.GetPositionAsync();
                 CurrentPosition = new Position(position.Latitude, position.Longitude);

@@ -150,10 +150,18 @@ namespace TCCApp.ViewModel
                 {
                     About = App.user.Sobre;
                 }
-                
+                else
+                {
+                    About = String.Empty;
+                }
+
                 if (App.user.Nome != null)
                 {
                     Name = App.user.Nome;
+                }
+                else
+                {
+                    Name = String.Empty;
                 }
 
                 if (App.user.DisplayUserInMap)

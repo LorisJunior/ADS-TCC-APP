@@ -76,6 +76,7 @@
                                 x:Name="name"
                                 Grid.Row="0"
                                 Grid.Column="1"
+                                Grid.RowSpan="2"
                                 Text="{Binding Author}"
                                 TextColor="DarkSlateGray"
                                 FontSize="Medium"/>
@@ -84,6 +85,7 @@
                                 Grid.Row="2"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="2"
+                                Grid.RowSpan="2"
                                 Text="Envie uma mensagem"
                                 TextColor="DarkSlateGray"
                                 FontSize="16"

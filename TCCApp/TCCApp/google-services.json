@@ -8,6 +8,43 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:178608825227:android:996c76dab171a3acbf858e",
+        "android_client_info": {
+          "package_name": "br.com.lourival.bruno.tccapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178608825227-gsqf0t03k8u1s6to28cr9ov8jgous3c7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.lourival.bruno.tccapp",
+            "certificate_hash": "2bc6d67bafd820ce3e451458a5a0a7f5b5165595"
+          }
+        },
+        {
+          "client_id": "178608825227-ru36d7og1o58sgeboupe22bk5jhnge6g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAp07ox7IPM21r6r7FkwjuhLPLFAf4fD_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178608825227-ru36d7og1o58sgeboupe22bk5jhnge6g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:178608825227:android:5028474bff177563bf858e",
         "android_client_info": {
           "package_name": "com.companyname.tccapp"

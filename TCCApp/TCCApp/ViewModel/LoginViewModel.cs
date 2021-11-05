@@ -71,9 +71,9 @@ namespace TCCApp.ViewModel
                     if (Usuario.Email == user.Email && Criptografia.HashValue(Usuario.Senha) == user.Senha)
                     {
                         //Pega a key do usuário  
-                        App.user.Key = user.Key;
+                        App.user = user;
                         //Abre a tela de HistoryPage após o sucesso do Login  
-                        await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                        await App.Current.MainPage.Navigation.PushAsync(new HistoryPage(null));
                         //App.Current.MainPage = new HistoryPage();
                     }
                     else
@@ -129,7 +129,7 @@ namespace TCCApp.ViewModel
         }
 
         async Task LoginGoogleAsync(AuthNetwork authNetwork)
-        {            
+        {
             try
             {
                 if (!string.IsNullOrEmpty(_googleService.AccessToken))
@@ -162,8 +162,8 @@ namespace TCCApp.ViewModel
                             var user = await DatabaseService.GetUser(socialLoginData.Email);
                             if (user != null)
                             {   
-                                App.user.Key = user.Key;
-                                await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                                App.user = user;
+                                await App.Current.MainPage.Navigation.PushAsync(new HistoryPage(socialLoginData));
                                 //App.Current.MainPage = new HistoryPage();
                             }
                             else
@@ -177,8 +177,8 @@ namespace TCCApp.ViewModel
                                 if (adicionado)
                                 {
                                     user = await DatabaseService.GetUser(socialLoginData.Email);
-                                    App.user.Key = user.Key;
-                                    await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                                    App.user = user;
+                                    await App.Current.MainPage.Navigation.PushAsync(new HistoryPage(socialLoginData));
                                     //App.Current.MainPage = new HistoryPage();
                                 }
                                 else
@@ -247,8 +247,8 @@ namespace TCCApp.ViewModel
                             var user = await DatabaseService.GetUser(socialLoginData.Email);
                             if (user != null)
                             {
-                                App.user.Key = user.Key;
-                                await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                                App.user = user;
+                                await App.Current.MainPage.Navigation.PushAsync(new HistoryPage(socialLoginData));
                             }
                             else
                             {
@@ -260,9 +260,9 @@ namespace TCCApp.ViewModel
                                 //Retorno true se o usuário foi inserido com sucesso   
                                 if (adicionado)
                                 {
-                                    user = await DatabaseService.GetUser(socialLoginData.Email);
-                                    App.user.Key = user.Key;
-                                    await App.Current.MainPage.Navigation.PushAsync(new HistoryPage());
+                                    user = await DatabaseService.GetUser(socialLoginData.Email);                                    
+                                    App.user = user;
+                                    await App.Current.MainPage.Navigation.PushAsync(new HistoryPage(socialLoginData));
                                 }
                                 else
                                 {
