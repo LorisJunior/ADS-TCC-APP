@@ -1,6 +1,7 @@
 ﻿using Plugin.Geolocator;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -103,21 +104,11 @@ namespace TCCApp.View
                 await Navigation.PushAsync(new ClickedUserPage(user));
             }
         }
-        private async void Search_Clicked(object sender, EventArgs e)
+        private void Search_Clicked(object sender, EventArgs e)
         {
-            var btn = sender as Button;
-            btn.IsEnabled = false;
-
-            await semaphoreSlim.WaitAsync();
-
             CleanMap(map.Pins);
             SetPins(App.user, true);
             FindNearUsers();
-
-            semaphoreSlim.Release();
-
-            await Task.Delay(TimeSpan.FromMilliseconds(1500));
-            btn.IsEnabled = true;
         }
         public async void LocatorStartListening()
         {
@@ -153,12 +144,28 @@ namespace TCCApp.View
         {
             await semaphoreSlim.WaitAsync();
 
-            BitmapDescriptor icon = icon = BitmapDescriptorFactory.DefaultMarker(Color.Red);
+            BitmapDescriptor icon = BitmapDescriptorFactory.DefaultMarker(Color.Red);
+            Stream stream = null;
 
-            if (user.Buffer != null)
+            try
             {
-                icon = BitmapDescriptorFactory.FromView(ImageService.GetIcon(user));
+                stream = new MemoryStream(user.Buffer);
             }
+            catch (Exception)
+            {
+            }
+
+            try
+            {
+                if (user.Buffer != null)
+                {
+                    icon = BitmapDescriptorFactory.FromView(new BindingPinView(stream));
+                }
+            }
+            catch (Exception)
+            {
+            }
+            
             
             Pin pin = new Pin()
             {
@@ -169,66 +176,76 @@ namespace TCCApp.View
                 Tag = user.Key,
                 Position = new Position(user.Latitude, user.Longitude)
             };
-            
-            if (isMyPin == true)
+            try
             {
-                userPin = pin;
-                map.Pins.Add(userPin);
+                if (isMyPin == true)
+                {
+                    userPin = pin;
+                    map.Pins.Add(userPin);
+                }
+                else
+                {
+                    map.Pins.Add(pin);
+                }
             }
-            else
+            catch (Exception)
             {
-                map.Pins.Add(pin);
             }
 
             semaphoreSlim.Release();
         }
         public async void FindNearUsers()
         {
-            await semaphoreSlim.WaitAsync();
 
             var nearUsers = await DatabaseService.GetNearUsers(radius);
 
-            var myItems = await DatabaseService.GetItems(App.user.Key);
-
-            if (myItems.Count > 0 && nearUsers.Count > 0)
+            if (nearUsers.Count > 0)
             {
-                int count = 0;
+                var myItems = await DatabaseService.GetItems(App.user.Key);
 
-                while (count < nearUsers.Count)
+                if (myItems.Count > 0)
                 {
-                    var items = await DatabaseService.GetItems(nearUsers[count].Key);
+                    int count = 0;
 
-                    if (items.Count > 0)
+                    while (count < nearUsers.Count)
                     {
-                        var result = from m in myItems
-                                     join i in items
-                                     on m.Tipo.ToLowerInvariant() equals i.Tipo.ToLowerInvariant()
-                                     select m.Key;
+                        var items = await DatabaseService.GetItems(nearUsers[count].Key);
+                        if (items.Count > 0)
+                        {
+                            var result = from m in myItems
+                                         join i in items
+                                         on m.Tipo.ToLowerInvariant() equals i.Tipo.ToLowerInvariant()
+                                         select m.Key;
 
-                        if (result == null)
+                            if (result == null)
+                            {
+                                nearUsers.RemoveAt(count);
+                                count--;
+                            }
+                        }
+                        else
                         {
                             nearUsers.RemoveAt(count);
                             count--;
                         }
-                    }
-                    else
-                    {
-                        nearUsers.RemoveAt(count);
-                        count--;
-                    }
 
-                    count++;
+                        count++;
+                    }
                 }
-
                 if (nearUsers.Count > 0)
                 {
-                    foreach (var user in nearUsers)
+                    try
                     {
-                        SetPins(user, false);
+                        foreach (var user in nearUsers)
+                        {
+                            SetPins(user, false);
+                        }
+                    }
+                    catch (Exception)
+                    {
                     }
                 }
             }
-            semaphoreSlim.Release();
         }
         public void SetCircle(Position position)
         {

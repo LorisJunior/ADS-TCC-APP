@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using TCCApp.Model;
 using Xamarin.Forms;
@@ -229,9 +230,12 @@ namespace TCCApp.Services
         }
         public static async Task<List<Item>> GetItems(string userKey)
         {
+            SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
             try
             {
-                return (await firebase
+                await semaphoreSlim.WaitAsync();
+
+                var items = (await firebase
                 .Child("Item")
                 .Child(userKey)
                 .OnceAsync<Item>()).Select(item => new Item
@@ -243,6 +247,9 @@ namespace TCCApp.Services
                     Cor = Color.FromHsla(item.Object.Hue, 0.73, 0.85, 1),
                     ImageUrl = ImageSource.FromStream(() => new MemoryStream(item.Object.ByteImage))
                 }).ToList();
+
+                semaphoreSlim.Release();
+                return items;
             }
             catch (Exception)
             {
@@ -289,12 +296,20 @@ namespace TCCApp.Services
         }
         public static async Task<User> GetUserAsync(string key)
         {
+            SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
+            
             try
             {
-                return await firebase
+                await semaphoreSlim.WaitAsync();
+
+                var user = await firebase
                     .Child("Users")
                     .Child(key)
                     .OnceSingleAsync<User>();
+                semaphoreSlim.Release();
+                return user;
+                
+
             }
             catch (Exception)
             {
@@ -330,13 +345,13 @@ namespace TCCApp.Services
         {
             try
             {
-                return (await firebase
+                var users = (await firebase
                 .Child("Users")
                 .OnceAsync<User>())
                 .Where(u => u.Key != App.user.Key &&
                     DistanceService.CompareDistance
-                    (App.user.Latitude, App.user.Longitude, 
-                    u.Object.Latitude, u.Object.Longitude) <= (raio / 1000) && 
+                    (App.user.Latitude, App.user.Longitude,
+                    u.Object.Latitude, u.Object.Longitude) <= (raio / 1000) &&
                     u.Object.DisplayUserInMap)
                 .Select(item => new User
                 {
@@ -345,13 +360,14 @@ namespace TCCApp.Services
                     Latitude = item.Object.Latitude,
                     Longitude = item.Object.Longitude
                 }).ToList();
+
+                return users;
             }
             catch (Exception)
             {
                 return null;
             }
         }
-
         public static async Task<User> GetUser(string email)
         {
             var allUsers = await GetUsers();

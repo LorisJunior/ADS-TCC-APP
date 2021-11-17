@@ -150,7 +150,7 @@ namespace TCCApp.ViewModel
                 var stream = media.GetStream();
 
                 ByteItemImage = ImageService.ConvertToByte(stream);
-                ItemImage = ImageSource.FromStream(() => stream);
+                ItemImage = ImageSource.FromStream(() => new MemoryStream(ByteItemImage));
                 ItemMargin = 0;
             }
             catch (Exception)

@@ -12,11 +12,6 @@ namespace TCCApp.Services
     {
         const double TAM = 75;
         
-        public static ImageButton placeholder = new ImageButton
-        {
-            Source = "user.png",
-            CornerRadius = 38,
-        };
         public static byte[] ConvertToByte(string path, Assembly assembly)
         {
             var stream = GetImageFromStream(path, assembly);
@@ -49,6 +44,11 @@ namespace TCCApp.Services
                 BackgroundColor = Color.Transparent
             };
 
+            var placeholder = new ImageButton
+            {
+                Source = "user.png",
+                CornerRadius = 38,
+            };
             AbsoluteLayout.SetLayoutBounds(img, new Rectangle(x: 0, y: 0, width: TAM, height: TAM));
             AbsoluteLayout.SetLayoutFlags(img, AbsoluteLayoutFlags.None);
             AbsoluteLayout.SetLayoutBounds(placeholder, new Rectangle(x: 0, y: 0, width: TAM, height: TAM));
