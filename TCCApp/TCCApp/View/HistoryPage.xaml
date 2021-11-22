@@ -10,8 +10,8 @@
              android:TabbedPage.BarSelectedItemColor="Black">
 
     <local:ProfilePage Title="Perfil" IconImageSource="person.png"/>
-    <local:ItemsPage Title="Items" IconImageSource="list.png"/>
+    <local:ItemsPage Title="Itens" IconImageSource="list.png"/>
     <local:MapPage Title="Mapa" IconImageSource="map.png"/>
-    <local:ChatListPage Title="ChatList" IconImageSource="chat.png"/>
+    <local:ChatListPage Title="Conversas" IconImageSource="chat.png"/>
 
 </TabbedPage>

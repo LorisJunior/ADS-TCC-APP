@@ -51,6 +51,7 @@ namespace TCCApp.View
             map.PinClicked += Map_PinClicked;
 
             LocatorStartListening();
+
         }
 
         protected override void OnAppearing()
@@ -122,9 +123,6 @@ namespace TCCApp.View
                 await locator.StartListeningAsync(new TimeSpan(0, 0, 0), 100);
                 var position = await locator.GetPositionAsync();
                 CurrentPosition = new Position(position.Latitude, position.Longitude);
-                App.user.Latitude = CurrentPosition.Latitude;
-                App.user.Longitude = CurrentPosition.Longitude;
-                await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
 
                 semaphoreSlim.Release();
             }
@@ -134,8 +132,11 @@ namespace TCCApp.View
                 await Navigation.PopAsync();
             }
         }
-        public void UpdatePosition()
+        public async void UpdatePosition()
         {
+            App.user.Latitude = CurrentPosition.Latitude;
+            App.user.Longitude = CurrentPosition.Longitude;
+            await DatabaseService.UpdateUserAsync(App.user.Key, App.user);
             userPin.Position = CurrentPosition;
             userCircle.Center = CurrentPosition;
             map.MoveToRegion(MapSpan.FromCenterAndRadius(CurrentPosition, Distance.FromMeters(5000)), true);
