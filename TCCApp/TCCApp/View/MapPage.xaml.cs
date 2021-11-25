@@ -232,18 +232,18 @@ namespace TCCApp.View
 
                         count++;
                     }
-                }
-                if (nearUsers.Count > 0)
-                {
-                    try
+                    if (nearUsers.Count > 0)
                     {
-                        foreach (var user in nearUsers)
+                        try
                         {
-                            SetPins(user, false);
+                            foreach (var user in nearUsers)
+                            {
+                                SetPins(user, false);
+                            }
                         }
-                    }
-                    catch (Exception)
-                    {
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
             }
