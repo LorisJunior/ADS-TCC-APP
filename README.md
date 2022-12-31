@@ -3,7 +3,7 @@
 
 # Sobre o projeto
 
-Este é uma aplicação full stack mobile construída para o trabalho de conclusão de curso de **Análise e Desenvolvimento de Sistemas**. 
+Esta é uma aplicação full stack mobile construída para o trabalho de conclusão de curso de **Análise e Desenvolvimento de Sistemas**. 
 
 [Link para o TCC](https://drive.ifsp.edu.br/s/c8HRlf53fCRFsZi#pdfviewer).
 
@@ -51,7 +51,7 @@ https://www.youtube.com/watch?v=6fR0SVXOyio&t
 - XAML
 - Figma
 
-# Autor
+# Autores
 
 Lourival Menezes do Rosario Junior
 
