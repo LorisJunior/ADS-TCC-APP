@@ -31,7 +31,7 @@ https://www.youtube.com/watch?v=6fR0SVXOyio&t
 ### Chat
 ![Chat](https://github.com/LorisJunior/Assets/blob/main/TccImagens/chat.PNG)
 
-## Modelo conceitual
+## Diagramas
 
 ### Casos de Uso
 ![Modelo Conceitual](https://github.com/LorisJunior/Assets/blob/main/TccImagens/Diagrama%20de%20Casos%20de%20Uso-final.png)
